@@ -1,0 +1,12 @@
+from django.db import models
+
+# Create your models here.
+class Medical(models.Model):
+    class ClassNumbers(models.IntegerChoices):
+        FIRST = 1
+        SECOND = 2
+        THIRD = 3
+
+    name = models.CharField(max_length=50)
+    classNumber = models.IntegerField(choices=ClassNumbers.choices)
+    expiration = models.DateField()
