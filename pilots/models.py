@@ -13,5 +13,5 @@ class Pilot(models.Model):
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
     role = models.CharField(choices=RoleChoices.choices, max_length=2)
-    medical_certificate = models.ForeignKey(Medical, on_delete=models.CASCADE)
+    medical_certificate = models.ForeignKey(Medical, on_delete=models.CASCADE, null=True)
     licenses = models.ManyToManyField(License, related_name='licenses')
