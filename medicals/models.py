@@ -7,6 +7,5 @@ class Medical(models.Model):
         SECOND = 2
         THIRD = 3
 
-    name = models.CharField(max_length=50)
     classNumber = models.IntegerField(choices=ClassNumbers.choices)
-    expiration = models.DateField()
+    expiration_years = models.PositiveSmallIntegerField(null=True, blank=True)
