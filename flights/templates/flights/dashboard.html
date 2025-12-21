@@ -1,0 +1,431 @@
+{% extends "flights/base.html" %}
+
+{% block title %}Dashboard - Flight Logbook{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <h1 class="mb-4">Flight Dashboard</h1>
+
+    <!-- Hero Stats Section -->
+    <div class="row mb-4">
+        <div class="col-md-2 col-sm-6 mb-3">
+            <div class="card stat-card">
+                <div class="card-body text-center">
+                    <h6 class="card-subtitle mb-2 text-muted">Total Time</h6>
+                    <h2 class="card-title">{{ total_times.total_time|floatformat:1 }}</h2>
+                    <p class="card-text">hours</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2 col-sm-6 mb-3">
+            <div class="card stat-card">
+                <div class="card-body text-center">
+                    <h6 class="card-subtitle mb-2 text-muted">PIC Time</h6>
+                    <h2 class="card-title">{{ total_times.pic_time|floatformat:1 }}</h2>
+                    <p class="card-text">hours</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2 col-sm-6 mb-3">
+            <div class="card stat-card">
+                <div class="card-body text-center">
+                    <h6 class="card-subtitle mb-2 text-muted">Instrument Time</h6>
+                    <h2 class="card-title">{{ instrument_breakdown.total|floatformat:1 }}</h2>
+                    <p class="card-text">hours</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2 col-sm-6 mb-3">
+            <div class="card stat-card">
+                <div class="card-body text-center">
+                    <h6 class="card-subtitle mb-2 text-muted">Cross Country</h6>
+                    <h2 class="card-title">{{ total_times.xc_time|floatformat:1 }}</h2>
+                    <p class="card-text">hours</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2 col-sm-6 mb-3">
+            <div class="card stat-card">
+                <div class="card-body text-center">
+                    <h6 class="card-subtitle mb-2 text-muted">Total Landings</h6>
+                    <h2 class="card-title">{{ total_times.total_landings }}</h2>
+                    <p class="card-text">landings</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2 col-sm-6 mb-3">
+            <div class="card stat-card">
+                <div class="card-body text-center">
+                    <h6 class="card-subtitle mb-2 text-muted">Days Since Last Flight</h6>
+                    <h2 class="card-title">{{ days_since_last_flight|default:"N/A" }}</h2>
+                    <p class="card-text">days</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Currency Tracking Section -->
+    <div class="row mb-4">
+        <div class="col-md-6 mb-3">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5>Passenger Currency (FAR 61.57a)</h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <h6>Day Currency (90 days)</h6>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <span class="badge {% if currency.day_current %}bg-success{% else %}bg-danger{% endif %}">
+                                    {% if currency.day_current %}CURRENT{% else %}NOT CURRENT{% endif %}
+                                </span>
+                                <span class="ms-2">{{ currency.day_landings }}/3 landings</span>
+                            </div>
+                            {% if currency.day_expiry %}
+                                <small class="text-muted">Expires: {{ currency.day_expiry }}</small>
+                            {% endif %}
+                        </div>
+                        <div class="progress mt-2" style="height: 25px;">
+                            <div class="progress-bar {% if currency.day_current %}bg-success{% else %}bg-danger{% endif %}"
+                                 role="progressbar"
+                                 style="width: {% widthratio currency.day_landings 3 100 %}%">
+                                {{ currency.day_landings }}/3
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h6>Night Currency (90 days)</h6>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <span class="badge {% if currency.night_current %}bg-success{% else %}bg-danger{% endif %}">
+                                    {% if currency.night_current %}CURRENT{% else %}NOT CURRENT{% endif %}
+                                </span>
+                                <span class="ms-2">{{ currency.night_landings }}/3 landings</span>
+                            </div>
+                            {% if currency.night_expiry %}
+                                <small class="text-muted">Expires: {{ currency.night_expiry }}</small>
+                            {% endif %}
+                        </div>
+                        <div class="progress mt-2" style="height: 25px;">
+                            <div class="progress-bar {% if currency.night_current %}bg-success{% else %}bg-danger{% endif %}"
+                                 role="progressbar"
+                                 style="width: {% widthratio currency.night_landings 3 100 %}%">
+                                {{ currency.night_landings }}/3
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <div class="card">
+                <div class="card-header bg-info text-white">
+                    <h5>Medical Certificate</h5>
+                </div>
+                <div class="card-body">
+                    {% if medical.has_medical %}
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <h6>Class {{ medical.class }} Medical</h6>
+                            <span class="badge
+                                {% if medical.status == 'current' %}bg-success
+                                {% elif medical.status == 'warning' %}bg-warning
+                                {% elif medical.status == 'critical' %}bg-danger
+                                {% else %}bg-secondary{% endif %}">
+                                {{ medical.status|upper }}
+                            </span>
+                        </div>
+                        <p class="mb-1"><strong>Expires:</strong> {{ medical.expiry }}</p>
+                        <p class="mb-0">
+                            <strong>Days Remaining:</strong>
+                            <span class="{% if medical.days_remaining < 30 %}text-danger{% elif medical.days_remaining < 60 %}text-warning{% else %}text-success{% endif %}">
+                                {{ medical.days_remaining }} days
+                            </span>
+                        </p>
+                    {% else %}
+                        <p class="text-muted">No medical certificate on file</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Instrument Rating Progress -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h5>Instrument Rating Progress</h5>
+                </div>
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <h6>{{ ir_progress.creditable_total }}/40 hours</h6>
+                        <span class="badge bg-success">{{ ir_progress.percentage }}% Complete</span>
+                    </div>
+                    <div class="progress mb-3" style="height: 30px;">
+                        <div class="progress-bar bg-success"
+                             role="progressbar"
+                             style="width: {{ ir_progress.percentage }}%">
+                            {{ ir_progress.creditable_total }}/40 hrs
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <strong>Actual Instrument:</strong> {{ ir_progress.actual|floatformat:1 }} hrs
+                        </div>
+                        <div class="col-md-3">
+                            <strong>Simulated:</strong> {{ ir_progress.simulated|floatformat:1 }} hrs
+                        </div>
+                        <div class="col-md-3">
+                            <strong>Creditable Simulated:</strong> {{ ir_progress.creditable_simulated|floatformat:1 }} hrs (max 20)
+                        </div>
+                        <div class="col-md-3">
+                            <strong>Remaining:</strong> {{ ir_progress.remaining|floatformat:1 }} hrs
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="row mb-4">
+        <div class="col-md-6 mb-3">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Monthly Flight Activity (Last 12 Months)</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="monthlyChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Instrument Time Breakdown</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="instrumentChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Cumulative Time Progression</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="cumulativeChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Aircraft Breakdown -->
+    {% if aircraft_breakdown %}
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Aircraft Experience</h5>
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Aircraft</th>
+                                <th>Total Hours</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for aircraft, hours in aircraft_breakdown %}
+                            <tr>
+                                <td>{{ aircraft }}</td>
+                                <td>{{ hours|floatformat:1 }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Recent Flights -->
+    {% if recent_flights %}
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Recent Flights</h5>
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Aircraft</th>
+                                <th>Duration</th>
+                                <th>Day Landings</th>
+                                <th>Night Landings</th>
+                                <th>Notes</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for flight in recent_flights %}
+                            <tr>
+                                <td>{{ flight.date }}</td>
+                                <td>{{ flight.plane }}</td>
+                                <td>{{ flight.flight_time|floatformat:1 }}</td>
+                                <td>{{ flight.day_landings }}</td>
+                                <td>{{ flight.night_landings }}</td>
+                                <td>{{ flight.notes|truncatewords:10 }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Monthly Activity Chart
+    const monthlyCtx = document.getElementById('monthlyChart');
+    new Chart(monthlyCtx, {
+        type: 'bar',
+        data: {
+            labels: {{ monthly_labels|safe }},
+            datasets: [{
+                label: 'Flight Hours',
+                data: {{ monthly_hours|safe }},
+                backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Hours'
+                    }
+                }
+            }
+        }
+    });
+
+    // Instrument Time Breakdown Chart
+    const instrumentCtx = document.getElementById('instrumentChart');
+    new Chart(instrumentCtx, {
+        type: 'pie',
+        data: {
+            labels: ['Actual Instrument', 'Simulated Instrument'],
+            datasets: [{
+                data: [{{ instrument_breakdown.actual }}, {{ instrument_breakdown.simulated }}],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.6)',
+                    'rgba(54, 162, 235, 0.6)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            plugins: {
+                legend: {
+                    position: 'bottom'
+                }
+            }
+        }
+    });
+
+    // Cumulative Time Progression Chart
+    const cumulativeCtx = document.getElementById('cumulativeChart');
+    const cumulativeData = {{ cumulative_data|safe }};
+
+    new Chart(cumulativeCtx, {
+        type: 'line',
+        data: {
+            labels: cumulativeData.map(d => d.date),
+            datasets: [
+                {
+                    label: 'Total Time',
+                    data: cumulativeData.map(d => d.total),
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    fill: false,
+                    tension: 0.1
+                },
+                {
+                    label: 'PIC Time',
+                    data: cumulativeData.map(d => d.pic),
+                    borderColor: 'rgba(255, 159, 64, 1)',
+                    backgroundColor: 'rgba(255, 159, 64, 0.2)',
+                    fill: false,
+                    tension: 0.1
+                },
+                {
+                    label: 'Dual Instruction',
+                    data: cumulativeData.map(d => d.dual),
+                    borderColor: 'rgba(153, 102, 255, 1)',
+                    backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                    fill: false,
+                    tension: 0.1
+                },
+                {
+                    label: 'Instrument Time',
+                    data: cumulativeData.map(d => d.instrument),
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    fill: false,
+                    tension: 0.1
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Cumulative Hours'
+                    }
+                },
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Date'
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    position: 'bottom'
+                }
+            }
+        }
+    });
+</script>
+{% endblock %}
