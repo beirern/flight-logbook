@@ -7,25 +7,51 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Plane',
+            name="Plane",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('tail_number', models.CharField(max_length=6)),
-                ('type', models.CharField(max_length=4)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("tail_number", models.CharField(max_length=6)),
+                ("type", models.CharField(max_length=4)),
             ],
         ),
         migrations.CreateModel(
-            name='Simulator',
+            name="Simulator",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('tail_number', models.CharField(max_length=6)),
-                ('type', models.CharField(max_length=20)),
-                ('sim_type', models.CharField(choices=[('FTD', 'Ftd'), ('FFS', 'Ffs'), ('BATD', 'Batd'), ('AATD', 'Aatd')], max_length=4)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("tail_number", models.CharField(max_length=6)),
+                ("type", models.CharField(max_length=20)),
+                (
+                    "sim_type",
+                    models.CharField(
+                        choices=[
+                            ("FTD", "Ftd"),
+                            ("FFS", "Ffs"),
+                            ("BATD", "Batd"),
+                            ("AATD", "Aatd"),
+                        ],
+                        max_length=4,
+                    ),
+                ),
             ],
         ),
     ]

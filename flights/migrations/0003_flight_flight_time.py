@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('flights', '0002_alter_flight_time_end_alter_flight_time_start'),
+        ("flights", "0002_alter_flight_time_end_alter_flight_time_start"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='flight',
-            name='flight_time',
+            model_name="flight",
+            name="flight_time",
             field=models.DecimalField(decimal_places=1, default=0, max_digits=19),
             preserve_default=False,
         ),

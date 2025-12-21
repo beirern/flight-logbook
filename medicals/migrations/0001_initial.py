@@ -7,17 +7,29 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Medical',
+            name="Medical",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=50)),
-                ('classNumber', models.IntegerField(choices=[(1, 'First'), (2, 'Second'), (3, 'Third')])),
-                ('expiration', models.DateField()),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=50)),
+                (
+                    "classNumber",
+                    models.IntegerField(
+                        choices=[(1, "First"), (2, "Second"), (3, "Third")]
+                    ),
+                ),
+                ("expiration", models.DateField()),
             ],
         ),
     ]
