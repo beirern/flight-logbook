@@ -6,21 +6,21 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('medicals', '0001_initial'),
+        ("medicals", "0001_initial"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='medical',
-            name='expiration',
+            model_name="medical",
+            name="expiration",
         ),
         migrations.RemoveField(
-            model_name='medical',
-            name='name',
+            model_name="medical",
+            name="name",
         ),
         migrations.AddField(
-            model_name='medical',
-            name='expiration_years',
+            model_name="medical",
+            name="expiration_years",
             field=models.PositiveSmallIntegerField(blank=True, null=True),
         ),
     ]
