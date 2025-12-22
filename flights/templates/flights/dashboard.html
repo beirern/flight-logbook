@@ -380,6 +380,35 @@
                 </div>
                 <div class="card-body">
                     <canvas id="cumulativeChart"></canvas>
+                    <div class="mt-3">
+                        <h6>Milestones:</h6>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <small>
+                                    <ul class="list-unstyled" style="font-size: 0.85rem;">
+                                        <li><span style="color: rgba(128, 128, 128, 0.8);">●</span> 2021-04-05: First Discovery Flight</li>
+                                        <li><span style="color: rgba(128, 128, 128, 0.8);">●</span> 2023-08-16: Second Discovery Flight</li>
+                                        <li><span style="color: rgba(54, 162, 235, 0.8);">●</span> 2024-07-31: Stage Check 1 PPL</li>
+                                        <li><span style="color: rgba(255, 206, 86, 0.8);">●</span> 2024-08-12: First Solo C162</li>
+                                        <li><span style="color: rgba(153, 102, 255, 0.8);">●</span> 2025-01-25: KSQL</li>
+                                        <li><span style="color: rgba(75, 192, 192, 0.8);">●</span> 2025-07-27: Return to RFS</li>
+                                    </ul>
+                                </small>
+                            </div>
+                            <div class="col-md-6">
+                                <small>
+                                    <ul class="list-unstyled" style="font-size: 0.85rem;">
+                                        <li><span style="color: rgba(255, 99, 132, 0.8);">●</span> 2025-08-19: Stage 2 Check PPL Fail</li>
+                                        <li><span style="color: rgba(0, 200, 0, 0.8);">●</span> 2025-09-16: Stage 2 Check PPL Pass</li>
+                                        <li><span style="color: rgba(255, 159, 64, 0.8);">●</span> 2025-09-19: Second Solo C172</li>
+                                        <li><span style="color: rgba(100, 100, 100, 0.8);">●</span> 2025-09-22: First XC Solo</li>
+                                        <li><span style="color: rgba(0, 128, 0, 0.8);">●</span> 2025-10-30: EOC PPL Pass</li>
+                                        <li><span style="color: rgba(0, 100, 0, 0.9);">●</span> 2025-12-01: PPL Checkride</li>
+                                    </ul>
+                                </small>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -527,11 +556,10 @@
     new Chart(cumulativeCtx, {
         type: 'line',
         data: {
-            labels: cumulativeData.map(d => d.date),
             datasets: [
                 {
                     label: 'Total Time',
-                    data: cumulativeData.map(d => d.total),
+                    data: cumulativeData.map(d => ({x: d.date, y: d.total})),
                     borderColor: 'rgba(75, 192, 192, 1)',
                     backgroundColor: 'rgba(75, 192, 192, 0.2)',
                     fill: false,
@@ -539,7 +567,7 @@
                 },
                 {
                     label: 'PIC Time',
-                    data: cumulativeData.map(d => d.pic),
+                    data: cumulativeData.map(d => ({x: d.date, y: d.pic})),
                     borderColor: 'rgba(255, 159, 64, 1)',
                     backgroundColor: 'rgba(255, 159, 64, 0.2)',
                     fill: false,
@@ -547,7 +575,7 @@
                 },
                 {
                     label: 'Dual Instruction',
-                    data: cumulativeData.map(d => d.dual),
+                    data: cumulativeData.map(d => ({x: d.date, y: d.dual})),
                     borderColor: 'rgba(153, 102, 255, 1)',
                     backgroundColor: 'rgba(153, 102, 255, 0.2)',
                     fill: false,
@@ -555,7 +583,7 @@
                 },
                 {
                     label: 'Instrument Time',
-                    data: cumulativeData.map(d => d.instrument),
+                    data: cumulativeData.map(d => ({x: d.date, y: d.instrument})),
                     borderColor: 'rgba(255, 99, 132, 1)',
                     backgroundColor: 'rgba(255, 99, 132, 0.2)',
                     fill: false,
@@ -575,6 +603,13 @@
                     }
                 },
                 x: {
+                    type: 'time',
+                    time: {
+                        unit: 'month',
+                        displayFormats: {
+                            month: 'MMM yyyy'
+                        }
+                    },
                     title: {
                         display: true,
                         text: 'Date'
@@ -584,6 +619,229 @@
             plugins: {
                 legend: {
                     position: 'bottom'
+                },
+                tooltip: {
+                    callbacks: {
+                        afterBody: function(context) {
+                            if (context.length === 0) return '';
+                            const date = context[0].parsed.x;
+                            const dateStr = new Date(date).toISOString().split('T')[0];
+
+                            const milestones = {
+                                '2021-04-05': 'First Discovery Flight',
+                                '2023-08-16': 'Second Discovery Flight',
+                                '2024-07-31': 'Stage Check 1 PPL',
+                                '2024-08-12': 'First Solo C162',
+                                '2025-01-25': 'KSQL',
+                                '2025-07-27': 'Return to RFS',
+                                '2025-08-19': 'Stage 2 Check PPL Fail',
+                                '2025-09-16': 'Stage 2 Check PPL Pass',
+                                '2025-09-19': 'Second Solo C172',
+                                '2025-09-22': 'First XC Solo',
+                                '2025-10-30': 'EOC PPL Pass',
+                                '2025-12-01': 'PPL Checkride'
+                            };
+
+                            if (milestones[dateStr]) {
+                                return '\n🎯 ' + milestones[dateStr];
+                            }
+                            return '';
+                        }
+                    }
+                },
+                annotation: {
+                    annotations: {
+                        discovery1: {
+                            type: 'line',
+                            xMin: '2021-04-05',
+                            xMax: '2021-04-05',
+                            borderColor: 'rgba(128, 128, 128, 0.6)',
+                            borderWidth: 2,
+                            borderDash: [3, 3],
+                            label: {
+                                display: true,
+                                content: 'First Discovery Flight',
+                                position: 'start',
+                                yAdjust: -10,
+                                backgroundColor: 'rgba(128, 128, 128, 0.8)',
+                                color: 'white',
+                                font: {
+                                    size: 10
+                                },
+                                padding: 3
+                            }
+                        },
+                        discovery2: {
+                            type: 'line',
+                            xMin: '2023-08-16',
+                            xMax: '2023-08-16',
+                            borderColor: 'rgba(128, 128, 128, 0.6)',
+                            borderWidth: 2,
+                            borderDash: [3, 3],
+                            label: {
+                                display: true,
+                                content: 'Second Discovery Flight',
+                                position: 'start',
+                                yAdjust: -10,
+                                backgroundColor: 'rgba(128, 128, 128, 0.8)',
+                                color: 'white',
+                                font: {
+                                    size: 10
+                                },
+                                padding: 3
+                            }
+                        },
+                        stage1: {
+                            type: 'line',
+                            xMin: '2024-07-31',
+                            xMax: '2024-07-31',
+                            borderColor: 'rgba(54, 162, 235, 0.8)',
+                            borderWidth: 2,
+                            borderDash: [5, 5],
+                            label: {
+                                display: false
+                            }
+                        },
+                        firstSolo: {
+                            type: 'line',
+                            xMin: '2024-08-12',
+                            xMax: '2024-08-12',
+                            borderColor: 'rgba(255, 206, 86, 0.8)',
+                            borderWidth: 2,
+                            borderDash: [5, 5],
+                            label: {
+                                display: true,
+                                content: 'First Solo C162',
+                                position: 'start',
+                                yAdjust: -10,
+                                backgroundColor: 'rgba(255, 206, 86, 0.8)',
+                                color: 'black',
+                                font: {
+                                    weight: 'bold',
+                                    size: 10
+                                },
+                                padding: 3
+                            }
+                        },
+                        ksql: {
+                            type: 'line',
+                            xMin: '2025-01-25',
+                            xMax: '2025-01-25',
+                            borderColor: 'rgba(153, 102, 255, 0.8)',
+                            borderWidth: 2,
+                            borderDash: [5, 5],
+                            label: {
+                                display: true,
+                                content: 'KSQL',
+                                position: 'start',
+                                yAdjust: -10,
+                                backgroundColor: 'rgba(153, 102, 255, 0.8)',
+                                color: 'white',
+                                font: {
+                                    weight: 'bold',
+                                    size: 10
+                                },
+                                padding: 3
+                            }
+                        },
+                        returnRFS: {
+                            type: 'line',
+                            xMin: '2025-07-27',
+                            xMax: '2025-07-27',
+                            borderColor: 'rgba(75, 192, 192, 0.8)',
+                            borderWidth: 2,
+                            borderDash: [5, 5],
+                            label: {
+                                display: true,
+                                content: 'RFS',
+                                position: 'start',
+                                yAdjust: -10,
+                                backgroundColor: 'rgba(75, 192, 192, 0.8)',
+                                color: 'white',
+                                font: {
+                                    weight: 'bold',
+                                    size: 10
+                                },
+                                padding: 3
+                            }
+                        },
+                        stage2Fail: {
+                            type: 'line',
+                            xMin: '2025-08-19',
+                            xMax: '2025-08-19',
+                            borderColor: 'rgba(255, 99, 132, 0.8)',
+                            borderWidth: 2,
+                            borderDash: [5, 5],
+                            label: {
+                                display: false
+                            }
+                        },
+                        stage2Pass: {
+                            type: 'line',
+                            xMin: '2025-09-16',
+                            xMax: '2025-09-16',
+                            borderColor: 'rgba(0, 200, 0, 0.8)',
+                            borderWidth: 2,
+                            borderDash: [5, 5],
+                            label: {
+                                display: false
+                            }
+                        },
+                        secondSolo: {
+                            type: 'line',
+                            xMin: '2025-09-19',
+                            xMax: '2025-09-19',
+                            borderColor: 'rgba(255, 159, 64, 0.8)',
+                            borderWidth: 2,
+                            borderDash: [5, 5],
+                            label: {
+                                display: false
+                            }
+                        },
+                        firstXC: {
+                            type: 'line',
+                            xMin: '2025-09-22',
+                            xMax: '2025-09-22',
+                            borderColor: 'rgba(201, 203, 207, 0.8)',
+                            borderWidth: 2,
+                            borderDash: [5, 5],
+                            label: {
+                                display: false
+                            }
+                        },
+                        eoc: {
+                            type: 'line',
+                            xMin: '2025-10-30',
+                            xMax: '2025-10-30',
+                            borderColor: 'rgba(0, 128, 0, 0.8)',
+                            borderWidth: 2,
+                            borderDash: [5, 5],
+                            label: {
+                                display: false
+                            }
+                        },
+                        pplCheckride: {
+                            type: 'line',
+                            xMin: '2025-12-01',
+                            xMax: '2025-12-01',
+                            borderColor: 'rgba(0, 100, 0, 0.9)',
+                            borderWidth: 3,
+                            borderDash: [5, 5],
+                            label: {
+                                display: true,
+                                content: 'PPL Checkride',
+                                position: 'start',
+                                yAdjust: -10,
+                                backgroundColor: 'rgba(0, 100, 0, 0.9)',
+                                color: 'white',
+                                font: {
+                                    weight: 'bold',
+                                    size: 11
+                                },
+                                padding: 4
+                            }
+                        }
+                    }
                 }
             }
         }
