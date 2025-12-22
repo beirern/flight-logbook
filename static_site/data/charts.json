@@ -560,118 +560,147 @@
   "aircraft_breakdown": [
     {
       "name": "N13312",
+      "type": "C172",
       "hours": 9.8
     },
     {
       "name": "N82MH",
+      "type": "C172",
       "hours": 9.4
     },
     {
       "name": "N162HA",
+      "type": "C162",
       "hours": 8.3
     },
     {
       "name": "N1152Z",
+      "type": "C172",
       "hours": 6.9
     },
     {
       "name": "N5689M",
+      "type": "C162",
       "hours": 6.4
     },
     {
       "name": "N121W",
+      "type": "C172",
       "hours": 6.2
     },
     {
       "name": "N137ME",
+      "type": "C172",
       "hours": 5.7
     },
     {
       "name": "N5199D",
+      "type": "C162",
       "hours": 5.4
     },
     {
       "name": "N297PL",
+      "type": "C172",
       "hours": 5.0
     },
     {
       "name": "N6043M",
+      "type": "C162",
       "hours": 4.699999999999999
     },
     {
       "name": "N444VW",
+      "type": "C172",
       "hours": 4.6
     },
     {
       "name": "N52165",
+      "type": "C162",
       "hours": 3.7
     },
     {
       "name": "N5213U",
+      "type": "C162",
       "hours": 3.2
     },
     {
       "name": "N9283A",
+      "type": "C172",
       "hours": 3.0999999999999996
     },
     {
       "name": "N4585P",
+      "type": "C172",
       "hours": 2.9
     },
     {
       "name": "N5211Y",
+      "type": "C162",
       "hours": 2.8
     },
     {
       "name": "N5202B",
+      "type": "C162",
       "hours": 2.5999999999999996
     },
     {
       "name": "N6067Z",
+      "type": "C162",
       "hours": 2.5999999999999996
     },
     {
       "name": "N278CA",
+      "type": "C172",
       "hours": 1.9000000000000001
     },
     {
       "name": "N6058V",
+      "type": "C162",
       "hours": 1.5
     },
     {
       "name": "N5210A",
+      "type": "C172",
       "hours": 1.5
     },
     {
       "name": "N602ND",
+      "type": "C172",
       "hours": 1.3
     },
     {
       "name": "N3029F",
+      "type": "C162",
       "hours": 1.3
     },
     {
       "name": "N52056",
+      "type": "C162",
       "hours": 1.3
     },
     {
       "name": "N2365P",
+      "type": "C172",
       "hours": 1.2
     },
     {
       "name": "N410B5",
+      "type": "C172",
       "hours": 0.8
     },
     {
       "name": "N410BS",
+      "type": "C172",
       "hours": 0.8
     },
     {
       "name": "N633ND",
+      "type": "C172",
       "hours": 0.8
     },
     {
       "name": "N75879",
+      "type": "C172",
       "hours": 0.7
     }
   ]

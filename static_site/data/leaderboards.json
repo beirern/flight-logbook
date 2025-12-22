@@ -1,19 +1,9 @@
 {
   "passengers": [
     {
-      "name": "Olga Davidov",
-      "flight_count": 1,
-      "total_time": 0.3
-    },
-    {
       "name": "Caleb Lee",
       "flight_count": 1,
       "total_time": 1.7
-    },
-    {
-      "name": "Richard Zhang",
-      "flight_count": 1,
-      "total_time": 1.1
     },
     {
       "name": "Manan Gandhi",
@@ -24,13 +14,23 @@
       "name": "Ryan Liu",
       "flight_count": 1,
       "total_time": 1.3
+    },
+    {
+      "name": "Richard Zhang",
+      "flight_count": 1,
+      "total_time": 1.1
+    },
+    {
+      "name": "Olga Davidov",
+      "flight_count": 1,
+      "total_time": 0.3
     }
   ],
   "instructors": [
     {
       "name": "Emily Stednitz",
-      "flight_count": 20,
-      "total_time": 28.9
+      "flight_count": 19,
+      "total_time": 27.8
     },
     {
       "name": "Erika Bengard",
@@ -48,9 +48,9 @@
       "total_time": 11.8
     },
     {
-      "name": "Brandon Gockel",
+      "name": "Cailee Landis",
       "flight_count": 2,
-      "total_time": 2.0
+      "total_time": 2.8
     },
     {
       "name": "Kevin Lamp",
@@ -58,24 +58,24 @@
       "total_time": 2.5
     },
     {
-      "name": "Daniel Stellini",
-      "flight_count": 2,
-      "total_time": 1.1
-    },
-    {
-      "name": "Cailee Landis",
-      "flight_count": 2,
-      "total_time": 2.8
-    },
-    {
       "name": "Ian Middleton",
       "flight_count": 2,
       "total_time": 2.5
     },
     {
-      "name": "Tyler Tentschert",
-      "flight_count": 1,
-      "total_time": 1.2
+      "name": "Jaimason Sunderman",
+      "flight_count": 2,
+      "total_time": 2.4
+    },
+    {
+      "name": "Brandon Gockel",
+      "flight_count": 2,
+      "total_time": 2.0
+    },
+    {
+      "name": "Daniel Stellini",
+      "flight_count": 2,
+      "total_time": 1.1
     }
   ]
 }
