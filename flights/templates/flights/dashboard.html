@@ -150,23 +150,104 @@
         </div>
     </div>
 
+    <!-- Commercial License Progress -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header bg-warning text-dark">
+                    <h5>Commercial Pilot License Progress (FAR 61.129)</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <h6>Total Flight Time</h6>
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span>{{ commercial_progress.total_time.current|floatformat:1 }}/{{ commercial_progress.total_time.required }} hours</span>
+                                <span class="badge bg-warning text-dark">{{ commercial_progress.total_time.percentage|floatformat:1 }}%</span>
+                            </div>
+                            <div class="progress" style="height: 25px;">
+                                <div class="progress-bar bg-warning"
+                                     role="progressbar"
+                                     style="width: {{ commercial_progress.total_time.percentage }}%">
+                                    {{ commercial_progress.total_time.current|floatformat:1 }}/{{ commercial_progress.total_time.required }}
+                                </div>
+                            </div>
+                            <small class="text-muted">Remaining: {{ commercial_progress.total_time.remaining|floatformat:1 }} hrs</small>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <h6>PIC Time</h6>
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span>{{ commercial_progress.pic_time.current|floatformat:1 }}/{{ commercial_progress.pic_time.required }} hours</span>
+                                <span class="badge bg-warning text-dark">{{ commercial_progress.pic_time.percentage|floatformat:1 }}%</span>
+                            </div>
+                            <div class="progress" style="height: 25px;">
+                                <div class="progress-bar bg-warning"
+                                     role="progressbar"
+                                     style="width: {{ commercial_progress.pic_time.percentage }}%">
+                                    {{ commercial_progress.pic_time.current|floatformat:1 }}/{{ commercial_progress.pic_time.required }}
+                                </div>
+                            </div>
+                            <small class="text-muted">Remaining: {{ commercial_progress.pic_time.remaining|floatformat:1 }} hrs</small>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <h6>Cross Country PIC Time</h6>
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span>{{ commercial_progress.xc_pic_time.current|floatformat:1 }}/{{ commercial_progress.xc_pic_time.required }} hours</span>
+                                <span class="badge bg-warning text-dark">{{ commercial_progress.xc_pic_time.percentage|floatformat:1 }}%</span>
+                            </div>
+                            <div class="progress" style="height: 25px;">
+                                <div class="progress-bar bg-warning"
+                                     role="progressbar"
+                                     style="width: {{ commercial_progress.xc_pic_time.percentage }}%">
+                                    {{ commercial_progress.xc_pic_time.current|floatformat:1 }}/{{ commercial_progress.xc_pic_time.required }}
+                                </div>
+                            </div>
+                            <small class="text-muted">Remaining: {{ commercial_progress.xc_pic_time.remaining|floatformat:1 }} hrs</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Instrument Rating Progress -->
     <div class="row mb-4">
         <div class="col-12">
             <div class="card">
                 <div class="card-header bg-success text-white">
-                    <h5>Instrument Rating Progress</h5>
+                    <h5>Instrument Rating Progress (FAR 61.65d)</h5>
                 </div>
                 <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-center mb-2">
-                        <h6>{{ ir_progress.creditable_total }}/40 hours</h6>
-                        <span class="badge bg-success">{{ ir_progress.percentage }}% Complete</span>
-                    </div>
-                    <div class="progress mb-3" style="height: 30px;">
-                        <div class="progress-bar bg-success"
-                             role="progressbar"
-                             style="width: {{ ir_progress.percentage }}%">
-                            {{ ir_progress.creditable_total }}/40 hrs
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <h6>Instrument Time</h6>
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span>{{ ir_progress.creditable_total }}/40 hours</span>
+                                <span class="badge bg-success">{{ ir_progress.percentage|floatformat:1 }}% Complete</span>
+                            </div>
+                            <div class="progress mb-2" style="height: 25px;">
+                                <div class="progress-bar bg-success"
+                                     role="progressbar"
+                                     style="width: {{ ir_progress.percentage }}%">
+                                    {{ ir_progress.creditable_total }}/40 hrs
+                                </div>
+                            </div>
+                            <small class="text-muted">Remaining: {{ ir_progress.remaining|floatformat:1 }} hrs</small>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>Cross Country PIC Time</h6>
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span>{{ ir_progress.xc_pic_time|floatformat:1 }}/{{ ir_progress.xc_pic_required }} hours</span>
+                                <span class="badge bg-success">{{ ir_progress.xc_pic_percentage|floatformat:1 }}% Complete</span>
+                            </div>
+                            <div class="progress mb-2" style="height: 25px;">
+                                <div class="progress-bar bg-success"
+                                     role="progressbar"
+                                     style="width: {{ ir_progress.xc_pic_percentage }}%">
+                                    {{ ir_progress.xc_pic_time|floatformat:1 }}/{{ ir_progress.xc_pic_required }} hrs
+                                </div>
+                            </div>
+                            <small class="text-muted">Remaining: {{ ir_progress.xc_pic_remaining|floatformat:1 }} hrs</small>
                         </div>
                     </div>
                     <div class="row">
@@ -180,9 +261,80 @@
                             <strong>Creditable Simulated:</strong> {{ ir_progress.creditable_simulated|floatformat:1 }} hrs (max 20)
                         </div>
                         <div class="col-md-3">
-                            <strong>Remaining:</strong> {{ ir_progress.remaining|floatformat:1 }} hrs
+                            <strong>Total Instrument:</strong> {{ ir_progress.creditable_total|floatformat:1 }} hrs
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Leaderboards Section -->
+    <div class="row mb-4">
+        <div class="col-md-6 mb-3">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5>Passenger Leaderboard</h5>
+                </div>
+                <div class="card-body">
+                    {% if passenger_leaderboard %}
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Flights</th>
+                                    <th>Total Time</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for entry in passenger_leaderboard %}
+                                <tr>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td>{{ entry.pilot }}</td>
+                                    <td>{{ entry.flight_count }}</td>
+                                    <td>{{ entry.total_time }} hrs</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    {% else %}
+                        <p class="text-muted">No passengers recorded yet</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h5>Instructor Leaderboard</h5>
+                </div>
+                <div class="card-body">
+                    {% if instructor_leaderboard %}
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Flights</th>
+                                    <th>Total Time</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for entry in instructor_leaderboard %}
+                                <tr>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td>{{ entry.pilot }}</td>
+                                    <td>{{ entry.flight_count }}</td>
+                                    <td>{{ entry.total_time }} hrs</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    {% else %}
+                        <p class="text-muted">No instructors recorded yet</p>
+                    {% endif %}
                 </div>
             </div>
         </div>

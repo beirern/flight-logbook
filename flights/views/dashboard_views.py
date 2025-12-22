@@ -5,11 +5,14 @@ from django.shortcuts import render
 from flights.utils.currency_calculator import check_medical_status, check_passenger_currency
 from flights.utils.statistics import (
     get_aircraft_breakdown,
+    get_commercial_license_progress,
     get_cumulative_time_data,
     get_days_since_last_flight,
+    get_instructor_leaderboard,
     get_instrument_breakdown,
     get_instrument_rating_progress,
     get_monthly_breakdown,
+    get_passenger_leaderboard,
     get_recent_flights,
     get_total_times,
 )
@@ -46,10 +49,13 @@ def dashboard(request):
     currency = check_passenger_currency(pilot)
     medical = check_medical_status(pilot)
     ir_progress = get_instrument_rating_progress(pilot)
+    commercial_progress = get_commercial_license_progress(pilot)
     instrument_breakdown = get_instrument_breakdown(pilot)
     aircraft_breakdown = get_aircraft_breakdown(pilot)
     recent_flights = get_recent_flights(pilot, limit=10)
     days_since_last_flight = get_days_since_last_flight(pilot)
+    passenger_leaderboard = get_passenger_leaderboard(pilot, limit=10)
+    instructor_leaderboard = get_instructor_leaderboard(pilot, limit=10)
 
     # Get monthly data for charts
     monthly_data = get_monthly_breakdown(pilot, months=12)
@@ -64,6 +70,7 @@ def dashboard(request):
         'currency': currency,
         'medical': medical,
         'ir_progress': ir_progress,
+        'commercial_progress': commercial_progress,
         'monthly_labels': json.dumps(monthly_labels),
         'monthly_hours': json.dumps(monthly_hours),
         'instrument_breakdown': instrument_breakdown,
@@ -71,6 +78,8 @@ def dashboard(request):
         'aircraft_breakdown': aircraft_breakdown,
         'recent_flights': recent_flights,
         'days_since_last_flight': days_since_last_flight,
+        'passenger_leaderboard': passenger_leaderboard,
+        'instructor_leaderboard': instructor_leaderboard,
     }
 
     return render(request, 'flights/dashboard.html', context)
