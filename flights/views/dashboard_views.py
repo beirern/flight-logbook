@@ -2,6 +2,7 @@ import json
 
 from django.shortcuts import render
 
+from flights.models import Flight
 from flights.utils.currency_calculator import check_medical_status, check_passenger_currency
 from flights.utils.statistics import (
     get_aircraft_breakdown,
@@ -83,3 +84,28 @@ def dashboard(request):
     }
 
     return render(request, 'flights/dashboard.html', context)
+
+
+def logbook(request):
+    """
+    Logbook view showing all flight entries in a table format.
+    """
+    # For now, hardcode to pilot with pk=1 (single user mode)
+    # In the future, this could filter by request.user
+    try:
+        pilot = Pilot.objects.get(pk=1)
+    except Pilot.DoesNotExist:
+        # If no pilot exists, show empty logbook
+        return render(request, 'flights/logbook.html', {
+            'error': 'No pilot found. Please create a pilot in the admin.',
+            'flights': [],
+        })
+
+    # Get all flights for this pilot, ordered by date (most recent first)
+    flights = Flight.objects.filter(pilot=pilot).select_related('plane', 'instructor').order_by('-date')
+
+    context = {
+        'flights': flights,
+    }
+
+    return render(request, 'flights/logbook.html', context)
