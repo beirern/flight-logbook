@@ -1,0 +1,991 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Flight Logbook</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    
+    <link rel="stylesheet" href="assets/css/dashboard.css">
+    
+
+    
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            
+            <a class="navbar-brand" href="index.html">Flight Logbook</a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        
+                        <a class="nav-link active" href="index.html">Dashboard</a>
+                        
+                    </li>
+                    <li class="nav-item">
+                        
+                        <a class="nav-link " href="logbook.html">Logbook</a>
+                        
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container-fluid py-4">
+        
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Flight Dashboard</h1>
+        
+        <small class="text-muted">Last updated: 2025-12-22 20:49:32</small>
+        
+    </div>
+
+    <!-- Hero Stats Section -->
+    <div class="row mb-4">
+        <div class="col-md-2 col-sm-6 mb-3">
+            <div class="card stat-card">
+                <div class="card-body text-center">
+                    <h6 class="card-subtitle mb-2 text-muted">Total Time</h6>
+                    <h2 class="card-title">106.4</h2>
+                    <p class="card-text">hours</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2 col-sm-6 mb-3">
+            <div class="card stat-card">
+                <div class="card-body text-center">
+                    <h6 class="card-subtitle mb-2 text-muted">PIC Time</h6>
+                    <h2 class="card-title">11.4</h2>
+                    <p class="card-text">hours</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2 col-sm-6 mb-3">
+            <div class="card stat-card">
+                <div class="card-body text-center">
+                    <h6 class="card-subtitle mb-2 text-muted">Instrument Time</h6>
+                    <h2 class="card-title">4.4</h2>
+                    <p class="card-text">hours</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2 col-sm-6 mb-3">
+            <div class="card stat-card">
+                <div class="card-body text-center">
+                    <h6 class="card-subtitle mb-2 text-muted">Cross Country</h6>
+                    <h2 class="card-title">10.8</h2>
+                    <p class="card-text">hours</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2 col-sm-6 mb-3">
+            <div class="card stat-card">
+                <div class="card-body text-center">
+                    <h6 class="card-subtitle mb-2 text-muted">Total Landings</h6>
+                    <h2 class="card-title">212</h2>
+                    <p class="card-text">landings</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2 col-sm-6 mb-3">
+            <div class="card stat-card">
+                <div class="card-body text-center">
+                    <h6 class="card-subtitle mb-2 text-muted">Days Since Last Flight</h6>
+                    <h2 class="card-title">21</h2>
+                    <p class="card-text">days</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Currency Tracking Section -->
+    <div class="row mb-4">
+        <div class="col-md-6 mb-3">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5>Passenger Currency (FAR 61.57a)</h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <h6>Day Currency (90 days)</h6>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <span class="badge bg-success">
+                                    CURRENT
+                                </span>
+                                <span class="ms-2">24/3 landings</span>
+                            </div>
+                            
+                                <small class="text-muted">Expires: Feb. 19, 2026</small>
+                            
+                        </div>
+                        <div class="progress mt-2" style="height: 25px;">
+                            <div class="progress-bar bg-success"
+                                 role="progressbar"
+                                 style="width: 800%">
+                                24/3
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h6>Night Currency (90 days)</h6>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <span class="badge bg-success">
+                                    CURRENT
+                                </span>
+                                <span class="ms-2">3/3 landings</span>
+                            </div>
+                            
+                                <small class="text-muted">Expires: Dec. 23, 2025</small>
+                            
+                        </div>
+                        <div class="progress mt-2" style="height: 25px;">
+                            <div class="progress-bar bg-success"
+                                 role="progressbar"
+                                 style="width: 100%">
+                                3/3
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <div class="card">
+                <div class="card-header bg-info text-white">
+                    <h5>Medical Certificate</h5>
+                </div>
+                <div class="card-body">
+                    
+                        <p class="text-muted">No medical certificate on file</p>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Commercial License Progress -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header bg-warning text-dark">
+                    <h5>Commercial Pilot License Progress (FAR 61.129)</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <h6>Total Flight Time</h6>
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span>106.4/250 hours</span>
+                                <span class="badge bg-warning text-dark">42.6%</span>
+                            </div>
+                            <div class="progress" style="height: 25px;">
+                                <div class="progress-bar bg-warning"
+                                     role="progressbar"
+                                     style="width: 42.56%">
+                                    106.4/250
+                                </div>
+                            </div>
+                            <small class="text-muted">Remaining: 143.6 hrs</small>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <h6>PIC Time</h6>
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span>11.4/100 hours</span>
+                                <span class="badge bg-warning text-dark">11.4%</span>
+                            </div>
+                            <div class="progress" style="height: 25px;">
+                                <div class="progress-bar bg-warning"
+                                     role="progressbar"
+                                     style="width: 11.4%">
+                                    11.4/100
+                                </div>
+                            </div>
+                            <small class="text-muted">Remaining: 88.6 hrs</small>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <h6>Cross Country PIC Time</h6>
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span>5.7/50 hours</span>
+                                <span class="badge bg-warning text-dark">11.4%</span>
+                            </div>
+                            <div class="progress" style="height: 25px;">
+                                <div class="progress-bar bg-warning"
+                                     role="progressbar"
+                                     style="width: 11.4%">
+                                    5.7/50
+                                </div>
+                            </div>
+                            <small class="text-muted">Remaining: 44.3 hrs</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Instrument Rating Progress -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h5>Instrument Rating Progress (FAR 61.65d)</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <h6>Instrument Time</h6>
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span>4.4/40 hours</span>
+                                <span class="badge bg-success">11.0% Complete</span>
+                            </div>
+                            <div class="progress mb-2" style="height: 25px;">
+                                <div class="progress-bar bg-success"
+                                     role="progressbar"
+                                     style="width: 11.0%">
+                                    4.4/40 hrs
+                                </div>
+                            </div>
+                            <small class="text-muted">Remaining: 35.6 hrs</small>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>Cross Country PIC Time</h6>
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span>5.7/50 hours</span>
+                                <span class="badge bg-success">11.4% Complete</span>
+                            </div>
+                            <div class="progress mb-2" style="height: 25px;">
+                                <div class="progress-bar bg-success"
+                                     role="progressbar"
+                                     style="width: 11.4%">
+                                    5.7/50 hrs
+                                </div>
+                            </div>
+                            <small class="text-muted">Remaining: 44.3 hrs</small>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <strong>Actual Instrument:</strong> 0.0 hrs
+                        </div>
+                        <div class="col-md-3">
+                            <strong>Simulated:</strong> 4.4 hrs
+                        </div>
+                        <div class="col-md-3">
+                            <strong>Creditable Simulated:</strong> 4.4 hrs (max 20)
+                        </div>
+                        <div class="col-md-3">
+                            <strong>Total Instrument:</strong> 4.4 hrs
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Leaderboards Section -->
+    <div class="row mb-4">
+        <div class="col-md-6 mb-3">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5>Passenger Leaderboard</h5>
+                </div>
+                <div class="card-body">
+                    
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Flights</th>
+                                    <th>Total Time</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                                <tr>
+                                    <td>1</td>
+                                    <td>Olga Davidov</td>
+                                    <td>1</td>
+                                    <td>0.3 hrs</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>2</td>
+                                    <td>Caleb Lee</td>
+                                    <td>1</td>
+                                    <td>1.7 hrs</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>3</td>
+                                    <td>Richard Zhang</td>
+                                    <td>1</td>
+                                    <td>1.1 hrs</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>4</td>
+                                    <td>Manan Gandhi</td>
+                                    <td>1</td>
+                                    <td>1.5 hrs</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>5</td>
+                                    <td>Ryan Liu</td>
+                                    <td>1</td>
+                                    <td>1.3 hrs</td>
+                                </tr>
+                                
+                            </tbody>
+                        </table>
+                    
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h5>Instructor Leaderboard</h5>
+                </div>
+                <div class="card-body">
+                    
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Flights</th>
+                                    <th>Total Time</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                                <tr>
+                                    <td>1</td>
+                                    <td>Emily Stednitz</td>
+                                    <td>20</td>
+                                    <td>28.9 hrs</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>2</td>
+                                    <td>Erika Bengard</td>
+                                    <td>16</td>
+                                    <td>24.9 hrs</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>3</td>
+                                    <td>Rafael Urrea</td>
+                                    <td>9</td>
+                                    <td>12.1 hrs</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>4</td>
+                                    <td>Matthew Kopiko</td>
+                                    <td>9</td>
+                                    <td>11.8 hrs</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>5</td>
+                                    <td>Brandon Gockel</td>
+                                    <td>2</td>
+                                    <td>2.0 hrs</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>6</td>
+                                    <td>Kevin Lamp</td>
+                                    <td>2</td>
+                                    <td>2.5 hrs</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>7</td>
+                                    <td>Daniel Stellini</td>
+                                    <td>2</td>
+                                    <td>1.1 hrs</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>8</td>
+                                    <td>Cailee Landis</td>
+                                    <td>2</td>
+                                    <td>2.8 hrs</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>9</td>
+                                    <td>Ian Middleton</td>
+                                    <td>2</td>
+                                    <td>2.5 hrs</td>
+                                </tr>
+                                
+                                <tr>
+                                    <td>10</td>
+                                    <td>Tyler Tentschert</td>
+                                    <td>1</td>
+                                    <td>1.2 hrs</td>
+                                </tr>
+                                
+                            </tbody>
+                        </table>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Charts Section -->
+    <div class="row mb-4">
+        <div class="col-md-6 mb-3">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Monthly Flight Activity (Last 12 Months)</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="monthlyChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Instrument Time Breakdown</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="instrumentChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Cumulative Time Progression</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="cumulativeChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Aircraft Breakdown -->
+    
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Aircraft Experience</h5>
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Aircraft</th>
+                                <th>Total Hours</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            <tr>
+                                <td>N13312</td>
+                                <td>9.8</td>
+                            </tr>
+                            
+                            <tr>
+                                <td>N82MH</td>
+                                <td>9.4</td>
+                            </tr>
+                            
+                            <tr>
+                                <td>N162HA</td>
+                                <td>8.3</td>
+                            </tr>
+                            
+                            <tr>
+                                <td>N1152Z</td>
+                                <td>6.9</td>
+                            </tr>
+                            
+                            <tr>
+                                <td>N5689M</td>
+                                <td>6.4</td>
+                            </tr>
+                            
+                            <tr>
+                                <td>N121W</td>
+                                <td>6.2</td>
+                            </tr>
+                            
+                            <tr>
+                                <td>N137ME</td>
+                                <td>5.7</td>
+                            </tr>
+                            
+                            <tr>
+                                <td>N5199D</td>
+                                <td>5.4</td>
+                            </tr>
+                            
+                            <tr>
+                                <td>N297PL</td>
+                                <td>5.0</td>
+                            </tr>
+                            
+                            <tr>
+                                <td>N6043M</td>
+                                <td>4.7</td>
+                            </tr>
+                            
+                            <tr>
+                                <td>N444VW</td>
+                                <td>4.6</td>
+                            </tr>
+                            
+                            <tr>
+                                <td>N52165</td>
+                                <td>3.7</td>
+                            </tr>
+                            
+                            <tr>
+                                <td>N5213U</td>
+                                <td>3.2</td>
+                            </tr>
+                            
+                            <tr>
+                                <td>N9283A</td>
+                                <td>3.1</td>
+                            </tr>
+                            
+                            <tr>
+                                <td>N4585P</td>
+                                <td>2.9</td>
+                            </tr>
+                            
+                            <tr>
+                                <td>N5211Y</td>
+                                <td>2.8</td>
+                            </tr>
+                            
+                            <tr>
+                                <td>N5202B</td>
+                                <td>2.6</td>
+                            </tr>
+                            
+                            <tr>
+                                <td>N6067Z</td>
+                                <td>2.6</td>
+                            </tr>
+                            
+                            <tr>
+                                <td>N278CA</td>
+                                <td>1.9</td>
+                            </tr>
+                            
+                            <tr>
+                                <td>N6058V</td>
+                                <td>1.5</td>
+                            </tr>
+                            
+                            <tr>
+                                <td>N5210A</td>
+                                <td>1.5</td>
+                            </tr>
+                            
+                            <tr>
+                                <td>N602ND</td>
+                                <td>1.3</td>
+                            </tr>
+                            
+                            <tr>
+                                <td>N3029F</td>
+                                <td>1.3</td>
+                            </tr>
+                            
+                            <tr>
+                                <td>N52056</td>
+                                <td>1.3</td>
+                            </tr>
+                            
+                            <tr>
+                                <td>N2365P</td>
+                                <td>1.2</td>
+                            </tr>
+                            
+                            <tr>
+                                <td>N410B5</td>
+                                <td>0.8</td>
+                            </tr>
+                            
+                            <tr>
+                                <td>N410BS</td>
+                                <td>0.8</td>
+                            </tr>
+                            
+                            <tr>
+                                <td>N633ND</td>
+                                <td>0.8</td>
+                            </tr>
+                            
+                            <tr>
+                                <td>N75879</td>
+                                <td>0.7</td>
+                            </tr>
+                            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <!-- Recent Flights -->
+    
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Recent Flights</h5>
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Aircraft</th>
+                                <th>Duration</th>
+                                <th>Day Landings</th>
+                                <th>Night Landings</th>
+                                <th>Notes</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            <tr>
+                                <td>Dec. 1, 2025</td>
+                                <td>N9283A</td>
+                                <td>1.2</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>Private Pilot Checkride pass!!</td>
+                            </tr>
+                            
+                            <tr>
+                                <td>Nov. 30, 2025</td>
+                                <td>N9283A</td>
+                                <td>1.9</td>
+                                <td>1</td>
+                                <td>0</td>
+                                <td>RFS Flight Lesson 37: practical test prep</td>
+                            </tr>
+                            
+                            <tr>
+                                <td>Nov. 21, 2025</td>
+                                <td>N82MH</td>
+                                <td>1.7</td>
+                                <td>3</td>
+                                <td>0</td>
+                                <td>RFS Flight Lesson 37: practical test prep, hood work, steep …</td>
+                            </tr>
+                            
+                            <tr>
+                                <td>Nov. 8, 2025</td>
+                                <td>N633ND</td>
+                                <td>0.8</td>
+                                <td>1</td>
+                                <td>0</td>
+                                <td>RFS Flight Lesson 37: practical test prep, slow flight, performance …</td>
+                            </tr>
+                            
+                            <tr>
+                                <td>Oct. 30, 2025</td>
+                                <td>N278CA</td>
+                                <td>0.8</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>EOC pass!</td>
+                            </tr>
+                            
+                            <tr>
+                                <td>Oct. 27, 2025</td>
+                                <td>N121W</td>
+                                <td>1.3</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>RFS Flight Lesson 37: Practical test prep, emergency descent, forward …</td>
+                            </tr>
+                            
+                            <tr>
+                                <td>Oct. 23, 2025</td>
+                                <td>N82MH</td>
+                                <td>1.7</td>
+                                <td>2</td>
+                                <td>0</td>
+                                <td>End of Course (EOC) fail. Work on emergency descent, slip, …</td>
+                            </tr>
+                            
+                            <tr>
+                                <td>Oct. 22, 2025</td>
+                                <td>N82MH</td>
+                                <td>2.2</td>
+                                <td>2</td>
+                                <td>0</td>
+                                <td>RFS Flight Lesson 37: Practical test prep, x-country nav, diversion, …</td>
+                            </tr>
+                            
+                            <tr>
+                                <td>Oct. 14, 2025</td>
+                                <td>N13312</td>
+                                <td>2.2</td>
+                                <td>5</td>
+                                <td>0</td>
+                                <td>RFS Flight Lesson 37: Practical test prep, steep turns, stalls, …</td>
+                            </tr>
+                            
+                            <tr>
+                                <td>Oct. 12, 2025</td>
+                                <td>N121W</td>
+                                <td>1.5</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>RFS Flight Lesson 37: Practical Test Prep 61.107(b)(i)(i-xii)</td>
+                            </tr>
+                            
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+    </main>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+    
+<script>
+    // Monthly Activity Chart
+    const monthlyCtx = document.getElementById('monthlyChart');
+    new Chart(monthlyCtx, {
+        type: 'bar',
+        data: {
+            labels: ["Jan 2025", "Feb 2025", "Mar 2025", "Apr 2025", "Jul 2025", "Aug 2025", "Sep 2025", "Oct 2025", "Nov 2025", "Dec 2025"],
+            datasets: [{
+                label: 'Flight Hours',
+                data: [0.8, 2.7, 5.9, 3.5, 2.8, 10.4, 15.4, 13.5, 4.4, 1.2],
+                backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Hours'
+                    }
+                }
+            }
+        }
+    });
+
+    // Instrument Time Breakdown Chart
+    const instrumentCtx = document.getElementById('instrumentChart');
+    new Chart(instrumentCtx, {
+        type: 'pie',
+        data: {
+            labels: ['Actual Instrument', 'Simulated Instrument'],
+            datasets: [{
+                data: [0.0, 4.4],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.6)',
+                    'rgba(54, 162, 235, 0.6)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            plugins: {
+                legend: {
+                    position: 'bottom'
+                }
+            }
+        }
+    });
+
+    // Cumulative Time Progression Chart
+    const cumulativeCtx = document.getElementById('cumulativeChart');
+    const cumulativeData = [{"date": "2021-04-05", "total": 0.7, "pic": 0.0, "dual": 0.7, "instrument": 0.0}, {"date": "2023-08-16", "total": 2.0, "pic": 0.0, "dual": 2.0, "instrument": 0.0}, {"date": "2023-11-02", "total": 3.2, "pic": 0.0, "dual": 3.2, "instrument": 0.0}, {"date": "2024-03-27", "total": 4.5, "pic": 0.0, "dual": 4.5, "instrument": 0.0}, {"date": "2024-03-28", "total": 5.6, "pic": 0.0, "dual": 5.6, "instrument": 0.0}, {"date": "2024-04-02", "total": 6.9, "pic": 0.0, "dual": 6.9, "instrument": 0.0}, {"date": "2024-04-03", "total": 8.3, "pic": 0.0, "dual": 8.3, "instrument": 0.0}, {"date": "2024-04-05", "total": 9.8, "pic": 0.0, "dual": 9.8, "instrument": 0.0}, {"date": "2024-04-10", "total": 11.2, "pic": 0.0, "dual": 11.2, "instrument": 0.0}, {"date": "2024-04-30", "total": 12.8, "pic": 0.0, "dual": 12.8, "instrument": 0.0}, {"date": "2024-05-09", "total": 14.1, "pic": 0.0, "dual": 14.1, "instrument": 0.0}, {"date": "2024-05-30", "total": 15.4, "pic": 0.0, "dual": 15.4, "instrument": 0.0}, {"date": "2024-06-10", "total": 16.7, "pic": 0.0, "dual": 16.7, "instrument": 0.0}, {"date": "2024-06-24", "total": 17.9, "pic": 0.0, "dual": 17.9, "instrument": 0.0}, {"date": "2024-07-09", "total": 18.8, "pic": 0.0, "dual": 18.8, "instrument": 0.0}, {"date": "2024-07-11", "total": 20.2, "pic": 0.0, "dual": 20.2, "instrument": 0.0}, {"date": "2024-07-12", "total": 21.4, "pic": 0.0, "dual": 21.4, "instrument": 0.0}, {"date": "2024-07-15", "total": 22.8, "pic": 0.0, "dual": 22.8, "instrument": 0.0}, {"date": "2024-07-16", "total": 24.3, "pic": 0.0, "dual": 24.3, "instrument": 0.0}, {"date": "2024-07-17", "total": 25.9, "pic": 0.0, "dual": 25.9, "instrument": 0.0}, {"date": "2024-07-24", "total": 27.4, "pic": 0.0, "dual": 27.4, "instrument": 0.0}, {"date": "2024-07-31", "total": 28.6, "pic": 0.0, "dual": 28.6, "instrument": 0.0}, {"date": "2024-08-05", "total": 30.3, "pic": 0.0, "dual": 30.3, "instrument": 0.0}, {"date": "2024-08-07", "total": 31.9, "pic": 0.0, "dual": 31.9, "instrument": 0.5}, {"date": "2024-08-10", "total": 34.0, "pic": 0.0, "dual": 34.0, "instrument": 0.5}, {"date": "2024-08-12", "total": 34.5, "pic": 0.0, "dual": 34.5, "instrument": 0.5}, {"date": "2024-08-12", "total": 35.0, "pic": 0.5, "dual": 34.5, "instrument": 0.5}, {"date": "2024-08-19", "total": 38.0, "pic": 0.5, "dual": 37.5, "instrument": 0.5}, {"date": "2024-08-21", "total": 39.5, "pic": 0.5, "dual": 39.0, "instrument": 1.0}, {"date": "2024-08-25", "total": 41.6, "pic": 0.5, "dual": 41.1, "instrument": 2.5}, {"date": "2024-08-26", "total": 42.8, "pic": 0.5, "dual": 42.3, "instrument": 2.5}, {"date": "2024-08-27", "total": 44.2, "pic": 0.5, "dual": 43.7, "instrument": 3.0}, {"date": "2024-08-28", "total": 45.8, "pic": 0.5, "dual": 45.3, "instrument": 3.0}, {"date": "2025-01-25", "total": 46.6, "pic": 0.5, "dual": 46.1, "instrument": 3.0}, {"date": "2025-02-17", "total": 47.8, "pic": 0.5, "dual": 47.3, "instrument": 3.0}, {"date": "2025-02-19", "total": 49.3, "pic": 0.5, "dual": 48.8, "instrument": 3.0}, {"date": "2025-03-10", "total": 50.7, "pic": 0.5, "dual": 50.2, "instrument": 3.0}, {"date": "2025-03-21", "total": 51.9, "pic": 0.5, "dual": 51.4, "instrument": 3.0}, {"date": "2025-03-24", "total": 54.0, "pic": 0.5, "dual": 53.5, "instrument": 3.0}, {"date": "2025-03-28", "total": 54.9, "pic": 0.5, "dual": 54.4, "instrument": 3.0}, {"date": "2025-03-31", "total": 55.2, "pic": 0.5, "dual": 54.7, "instrument": 3.0}, {"date": "2025-04-02", "total": 56.0, "pic": 0.5, "dual": 55.5, "instrument": 3.0}, {"date": "2025-04-04", "total": 57.4, "pic": 0.5, "dual": 56.9, "instrument": 3.0}, {"date": "2025-04-19", "total": 58.7, "pic": 0.5, "dual": 58.2, "instrument": 3.0}, {"date": "2025-07-27", "total": 60.4, "pic": 0.5, "dual": 59.9, "instrument": 3.0}, {"date": "2025-07-29", "total": 61.5, "pic": 0.5, "dual": 61.0, "instrument": 3.0}, {"date": "2025-08-05", "total": 63.5, "pic": 0.5, "dual": 63.0, "instrument": 3.0}, {"date": "2025-08-10", "total": 65.2, "pic": 0.5, "dual": 64.7, "instrument": 3.0}, {"date": "2025-08-13", "total": 66.7, "pic": 0.5, "dual": 66.2, "instrument": 3.0}, {"date": "2025-08-19", "total": 68.0, "pic": 0.5, "dual": 67.5, "instrument": 3.0}, {"date": "2025-08-25", "total": 69.4, "pic": 0.5, "dual": 68.9, "instrument": 3.2}, {"date": "2025-08-28", "total": 70.5, "pic": 0.5, "dual": 70.0, "instrument": 3.4}, {"date": "2025-08-29", "total": 71.9, "pic": 0.5, "dual": 71.4, "instrument": 3.4}, {"date": "2025-09-01", "total": 73.4, "pic": 0.5, "dual": 72.9, "instrument": 3.4}, {"date": "2025-09-15", "total": 74.7, "pic": 0.5, "dual": 74.2, "instrument": 3.5}, {"date": "2025-09-16", "total": 75.8, "pic": 0.5, "dual": 75.3, "instrument": 3.7}, {"date": "2025-09-19", "total": 76.6, "pic": 0.5, "dual": 76.1, "instrument": 3.7}, {"date": "2025-09-19", "total": 77.3, "pic": 1.2, "dual": 76.1, "instrument": 3.7}, {"date": "2025-09-19", "total": 77.6, "pic": 1.2, "dual": 76.4, "instrument": 3.7}, {"date": "2025-09-22", "total": 79.7, "pic": 3.3, "dual": 76.4, "instrument": 3.7}, {"date": "2025-09-23", "total": 80.9, "pic": 4.5, "dual": 76.4, "instrument": 3.7}, {"date": "2025-09-24", "total": 82.4, "pic": 4.5, "dual": 77.9, "instrument": 3.7}, {"date": "2025-09-26", "total": 86.0, "pic": 8.1, "dual": 77.9, "instrument": 3.7}, {"date": "2025-09-27", "total": 87.3, "pic": 8.1, "dual": 79.2, "instrument": 3.7}, {"date": "2025-10-02", "total": 89.4, "pic": 10.2, "dual": 79.2, "instrument": 3.7}, {"date": "2025-10-07", "total": 91.1, "pic": 10.2, "dual": 80.9, "instrument": 3.7}, {"date": "2025-10-12", "total": 92.6, "pic": 10.2, "dual": 82.4, "instrument": 3.7}, {"date": "2025-10-14", "total": 94.8, "pic": 10.2, "dual": 84.6, "instrument": 3.7}, {"date": "2025-10-22", "total": 97.0, "pic": 10.2, "dual": 86.8, "instrument": 3.7}, {"date": "2025-10-23", "total": 98.7, "pic": 10.2, "dual": 88.5, "instrument": 4.1}, {"date": "2025-10-27", "total": 100.0, "pic": 10.2, "dual": 89.8, "instrument": 4.1}, {"date": "2025-10-30", "total": 100.8, "pic": 10.2, "dual": 90.6, "instrument": 4.1}, {"date": "2025-11-08", "total": 101.6, "pic": 10.2, "dual": 91.4, "instrument": 4.1}, {"date": "2025-11-21", "total": 103.3, "pic": 10.2, "dual": 93.1, "instrument": 4.2}, {"date": "2025-11-30", "total": 105.2, "pic": 10.2, "dual": 95.0, "instrument": 4.3}, {"date": "2025-12-01", "total": 106.4, "pic": 11.4, "dual": 95.0, "instrument": 4.4}];
+
+    new Chart(cumulativeCtx, {
+        type: 'line',
+        data: {
+            labels: cumulativeData.map(d => d.date),
+            datasets: [
+                {
+                    label: 'Total Time',
+                    data: cumulativeData.map(d => d.total),
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    fill: false,
+                    tension: 0.1
+                },
+                {
+                    label: 'PIC Time',
+                    data: cumulativeData.map(d => d.pic),
+                    borderColor: 'rgba(255, 159, 64, 1)',
+                    backgroundColor: 'rgba(255, 159, 64, 0.2)',
+                    fill: false,
+                    tension: 0.1
+                },
+                {
+                    label: 'Dual Instruction',
+                    data: cumulativeData.map(d => d.dual),
+                    borderColor: 'rgba(153, 102, 255, 1)',
+                    backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                    fill: false,
+                    tension: 0.1
+                },
+                {
+                    label: 'Instrument Time',
+                    data: cumulativeData.map(d => d.instrument),
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    fill: false,
+                    tension: 0.1
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Cumulative Hours'
+                    }
+                },
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Date'
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    position: 'bottom'
+                }
+            }
+        }
+    });
+
+    // Client-side currency recalculation for static sites
+    
+    async function recalculateCurrency() {
+        try {
+            // Load flight data
+            const response = await fetch('data/flights.json');
+            const flights = await response.json();
+
+            const today = new Date();
+            const ninetyDaysAgo = new Date(today.getTime() - (90 * 24 * 60 * 60 * 1000));
+
+            // Calculate day and night landings in the last 90 days
+            let dayLandings = 0;
+            let nightFullstopLandings = 0;
+
+            flights.forEach(flight => {
+                const flightDate = new Date(flight.date);
+                if (flightDate >= ninetyDaysAgo) {
+                    dayLandings += flight.day_landings;
+                    nightFullstopLandings += flight.night_fullstop_landings;
+                }
+            });
+
+            // Update day currency display
+            const dayCurrent = dayLandings >= 3;
+            const dayBadge = document.querySelector('.badge.bg-success, .badge.bg-danger');
+            if (dayBadge && dayBadge.textContent.includes('CURRENT')) {
+                dayBadge.textContent = dayCurrent ? 'CURRENT' : 'NOT CURRENT';
+                dayBadge.className = dayCurrent ? 'badge bg-success' : 'badge bg-danger';
+            }
+
+            // Update night currency display
+            const nightCurrent = nightFullstopLandings >= 3;
+            const nightBadges = document.querySelectorAll('.badge');
+            nightBadges.forEach(badge => {
+                if (badge.textContent.includes('CURRENT') && badge.closest('div').querySelector('h6')?.textContent.includes('Night')) {
+                    badge.textContent = nightCurrent ? 'CURRENT' : 'NOT CURRENT';
+                    badge.className = nightCurrent ? 'badge bg-success' : 'badge bg-danger';
+                }
+            });
+
+            // Calculate days since last flight
+            if (flights.length > 0) {
+                const lastFlight = new Date(flights[0].date);
+                const daysSince = Math.floor((today - lastFlight) / (24 * 60 * 60 * 1000));
+
+                const daysSinceElement = document.querySelector('.card-title');
+                if (daysSinceElement && daysSinceElement.parentElement.querySelector('.card-subtitle').textContent.includes('Days Since')) {
+                    daysSinceElement.textContent = daysSince;
+                }
+            }
+        } catch (error) {
+            console.error('Error recalculating currency:', error);
+        }
+    }
+
+    // Run on page load
+    recalculateCurrency();
+    
+</script>
+
+</body>
+</html>
