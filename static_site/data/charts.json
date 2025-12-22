@@ -1,0 +1,678 @@
+{
+  "monthly_labels": [
+    "Jan 2025",
+    "Feb 2025",
+    "Mar 2025",
+    "Apr 2025",
+    "Jul 2025",
+    "Aug 2025",
+    "Sep 2025",
+    "Oct 2025",
+    "Nov 2025",
+    "Dec 2025"
+  ],
+  "monthly_hours": [
+    0.8,
+    2.7,
+    5.9,
+    3.5,
+    2.8,
+    10.4,
+    15.4,
+    13.5,
+    4.4,
+    1.2
+  ],
+  "cumulative_data": [
+    {
+      "date": "2021-04-05",
+      "total": 0.7,
+      "pic": 0.0,
+      "dual": 0.7,
+      "instrument": 0.0
+    },
+    {
+      "date": "2023-08-16",
+      "total": 2.0,
+      "pic": 0.0,
+      "dual": 2.0,
+      "instrument": 0.0
+    },
+    {
+      "date": "2023-11-02",
+      "total": 3.2,
+      "pic": 0.0,
+      "dual": 3.2,
+      "instrument": 0.0
+    },
+    {
+      "date": "2024-03-27",
+      "total": 4.5,
+      "pic": 0.0,
+      "dual": 4.5,
+      "instrument": 0.0
+    },
+    {
+      "date": "2024-03-28",
+      "total": 5.6,
+      "pic": 0.0,
+      "dual": 5.6,
+      "instrument": 0.0
+    },
+    {
+      "date": "2024-04-02",
+      "total": 6.9,
+      "pic": 0.0,
+      "dual": 6.9,
+      "instrument": 0.0
+    },
+    {
+      "date": "2024-04-03",
+      "total": 8.3,
+      "pic": 0.0,
+      "dual": 8.3,
+      "instrument": 0.0
+    },
+    {
+      "date": "2024-04-05",
+      "total": 9.8,
+      "pic": 0.0,
+      "dual": 9.8,
+      "instrument": 0.0
+    },
+    {
+      "date": "2024-04-10",
+      "total": 11.2,
+      "pic": 0.0,
+      "dual": 11.2,
+      "instrument": 0.0
+    },
+    {
+      "date": "2024-04-30",
+      "total": 12.8,
+      "pic": 0.0,
+      "dual": 12.8,
+      "instrument": 0.0
+    },
+    {
+      "date": "2024-05-09",
+      "total": 14.1,
+      "pic": 0.0,
+      "dual": 14.1,
+      "instrument": 0.0
+    },
+    {
+      "date": "2024-05-30",
+      "total": 15.4,
+      "pic": 0.0,
+      "dual": 15.4,
+      "instrument": 0.0
+    },
+    {
+      "date": "2024-06-10",
+      "total": 16.7,
+      "pic": 0.0,
+      "dual": 16.7,
+      "instrument": 0.0
+    },
+    {
+      "date": "2024-06-24",
+      "total": 17.9,
+      "pic": 0.0,
+      "dual": 17.9,
+      "instrument": 0.0
+    },
+    {
+      "date": "2024-07-09",
+      "total": 18.8,
+      "pic": 0.0,
+      "dual": 18.8,
+      "instrument": 0.0
+    },
+    {
+      "date": "2024-07-11",
+      "total": 20.2,
+      "pic": 0.0,
+      "dual": 20.2,
+      "instrument": 0.0
+    },
+    {
+      "date": "2024-07-12",
+      "total": 21.4,
+      "pic": 0.0,
+      "dual": 21.4,
+      "instrument": 0.0
+    },
+    {
+      "date": "2024-07-15",
+      "total": 22.8,
+      "pic": 0.0,
+      "dual": 22.8,
+      "instrument": 0.0
+    },
+    {
+      "date": "2024-07-16",
+      "total": 24.3,
+      "pic": 0.0,
+      "dual": 24.3,
+      "instrument": 0.0
+    },
+    {
+      "date": "2024-07-17",
+      "total": 25.9,
+      "pic": 0.0,
+      "dual": 25.9,
+      "instrument": 0.0
+    },
+    {
+      "date": "2024-07-24",
+      "total": 27.4,
+      "pic": 0.0,
+      "dual": 27.4,
+      "instrument": 0.0
+    },
+    {
+      "date": "2024-07-31",
+      "total": 28.6,
+      "pic": 0.0,
+      "dual": 28.6,
+      "instrument": 0.0
+    },
+    {
+      "date": "2024-08-05",
+      "total": 30.3,
+      "pic": 0.0,
+      "dual": 30.3,
+      "instrument": 0.0
+    },
+    {
+      "date": "2024-08-07",
+      "total": 31.9,
+      "pic": 0.0,
+      "dual": 31.9,
+      "instrument": 0.5
+    },
+    {
+      "date": "2024-08-10",
+      "total": 34.0,
+      "pic": 0.0,
+      "dual": 34.0,
+      "instrument": 0.5
+    },
+    {
+      "date": "2024-08-12",
+      "total": 34.5,
+      "pic": 0.0,
+      "dual": 34.5,
+      "instrument": 0.5
+    },
+    {
+      "date": "2024-08-12",
+      "total": 35.0,
+      "pic": 0.5,
+      "dual": 34.5,
+      "instrument": 0.5
+    },
+    {
+      "date": "2024-08-19",
+      "total": 38.0,
+      "pic": 0.5,
+      "dual": 37.5,
+      "instrument": 0.5
+    },
+    {
+      "date": "2024-08-21",
+      "total": 39.5,
+      "pic": 0.5,
+      "dual": 39.0,
+      "instrument": 1.0
+    },
+    {
+      "date": "2024-08-25",
+      "total": 41.6,
+      "pic": 0.5,
+      "dual": 41.1,
+      "instrument": 2.5
+    },
+    {
+      "date": "2024-08-26",
+      "total": 42.8,
+      "pic": 0.5,
+      "dual": 42.3,
+      "instrument": 2.5
+    },
+    {
+      "date": "2024-08-27",
+      "total": 44.2,
+      "pic": 0.5,
+      "dual": 43.7,
+      "instrument": 3.0
+    },
+    {
+      "date": "2024-08-28",
+      "total": 45.8,
+      "pic": 0.5,
+      "dual": 45.3,
+      "instrument": 3.0
+    },
+    {
+      "date": "2025-01-25",
+      "total": 46.6,
+      "pic": 0.5,
+      "dual": 46.1,
+      "instrument": 3.0
+    },
+    {
+      "date": "2025-02-17",
+      "total": 47.8,
+      "pic": 0.5,
+      "dual": 47.3,
+      "instrument": 3.0
+    },
+    {
+      "date": "2025-02-19",
+      "total": 49.3,
+      "pic": 0.5,
+      "dual": 48.8,
+      "instrument": 3.0
+    },
+    {
+      "date": "2025-03-10",
+      "total": 50.7,
+      "pic": 0.5,
+      "dual": 50.2,
+      "instrument": 3.0
+    },
+    {
+      "date": "2025-03-21",
+      "total": 51.9,
+      "pic": 0.5,
+      "dual": 51.4,
+      "instrument": 3.0
+    },
+    {
+      "date": "2025-03-24",
+      "total": 54.0,
+      "pic": 0.5,
+      "dual": 53.5,
+      "instrument": 3.0
+    },
+    {
+      "date": "2025-03-28",
+      "total": 54.9,
+      "pic": 0.5,
+      "dual": 54.4,
+      "instrument": 3.0
+    },
+    {
+      "date": "2025-03-31",
+      "total": 55.2,
+      "pic": 0.5,
+      "dual": 54.7,
+      "instrument": 3.0
+    },
+    {
+      "date": "2025-04-02",
+      "total": 56.0,
+      "pic": 0.5,
+      "dual": 55.5,
+      "instrument": 3.0
+    },
+    {
+      "date": "2025-04-04",
+      "total": 57.4,
+      "pic": 0.5,
+      "dual": 56.9,
+      "instrument": 3.0
+    },
+    {
+      "date": "2025-04-19",
+      "total": 58.7,
+      "pic": 0.5,
+      "dual": 58.2,
+      "instrument": 3.0
+    },
+    {
+      "date": "2025-07-27",
+      "total": 60.4,
+      "pic": 0.5,
+      "dual": 59.9,
+      "instrument": 3.0
+    },
+    {
+      "date": "2025-07-29",
+      "total": 61.5,
+      "pic": 0.5,
+      "dual": 61.0,
+      "instrument": 3.0
+    },
+    {
+      "date": "2025-08-05",
+      "total": 63.5,
+      "pic": 0.5,
+      "dual": 63.0,
+      "instrument": 3.0
+    },
+    {
+      "date": "2025-08-10",
+      "total": 65.2,
+      "pic": 0.5,
+      "dual": 64.7,
+      "instrument": 3.0
+    },
+    {
+      "date": "2025-08-13",
+      "total": 66.7,
+      "pic": 0.5,
+      "dual": 66.2,
+      "instrument": 3.0
+    },
+    {
+      "date": "2025-08-19",
+      "total": 68.0,
+      "pic": 0.5,
+      "dual": 67.5,
+      "instrument": 3.0
+    },
+    {
+      "date": "2025-08-25",
+      "total": 69.4,
+      "pic": 0.5,
+      "dual": 68.9,
+      "instrument": 3.2
+    },
+    {
+      "date": "2025-08-28",
+      "total": 70.5,
+      "pic": 0.5,
+      "dual": 70.0,
+      "instrument": 3.4
+    },
+    {
+      "date": "2025-08-29",
+      "total": 71.9,
+      "pic": 0.5,
+      "dual": 71.4,
+      "instrument": 3.4
+    },
+    {
+      "date": "2025-09-01",
+      "total": 73.4,
+      "pic": 0.5,
+      "dual": 72.9,
+      "instrument": 3.4
+    },
+    {
+      "date": "2025-09-15",
+      "total": 74.7,
+      "pic": 0.5,
+      "dual": 74.2,
+      "instrument": 3.5
+    },
+    {
+      "date": "2025-09-16",
+      "total": 75.8,
+      "pic": 0.5,
+      "dual": 75.3,
+      "instrument": 3.7
+    },
+    {
+      "date": "2025-09-19",
+      "total": 76.6,
+      "pic": 0.5,
+      "dual": 76.1,
+      "instrument": 3.7
+    },
+    {
+      "date": "2025-09-19",
+      "total": 77.3,
+      "pic": 1.2,
+      "dual": 76.1,
+      "instrument": 3.7
+    },
+    {
+      "date": "2025-09-19",
+      "total": 77.6,
+      "pic": 1.2,
+      "dual": 76.4,
+      "instrument": 3.7
+    },
+    {
+      "date": "2025-09-22",
+      "total": 79.7,
+      "pic": 3.3,
+      "dual": 76.4,
+      "instrument": 3.7
+    },
+    {
+      "date": "2025-09-23",
+      "total": 80.9,
+      "pic": 4.5,
+      "dual": 76.4,
+      "instrument": 3.7
+    },
+    {
+      "date": "2025-09-24",
+      "total": 82.4,
+      "pic": 4.5,
+      "dual": 77.9,
+      "instrument": 3.7
+    },
+    {
+      "date": "2025-09-26",
+      "total": 86.0,
+      "pic": 8.1,
+      "dual": 77.9,
+      "instrument": 3.7
+    },
+    {
+      "date": "2025-09-27",
+      "total": 87.3,
+      "pic": 8.1,
+      "dual": 79.2,
+      "instrument": 3.7
+    },
+    {
+      "date": "2025-10-02",
+      "total": 89.4,
+      "pic": 10.2,
+      "dual": 79.2,
+      "instrument": 3.7
+    },
+    {
+      "date": "2025-10-07",
+      "total": 91.1,
+      "pic": 10.2,
+      "dual": 80.9,
+      "instrument": 3.7
+    },
+    {
+      "date": "2025-10-12",
+      "total": 92.6,
+      "pic": 10.2,
+      "dual": 82.4,
+      "instrument": 3.7
+    },
+    {
+      "date": "2025-10-14",
+      "total": 94.8,
+      "pic": 10.2,
+      "dual": 84.6,
+      "instrument": 3.7
+    },
+    {
+      "date": "2025-10-22",
+      "total": 97.0,
+      "pic": 10.2,
+      "dual": 86.8,
+      "instrument": 3.7
+    },
+    {
+      "date": "2025-10-23",
+      "total": 98.7,
+      "pic": 10.2,
+      "dual": 88.5,
+      "instrument": 4.1
+    },
+    {
+      "date": "2025-10-27",
+      "total": 100.0,
+      "pic": 10.2,
+      "dual": 89.8,
+      "instrument": 4.1
+    },
+    {
+      "date": "2025-10-30",
+      "total": 100.8,
+      "pic": 10.2,
+      "dual": 90.6,
+      "instrument": 4.1
+    },
+    {
+      "date": "2025-11-08",
+      "total": 101.6,
+      "pic": 10.2,
+      "dual": 91.4,
+      "instrument": 4.1
+    },
+    {
+      "date": "2025-11-21",
+      "total": 103.3,
+      "pic": 10.2,
+      "dual": 93.1,
+      "instrument": 4.2
+    },
+    {
+      "date": "2025-11-30",
+      "total": 105.2,
+      "pic": 10.2,
+      "dual": 95.0,
+      "instrument": 4.3
+    },
+    {
+      "date": "2025-12-01",
+      "total": 106.4,
+      "pic": 11.4,
+      "dual": 95.0,
+      "instrument": 4.4
+    }
+  ],
+  "aircraft_breakdown": [
+    {
+      "name": "N13312",
+      "hours": 9.8
+    },
+    {
+      "name": "N82MH",
+      "hours": 9.4
+    },
+    {
+      "name": "N162HA",
+      "hours": 8.3
+    },
+    {
+      "name": "N1152Z",
+      "hours": 6.9
+    },
+    {
+      "name": "N5689M",
+      "hours": 6.4
+    },
+    {
+      "name": "N121W",
+      "hours": 6.2
+    },
+    {
+      "name": "N137ME",
+      "hours": 5.7
+    },
+    {
+      "name": "N5199D",
+      "hours": 5.4
+    },
+    {
+      "name": "N297PL",
+      "hours": 5.0
+    },
+    {
+      "name": "N6043M",
+      "hours": 4.699999999999999
+    },
+    {
+      "name": "N444VW",
+      "hours": 4.6
+    },
+    {
+      "name": "N52165",
+      "hours": 3.7
+    },
+    {
+      "name": "N5213U",
+      "hours": 3.2
+    },
+    {
+      "name": "N9283A",
+      "hours": 3.0999999999999996
+    },
+    {
+      "name": "N4585P",
+      "hours": 2.9
+    },
+    {
+      "name": "N5211Y",
+      "hours": 2.8
+    },
+    {
+      "name": "N5202B",
+      "hours": 2.5999999999999996
+    },
+    {
+      "name": "N6067Z",
+      "hours": 2.5999999999999996
+    },
+    {
+      "name": "N278CA",
+      "hours": 1.9000000000000001
+    },
+    {
+      "name": "N6058V",
+      "hours": 1.5
+    },
+    {
+      "name": "N5210A",
+      "hours": 1.5
+    },
+    {
+      "name": "N602ND",
+      "hours": 1.3
+    },
+    {
+      "name": "N3029F",
+      "hours": 1.3
+    },
+    {
+      "name": "N52056",
+      "hours": 1.3
+    },
+    {
+      "name": "N2365P",
+      "hours": 1.2
+    },
+    {
+      "name": "N410B5",
+      "hours": 0.8
+    },
+    {
+      "name": "N410BS",
+      "hours": 0.8
+    },
+    {
+      "name": "N633ND",
+      "hours": 0.8
+    },
+    {
+      "name": "N75879",
+      "hours": 0.7
+    }
+  ]
+}

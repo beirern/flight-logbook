@@ -12,6 +12,10 @@ media
 # in your Git repository. Update and uncomment the following line accordingly.
 # <django-project-name>/staticfiles/
 
+# Static site export for GitHub Pages
+# NOTE: static_site/ is INCLUDED in version control for GitHub Pages deployment
+# Do NOT add static_site/ to .gitignore
+
 ### Python template
 # Byte-compiled / optimized / DLL files
 __pycache__/

@@ -1,0 +1,70 @@
+{
+  "total_times": {
+    "total_time": 106.4,
+    "pic_time": 11.4,
+    "sic_time": 0.0,
+    "dual_time": 95.0,
+    "xc_time": 10.8,
+    "day_time": 100.7,
+    "night_time": 5.7,
+    "actual_instrument": 0.0,
+    "simulated_instrument": 4.4,
+    "day_landings": 137,
+    "night_landings": 1,
+    "total_landings": 212
+  },
+  "currency": {
+    "day_current": true,
+    "day_landings": 24,
+    "day_expiry": "2026-02-19",
+    "night_current": true,
+    "night_landings": 3,
+    "night_expiry": "2025-12-23"
+  },
+  "medical": {
+    "has_medical": false,
+    "class": null,
+    "expiry": null,
+    "days_remaining": null,
+    "status": "none"
+  },
+  "ir_progress": {
+    "actual": 0.0,
+    "simulated": 4.4,
+    "creditable_simulated": 4.4,
+    "creditable_total": 4.4,
+    "remaining": 35.6,
+    "percentage": 11.0,
+    "xc_pic_time": 5.7,
+    "xc_pic_required": 50,
+    "xc_pic_remaining": 44.3,
+    "xc_pic_percentage": 11.4
+  },
+  "commercial_progress": {
+    "total_time": {
+      "current": 106.4,
+      "required": 250,
+      "remaining": 143.6,
+      "percentage": 42.56
+    },
+    "pic_time": {
+      "current": 11.4,
+      "required": 100,
+      "remaining": 88.6,
+      "percentage": 11.4
+    },
+    "xc_pic_time": {
+      "current": 5.7,
+      "required": 50,
+      "remaining": 44.3,
+      "percentage": 11.4
+    }
+  },
+  "instrument_breakdown": {
+    "actual": 0.0,
+    "simulated": 4.4,
+    "total": 4.4
+  },
+  "days_since_last_flight": 21,
+  "last_updated": "2025-12-22T20:49:32.630973"
+}

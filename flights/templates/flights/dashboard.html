@@ -2,9 +2,16 @@
 
 {% block title %}Dashboard - Flight Logbook{% endblock %}
 
+{% block nav_dashboard %}active{% endblock %}
+
 {% block content %}
 <div class="container-fluid">
-    <h1 class="mb-4">Flight Dashboard</h1>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Flight Dashboard</h1>
+        {% if is_static and last_updated %}
+        <small class="text-muted">Last updated: {{ last_updated }}</small>
+        {% endif %}
+    </div>
 
     <!-- Hero Stats Section -->
     <div class="row mb-4">
@@ -579,5 +586,65 @@
             }
         }
     });
+
+    // Client-side currency recalculation for static sites
+    {% if is_static %}
+    async function recalculateCurrency() {
+        try {
+            // Load flight data
+            const response = await fetch('data/flights.json');
+            const flights = await response.json();
+
+            const today = new Date();
+            const ninetyDaysAgo = new Date(today.getTime() - (90 * 24 * 60 * 60 * 1000));
+
+            // Calculate day and night landings in the last 90 days
+            let dayLandings = 0;
+            let nightFullstopLandings = 0;
+
+            flights.forEach(flight => {
+                const flightDate = new Date(flight.date);
+                if (flightDate >= ninetyDaysAgo) {
+                    dayLandings += flight.day_landings;
+                    nightFullstopLandings += flight.night_fullstop_landings;
+                }
+            });
+
+            // Update day currency display
+            const dayCurrent = dayLandings >= 3;
+            const dayBadge = document.querySelector('.badge.bg-success, .badge.bg-danger');
+            if (dayBadge && dayBadge.textContent.includes('CURRENT')) {
+                dayBadge.textContent = dayCurrent ? 'CURRENT' : 'NOT CURRENT';
+                dayBadge.className = dayCurrent ? 'badge bg-success' : 'badge bg-danger';
+            }
+
+            // Update night currency display
+            const nightCurrent = nightFullstopLandings >= 3;
+            const nightBadges = document.querySelectorAll('.badge');
+            nightBadges.forEach(badge => {
+                if (badge.textContent.includes('CURRENT') && badge.closest('div').querySelector('h6')?.textContent.includes('Night')) {
+                    badge.textContent = nightCurrent ? 'CURRENT' : 'NOT CURRENT';
+                    badge.className = nightCurrent ? 'badge bg-success' : 'badge bg-danger';
+                }
+            });
+
+            // Calculate days since last flight
+            if (flights.length > 0) {
+                const lastFlight = new Date(flights[0].date);
+                const daysSince = Math.floor((today - lastFlight) / (24 * 60 * 60 * 1000));
+
+                const daysSinceElement = document.querySelector('.card-title');
+                if (daysSinceElement && daysSinceElement.parentElement.querySelector('.card-subtitle').textContent.includes('Days Since')) {
+                    daysSinceElement.textContent = daysSince;
+                }
+            }
+        } catch (error) {
+            console.error('Error recalculating currency:', error);
+        }
+    }
+
+    // Run on page load
+    recalculateCurrency();
+    {% endif %}
 </script>
 {% endblock %}
