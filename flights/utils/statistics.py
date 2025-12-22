@@ -70,23 +70,36 @@ def get_instrument_breakdown(pilot):
 
 
 def get_aircraft_breakdown(pilot):
-    """Get flight hours broken down by aircraft."""
+    """Get flight hours broken down by aircraft with type information."""
     flights = Flight.objects.filter(pilot=pilot).select_related('plane')
 
-    aircraft_hours = {}
+    aircraft_data = {}
     for flight in flights:
         plane_name = str(flight.plane)
-        if plane_name in aircraft_hours:
-            aircraft_hours[plane_name] += float(flight.flight_time)
-        else:
-            aircraft_hours[plane_name] = float(flight.flight_time)
+        if plane_name not in aircraft_data:
+            aircraft_data[plane_name] = {
+                'tail_number': plane_name,
+                'type': flight.plane.type,
+                'hours': 0
+            }
+        aircraft_data[plane_name]['hours'] += float(flight.flight_time)
 
-    return sorted(aircraft_hours.items(), key=lambda x: x[1], reverse=True)
+    # Sort by hours (descending) and return as list of tuples with dict values
+    return sorted(aircraft_data.values(), key=lambda x: x['hours'], reverse=True)
 
 
 def get_recent_flights(pilot, limit=10):
-    """Get the most recent N flights for a pilot."""
-    return Flight.objects.filter(pilot=pilot).select_related('plane').order_by('-date')[:limit]
+    """Get the most recent N flights for a pilot with computed total landings."""
+    flights = Flight.objects.filter(pilot=pilot).select_related('plane').order_by('-date')[:limit]
+
+    # Add computed total landings to each flight
+    flights_with_totals = []
+    for flight in flights:
+        flight.total_day_landings = flight.day_landings + flight.day_fullstop_landings
+        flight.total_night_landings = flight.night_landings + flight.night_fullstop_landings
+        flights_with_totals.append(flight)
+
+    return flights_with_totals
 
 
 def get_days_since_last_flight(pilot):
@@ -224,10 +237,10 @@ def get_passenger_leaderboard(pilot, limit=10):
             passenger_stats[passenger.id]['flight_count'] += 1
             passenger_stats[passenger.id]['total_time'] += float(flight.flight_time)
 
-    # Sort by flight count (descending) and return top N
+    # Sort by flight count (descending), then by total time (descending) for ties
     leaderboard = sorted(
         passenger_stats.values(),
-        key=lambda x: x['flight_count'],
+        key=lambda x: (x['flight_count'], x['total_time']),
         reverse=True
     )[:limit]
 
@@ -264,10 +277,10 @@ def get_instructor_leaderboard(pilot, limit=10):
         instructor_stats[instructor.id]['flight_count'] += 1
         instructor_stats[instructor.id]['total_time'] += float(flight.flight_time)
 
-    # Sort by flight count (descending) and return top N
+    # Sort by flight count (descending), then by total time (descending) for ties
     leaderboard = sorted(
         instructor_stats.values(),
-        key=lambda x: x['flight_count'],
+        key=lambda x: (x['flight_count'], x['total_time']),
         reverse=True
     )[:limit]
 

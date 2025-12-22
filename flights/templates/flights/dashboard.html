@@ -76,7 +76,7 @@
         <div class="col-md-6 mb-3">
             <div class="card">
                 <div class="card-header bg-primary text-white">
-                    <h5>Passenger Currency (FAR 61.57a)</h5>
+                    <h5>Passenger Currency (§FAR 61.57a)</h5>
                 </div>
                 <div class="card-body">
                     <div class="mb-3">
@@ -157,12 +157,71 @@
         </div>
     </div>
 
+    <!-- Instrument Rating Progress -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h5>Instrument Rating Progress (§FAR 61.65d)</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <h6>Instrument Time</h6>
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span>{{ ir_progress.creditable_total }}/40 hours</span>
+                                <span class="badge bg-success">{{ ir_progress.percentage|floatformat:1 }}% Complete</span>
+                            </div>
+                            <div class="progress mb-2" style="height: 25px;">
+                                <div class="progress-bar bg-success"
+                                     role="progressbar"
+                                     style="width: {{ ir_progress.percentage }}%">
+                                    {{ ir_progress.creditable_total }}/40 hrs
+                                </div>
+                            </div>
+                            <small class="text-muted">Remaining: {{ ir_progress.remaining|floatformat:1 }} hrs</small>
+                        </div>
+                        <div class="col-md-6">
+                            <h6>Cross Country PIC Time</h6>
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span>{{ ir_progress.xc_pic_time|floatformat:1 }}/{{ ir_progress.xc_pic_required }} hours</span>
+                                <span class="badge bg-success">{{ ir_progress.xc_pic_percentage|floatformat:1 }}% Complete</span>
+                            </div>
+                            <div class="progress mb-2" style="height: 25px;">
+                                <div class="progress-bar bg-success"
+                                     role="progressbar"
+                                     style="width: {{ ir_progress.xc_pic_percentage }}%">
+                                    {{ ir_progress.xc_pic_time|floatformat:1 }}/{{ ir_progress.xc_pic_required }} hrs
+                                </div>
+                            </div>
+                            <small class="text-muted">Remaining: {{ ir_progress.xc_pic_remaining|floatformat:1 }} hrs</small>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <strong>Actual Instrument:</strong> {{ ir_progress.actual|floatformat:1 }} hrs
+                        </div>
+                        <div class="col-md-3">
+                            <strong>Simulated:</strong> {{ ir_progress.simulated|floatformat:1 }} hrs
+                        </div>
+                        <div class="col-md-3">
+                            <strong>Creditable Simulated:</strong> {{ ir_progress.creditable_simulated|floatformat:1 }} hrs (max 20)
+                        </div>
+                        <div class="col-md-3">
+                            <strong>Total Instrument:</strong> {{ ir_progress.creditable_total|floatformat:1 }} hrs
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Commercial License Progress -->
     <div class="row mb-4">
         <div class="col-12">
             <div class="card">
                 <div class="card-header bg-warning text-dark">
-                    <h5>Commercial Pilot License Progress (FAR 61.129)</h5>
+                    <h5>Commercial Pilot License Progress (§FAR 61.129)</h5>
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -210,65 +269,6 @@
                                 </div>
                             </div>
                             <small class="text-muted">Remaining: {{ commercial_progress.xc_pic_time.remaining|floatformat:1 }} hrs</small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Instrument Rating Progress -->
-    <div class="row mb-4">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-header bg-success text-white">
-                    <h5>Instrument Rating Progress (FAR 61.65d)</h5>
-                </div>
-                <div class="card-body">
-                    <div class="row mb-3">
-                        <div class="col-md-6">
-                            <h6>Instrument Time</h6>
-                            <div class="d-flex justify-content-between align-items-center mb-2">
-                                <span>{{ ir_progress.creditable_total }}/40 hours</span>
-                                <span class="badge bg-success">{{ ir_progress.percentage|floatformat:1 }}% Complete</span>
-                            </div>
-                            <div class="progress mb-2" style="height: 25px;">
-                                <div class="progress-bar bg-success"
-                                     role="progressbar"
-                                     style="width: {{ ir_progress.percentage }}%">
-                                    {{ ir_progress.creditable_total }}/40 hrs
-                                </div>
-                            </div>
-                            <small class="text-muted">Remaining: {{ ir_progress.remaining|floatformat:1 }} hrs</small>
-                        </div>
-                        <div class="col-md-6">
-                            <h6>Cross Country PIC Time</h6>
-                            <div class="d-flex justify-content-between align-items-center mb-2">
-                                <span>{{ ir_progress.xc_pic_time|floatformat:1 }}/{{ ir_progress.xc_pic_required }} hours</span>
-                                <span class="badge bg-success">{{ ir_progress.xc_pic_percentage|floatformat:1 }}% Complete</span>
-                            </div>
-                            <div class="progress mb-2" style="height: 25px;">
-                                <div class="progress-bar bg-success"
-                                     role="progressbar"
-                                     style="width: {{ ir_progress.xc_pic_percentage }}%">
-                                    {{ ir_progress.xc_pic_time|floatformat:1 }}/{{ ir_progress.xc_pic_required }} hrs
-                                </div>
-                            </div>
-                            <small class="text-muted">Remaining: {{ ir_progress.xc_pic_remaining|floatformat:1 }} hrs</small>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-3">
-                            <strong>Actual Instrument:</strong> {{ ir_progress.actual|floatformat:1 }} hrs
-                        </div>
-                        <div class="col-md-3">
-                            <strong>Simulated:</strong> {{ ir_progress.simulated|floatformat:1 }} hrs
-                        </div>
-                        <div class="col-md-3">
-                            <strong>Creditable Simulated:</strong> {{ ir_progress.creditable_simulated|floatformat:1 }} hrs (max 20)
-                        </div>
-                        <div class="col-md-3">
-                            <strong>Total Instrument:</strong> {{ ir_progress.creditable_total|floatformat:1 }} hrs
                         </div>
                     </div>
                 </div>
@@ -398,14 +398,16 @@
                         <thead>
                             <tr>
                                 <th>Aircraft</th>
+                                <th>Type</th>
                                 <th>Total Hours</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {% for aircraft, hours in aircraft_breakdown %}
+                            {% for aircraft in aircraft_breakdown %}
                             <tr>
-                                <td>{{ aircraft }}</td>
-                                <td>{{ hours|floatformat:1 }}</td>
+                                <td>{{ aircraft.tail_number }}</td>
+                                <td>{{ aircraft.type }}</td>
+                                <td>{{ aircraft.hours|floatformat:1 }}</td>
                             </tr>
                             {% endfor %}
                         </tbody>
@@ -442,8 +444,8 @@
                                 <td>{{ flight.date }}</td>
                                 <td>{{ flight.plane }}</td>
                                 <td>{{ flight.flight_time|floatformat:1 }}</td>
-                                <td>{{ flight.day_landings }}</td>
-                                <td>{{ flight.night_landings }}</td>
+                                <td>{{ flight.total_day_landings }}</td>
+                                <td>{{ flight.total_night_landings }}</td>
                                 <td>{{ flight.notes|truncatewords:10 }}</td>
                             </tr>
                             {% endfor %}
