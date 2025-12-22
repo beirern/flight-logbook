@@ -29,6 +29,10 @@
                            href="{% url 'dashboard' %}">Dashboard</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'logbook' %}active{% endif %}"
+                           href="{% url 'logbook' %}">Logbook</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="/admin/">Admin</a>
                     </li>
                 </ul>
