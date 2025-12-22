@@ -155,7 +155,7 @@ class Command(BaseCommand):
             'monthly_labels': [entry['month'] for entry in monthly_data],
             'monthly_hours': [entry['hours'] for entry in monthly_data],
             'cumulative_data': cumulative_data,
-            'aircraft_breakdown': [{'name': name, 'hours': hours} for name, hours in aircraft_breakdown],
+            'aircraft_breakdown': [{'name': aircraft['tail_number'], 'type': aircraft['type'], 'hours': aircraft['hours']} for aircraft in aircraft_breakdown],
         }
 
         with open(data_dir / 'charts.json', 'w') as f:
