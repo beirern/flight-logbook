@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta
 
-from django.db.models import Sum
+from django.db.models import Count, Q, Sum
 from django.db.models.functions import TruncMonth
 
 from flights.models import Flight
@@ -12,7 +12,9 @@ def get_total_times(pilot):
 
     total_landings = (
         (flights.aggregate(Sum('day_landings'))['day_landings__sum'] or 0) +
-        (flights.aggregate(Sum('night_landings'))['night_landings__sum'] or 0)
+        (flights.aggregate(Sum('day_fullstop_landings'))['day_fullstop_landings__sum'] or 0) +
+        (flights.aggregate(Sum('night_landings'))['night_landings__sum'] or 0) +
+        (flights.aggregate(Sum('night_fullstop_landings'))['night_fullstop_landings__sum'] or 0)
     )
 
     return {
@@ -125,9 +127,52 @@ def get_cumulative_time_data(pilot):
     return cumulative_data
 
 
+def get_xc_pic_time(pilot):
+    """Calculate cross-country PIC time (flights with both xc_time > 0 and pic_time > 0)."""
+    flights = Flight.objects.filter(pilot=pilot, xc_time__gt=0, pic_time__gt=0)
+    xc_pic_total = flights.aggregate(Sum('xc_time'))['xc_time__sum'] or 0
+    return round(float(xc_pic_total), 1)
+
+
+def get_commercial_license_progress(pilot):
+    """Calculate progress toward commercial pilot license requirements."""
+    total_times = get_total_times(pilot)
+    xc_pic_time = get_xc_pic_time(pilot)
+
+    # Commercial requirements
+    required_total = 250
+    required_pic = 100
+    required_xc_pic = 50
+
+    current_total = total_times['total_time']
+    current_pic = total_times['pic_time']
+
+    return {
+        'total_time': {
+            'current': current_total,
+            'required': required_total,
+            'remaining': max(0, required_total - current_total),
+            'percentage': min(100, (current_total / required_total) * 100)
+        },
+        'pic_time': {
+            'current': current_pic,
+            'required': required_pic,
+            'remaining': max(0, required_pic - current_pic),
+            'percentage': min(100, (current_pic / required_pic) * 100)
+        },
+        'xc_pic_time': {
+            'current': xc_pic_time,
+            'required': required_xc_pic,
+            'remaining': max(0, required_xc_pic - xc_pic_time),
+            'percentage': min(100, (xc_pic_time / required_xc_pic) * 100)
+        }
+    }
+
+
 def get_instrument_rating_progress(pilot):
-    """Calculate progress toward instrument rating (40 hours total, max 20 simulated)."""
+    """Calculate progress toward instrument rating (40 hours total, max 20 simulated, 50 hours XC PIC)."""
     instrument_breakdown = get_instrument_breakdown(pilot)
+    xc_pic_time = get_xc_pic_time(pilot)
 
     actual = instrument_breakdown['actual']
     simulated = instrument_breakdown['simulated']
@@ -140,11 +185,94 @@ def get_instrument_rating_progress(pilot):
     remaining = max(0, 40 - creditable_total)
     percentage = min(100, (creditable_total / 40) * 100)
 
+    # XC PIC requirement for IR
+    required_xc_pic = 50
+    xc_pic_remaining = max(0, required_xc_pic - xc_pic_time)
+    xc_pic_percentage = min(100, (xc_pic_time / required_xc_pic) * 100)
+
     return {
         'actual': actual,
         'simulated': simulated,
         'creditable_simulated': creditable_simulated,
         'creditable_total': round(creditable_total, 1),
         'remaining': round(remaining, 1),
-        'percentage': round(percentage, 1)
+        'percentage': round(percentage, 1),
+        'xc_pic_time': xc_pic_time,
+        'xc_pic_required': required_xc_pic,
+        'xc_pic_remaining': round(xc_pic_remaining, 1),
+        'xc_pic_percentage': round(xc_pic_percentage, 1)
     }
+
+
+def get_passenger_leaderboard(pilot, limit=10):
+    """Get leaderboard of passengers (Pilots with role PA) ranked by number of flights."""
+    from pilots.models import Pilot
+
+    # Get flights where the pilot was PIC and had passengers
+    flights = Flight.objects.filter(pilot=pilot).prefetch_related('passengers')
+
+    # Collect passenger statistics
+    passenger_stats = {}
+    for flight in flights:
+        for passenger in flight.passengers.filter(role=Pilot.RoleChoices.PASSENGER):
+            if passenger.id not in passenger_stats:
+                passenger_stats[passenger.id] = {
+                    'pilot': passenger,
+                    'flight_count': 0,
+                    'total_time': 0
+                }
+            passenger_stats[passenger.id]['flight_count'] += 1
+            passenger_stats[passenger.id]['total_time'] += float(flight.flight_time)
+
+    # Sort by flight count (descending) and return top N
+    leaderboard = sorted(
+        passenger_stats.values(),
+        key=lambda x: x['flight_count'],
+        reverse=True
+    )[:limit]
+
+    # Round the total times
+    for entry in leaderboard:
+        entry['total_time'] = round(entry['total_time'], 1)
+
+    return leaderboard
+
+
+def get_instructor_leaderboard(pilot, limit=10):
+    """Get leaderboard of instructors/examiners (Pilots with role I or E) ranked by number of flights."""
+    from pilots.models import Pilot
+
+    # Get flights where the pilot received instruction
+    flights = Flight.objects.filter(
+        pilot=pilot,
+        instructor__isnull=False
+    ).select_related('instructor').filter(
+        Q(instructor__role=Pilot.RoleChoices.INSTRUCTOR) |
+        Q(instructor__role=Pilot.RoleChoices.EXAMINER)
+    )
+
+    # Collect instructor statistics
+    instructor_stats = {}
+    for flight in flights:
+        instructor = flight.instructor
+        if instructor.id not in instructor_stats:
+            instructor_stats[instructor.id] = {
+                'pilot': instructor,
+                'flight_count': 0,
+                'total_time': 0
+            }
+        instructor_stats[instructor.id]['flight_count'] += 1
+        instructor_stats[instructor.id]['total_time'] += float(flight.flight_time)
+
+    # Sort by flight count (descending) and return top N
+    leaderboard = sorted(
+        instructor_stats.values(),
+        key=lambda x: x['flight_count'],
+        reverse=True
+    )[:limit]
+
+    # Round the total times
+    for entry in leaderboard:
+        entry['total_time'] = round(entry['total_time'], 1)
+
+    return leaderboard
