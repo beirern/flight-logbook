@@ -15,10 +15,10 @@
   },
   "currency": {
     "day_current": true,
-    "day_landings": 24,
+    "day_landings": 19,
     "day_expiry": "2026-02-19",
-    "night_current": true,
-    "night_landings": 3,
+    "night_current": false,
+    "night_landings": 0,
     "night_expiry": "2025-12-23"
   },
   "medical": {
@@ -65,6 +65,6 @@
     "simulated": 4.4,
     "total": 4.4
   },
-  "days_since_last_flight": 21,
-  "last_updated": "2025-12-22T22:52:21.272025"
+  "days_since_last_flight": 23,
+  "last_updated": "2025-12-24T04:33:03.396784"
 }
