@@ -298,7 +298,7 @@
                                 {% for entry in passenger_leaderboard %}
                                 <tr>
                                     <td>{{ forloop.counter }}</td>
-                                    <td>{{ entry.pilot }}</td>
+                                    <td>{{ entry.pilot.first_name }}</td>
                                     <td>{{ entry.flight_count }}</td>
                                     <td>{{ entry.total_time }} hrs</td>
                                 </tr>
@@ -332,7 +332,7 @@
                                 {% for entry in instructor_leaderboard %}
                                 <tr>
                                     <td>{{ forloop.counter }}</td>
-                                    <td>{{ entry.pilot }}</td>
+                                    <td>{{ entry.pilot.first_name }}</td>
                                     <td>{{ entry.flight_count }}</td>
                                     <td>{{ entry.total_time }} hrs</td>
                                 </tr>
