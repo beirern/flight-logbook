@@ -18,6 +18,7 @@ from flights.utils.statistics import (
     get_total_times,
 )
 from pilots.models import Pilot
+from routes.models import Route
 
 
 def dashboard(request):
@@ -109,3 +110,72 @@ def logbook(request):
     }
 
     return render(request, 'flights/logbook.html', context)
+
+
+def routes_map(request):
+    """
+    Routes map view showing unique flight routes on an interactive map.
+    """
+    try:
+        pilot = Pilot.objects.get(pk=1)
+    except Pilot.DoesNotExist:
+        return render(request, 'flights/routes_map.html', {
+            'error': 'No pilot found. Please create a pilot in the admin.',
+            'routes': [],
+        })
+
+    # Get all unique routes from flights and count how many times each was flown
+    # Also count how many times each airport was visited
+    flights = Flight.objects.filter(pilot=pilot).select_related('route').prefetch_related('route__waypoints')
+    unique_routes = {}
+    route_counts = {}
+    airport_visits = {}
+
+    for flight in flights:
+        if flight.route:
+            route_id = flight.route.id
+
+            # Count flights for this route
+            route_counts[route_id] = route_counts.get(route_id, 0) + 1
+
+            # Count airport visits for this flight
+            waypoints = flight.route.waypoints.all()
+            for waypoint in waypoints:
+                airport_visits[waypoint.code] = airport_visits.get(waypoint.code, 0) + 1
+
+            if route_id not in unique_routes:
+                route = flight.route
+                waypoints = route.waypoints.all().order_by('routewaypoint__sequence')
+
+                waypoints_data = []
+                for waypoint in waypoints:
+                    if waypoint.latitude and waypoint.longitude:
+                        waypoints_data.append({
+                            'code': waypoint.code,
+                            'name': waypoint.name,
+                            'lat': float(waypoint.latitude),
+                            'lon': float(waypoint.longitude),
+                            'visit_count': 0,  # Will be updated below
+                        })
+
+                if waypoints_data:
+                    unique_routes[route_id] = {
+                        'id': route.id,
+                        'name': route.name,
+                        'waypoints': waypoints_data,
+                        'flight_count': 0,  # Will be updated below
+                    }
+
+    # Add flight counts to unique routes
+    for route_id in unique_routes:
+        unique_routes[route_id]['flight_count'] = route_counts.get(route_id, 0)
+
+        # Add visit counts to waypoints
+        for waypoint in unique_routes[route_id]['waypoints']:
+            waypoint['visit_count'] = airport_visits.get(waypoint['code'], 0)
+
+    context = {
+        'routes_json': json.dumps(list(unique_routes.values())),
+    }
+
+    return render(request, 'flights/routes_map.html', context)
