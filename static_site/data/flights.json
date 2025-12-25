@@ -15,7 +15,7 @@
     "day_fullstop_landings": 3,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": null,
+    "route": "Maneuvers around KBFI: (KBFI -> KBFI)",
     "instructor": "Jim Simon",
     "passengers": [],
     "notes": "Private Pilot Checkride pass!!"
@@ -36,7 +36,7 @@
     "day_fullstop_landings": 1,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": null,
+    "route": "Maneuvers around KBFI: (KBFI -> KBFI)",
     "instructor": "Emily Stednitz",
     "passengers": [],
     "notes": "RFS Flight Lesson 37: practical test prep"
@@ -57,7 +57,7 @@
     "day_fullstop_landings": 1,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": null,
+    "route": "Maneuvers around KBFI: (KBFI -> KBFI)",
     "instructor": "Emily Stednitz",
     "passengers": [],
     "notes": "RFS Flight Lesson 37: practical test prep, hood work, steep turns, stalls, ground ref, landings"
@@ -78,7 +78,7 @@
     "day_fullstop_landings": 1,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": null,
+    "route": "Maneuvers around KBFI: (KBFI -> KBFI)",
     "instructor": "Emily Stednitz",
     "passengers": [],
     "notes": "RFS Flight Lesson 37: practical test prep, slow flight, performance takeoff/landings"
@@ -99,7 +99,7 @@
     "day_fullstop_landings": 1,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": null,
+    "route": "Maneuvers around KBFI: (KBFI -> KBFI)",
     "instructor": "Ian Middleton",
     "passengers": [],
     "notes": "EOC pass!"
@@ -120,7 +120,7 @@
     "day_fullstop_landings": 1,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": null,
+    "route": "Maneuvers around KBFI: (KBFI -> KBFI)",
     "instructor": "Emily Stednitz",
     "passengers": [],
     "notes": "RFS Flight Lesson 37: Practical test prep, emergency descent, forward slip, normal landing, coordination"
@@ -141,7 +141,7 @@
     "day_fullstop_landings": 1,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": null,
+    "route": "Maneuvers around KBFI: (KBFI -> KBFI)",
     "instructor": "Ian Middleton",
     "passengers": [],
     "notes": "End of Course (EOC) fail. Work on emergency descent, slip, normal landing, coordination"
@@ -162,7 +162,7 @@
     "day_fullstop_landings": 1,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": null,
+    "route": "Maneuvers around KBFI: (KBFI -> KBFI)",
     "instructor": "Emily Stednitz",
     "passengers": [],
     "notes": "RFS Flight Lesson 37: Practical test prep, x-country nav, diversion, slow flight, stalls, ground ref, performance TOL"
@@ -183,7 +183,7 @@
     "day_fullstop_landings": 1,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": null,
+    "route": "Maneuvers around KBFI: (KBFI -> KBFI)",
     "instructor": "Emily Stednitz",
     "passengers": [],
     "notes": "RFS Flight Lesson 37: Practical test prep, steep turns, stalls, performance takeoff/landings, no flap landing, turn around point"
@@ -204,7 +204,7 @@
     "day_fullstop_landings": 1,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": null,
+    "route": "Maneuvers around KBFI: (KBFI -> KBFI)",
     "instructor": "Emily Stednitz",
     "passengers": [],
     "notes": "RFS Flight Lesson 37: Practical Test Prep 61.107(b)(i)(i-xii)"
@@ -225,7 +225,7 @@
     "day_fullstop_landings": 1,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": null,
+    "route": "Maneuvers around KBFI: (KBFI -> KBFI)",
     "instructor": "Emily Stednitz",
     "passengers": [],
     "notes": "RFS Flight Lesson 37: Practical test prep 61.107(b)(i)(i-xii)"
@@ -246,7 +246,7 @@
     "day_fullstop_landings": 1,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": null,
+    "route": "Maneuvers around KBFI: (KBFI -> KBFI)",
     "instructor": null,
     "passengers": [],
     "notes": "Maneuver + Landing Practice + Stalls + Ground Ref"
@@ -267,7 +267,7 @@
     "day_fullstop_landings": 1,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": null,
+    "route": "Maneuvers around KBFI: (KBFI -> KBFI)",
     "instructor": "Brendan Good",
     "passengers": [
       "Ryan Liu"
@@ -290,7 +290,7 @@
     "day_fullstop_landings": 3,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": null,
+    "route": "Maneuvers around KBFI: (KBFI -> KBFI)",
     "instructor": null,
     "passengers": [],
     "notes": "Long XC Solo KBFI -> KSPB -> KOLM -> BKFI. All full stop landings."
@@ -311,7 +311,7 @@
     "day_fullstop_landings": 0,
     "night_landings": 1,
     "night_fullstop_landings": 3,
-    "route": null,
+    "route": "Maneuvers around KBFI: (KBFI -> KBFI)",
     "instructor": "Emily Stednitz",
     "passengers": [
       "Manan Gandhi"
@@ -334,7 +334,7 @@
     "day_fullstop_landings": 1,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": null,
+    "route": "Maneuvers around KBFI: (KBFI -> KBFI)",
     "instructor": null,
     "passengers": [],
     "notes": "Attempted maneuver practice. Landing Practice."
@@ -355,7 +355,7 @@
     "day_fullstop_landings": 2,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": null,
+    "route": "Maneuvers around KBFI: (KBFI -> KBFI)",
     "instructor": null,
     "passengers": [],
     "notes": "First XC Solo flight to Port Angeles!"
@@ -376,7 +376,7 @@
     "day_fullstop_landings": 1,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": null,
+    "route": "Maneuvers around KBFI: (KBFI -> KBFI)",
     "instructor": "Emily Stednitz",
     "passengers": [],
     "notes": "Pre-solo C172 warmup!"
@@ -397,7 +397,7 @@
     "day_fullstop_landings": 1,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": null,
+    "route": "Maneuvers around KBFI: (KBFI -> KBFI)",
     "instructor": null,
     "passengers": [],
     "notes": "172 Solo!!"
@@ -418,7 +418,7 @@
     "day_fullstop_landings": 1,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": null,
+    "route": "Maneuvers around KBFI: (KBFI -> KBFI)",
     "instructor": "Emily Stednitz",
     "passengers": [],
     "notes": "Performance takeoff: soft and short landing. Flight back to KBFI post-solo."
@@ -439,7 +439,7 @@
     "day_fullstop_landings": 1,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": null,
+    "route": "Maneuvers around KBFI: (KBFI -> KBFI)",
     "instructor": "Jaimason Sunderman",
     "passengers": [],
     "notes": "Stage 2 check pass!!"
@@ -460,7 +460,7 @@
     "day_fullstop_landings": 1,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": null,
+    "route": "Maneuvers around KBFI: (KBFI -> KBFI)",
     "instructor": "Emily Stednitz",
     "passengers": [],
     "notes": "Soft takeoff/landings, short takeoff/landings, unusual attitudes, hood work"
@@ -481,7 +481,7 @@
     "day_fullstop_landings": 1,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": null,
+    "route": "Maneuvers around KBFI: (KBFI -> KBFI)",
     "instructor": "Emily Stednitz",
     "passengers": [],
     "notes": "RFS Flight Lesson 23: short + soft takeoff/landings, unusual attitudes"
@@ -502,7 +502,7 @@
     "day_fullstop_landings": 1,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": null,
+    "route": "Maneuvers around KBFI: (KBFI -> KBFI)",
     "instructor": "Emily Stednitz",
     "passengers": [],
     "notes": "RFS Flight Lesson 23: Short + soft field takeoff/landings"
@@ -523,7 +523,7 @@
     "day_fullstop_landings": 1,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": null,
+    "route": "Maneuvers around KBFI: (KBFI -> KBFI)",
     "instructor": "Emily Stednitz",
     "passengers": [
       "Richard Zhang"
@@ -546,7 +546,7 @@
     "day_fullstop_landings": 1,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": null,
+    "route": "Maneuvers around KBFI: (KBFI -> KBFI)",
     "instructor": "Emily Stednitz",
     "passengers": [],
     "notes": "RFS Flight Lesson 23: Performance takeoffs/landing, hood work, unusual attitudes"
@@ -567,7 +567,7 @@
     "day_fullstop_landings": 1,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": null,
+    "route": "Maneuvers around KBFI: (KBFI -> KBFI)",
     "instructor": "Jaimason Sunderman",
     "passengers": [],
     "notes": "Stage 2 check fail. Big lesson about being prepared."
@@ -588,7 +588,7 @@
     "day_fullstop_landings": 1,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": null,
+    "route": "Maneuvers around KBFI: (KBFI -> KBFI)",
     "instructor": "Emily Stednitz",
     "passengers": [],
     "notes": "RFS Flight Lesson 25: Abnormal/Emergency descents, steep turns, unusual attitudes, performance takeoff and landings"
@@ -609,7 +609,7 @@
     "day_fullstop_landings": 0,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": null,
+    "route": "Maneuvers around KBFI: (KBFI -> KBFI)",
     "instructor": "Emily Stednitz",
     "passengers": [
       "Caleb Lee"
@@ -632,7 +632,7 @@
     "day_fullstop_landings": 1,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": null,
+    "route": "Maneuvers around KBFI: (KBFI -> KBFI)",
     "instructor": "Emily Stednitz",
     "passengers": [],
     "notes": "Slow flight, stalls, emergency procedures, 61.87 (d), normal/soft/no-flap landing"
@@ -653,7 +653,7 @@
     "day_fullstop_landings": 1,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": null,
+    "route": "Maneuvers around KBFI: (KBFI -> KBFI)",
     "instructor": "Cailee Landis",
     "passengers": [],
     "notes": "Landings/takeoff"
@@ -674,7 +674,7 @@
     "day_fullstop_landings": 1,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": null,
+    "route": "Maneuvers around KBFI: (KBFI -> KBFI)",
     "instructor": "Cailee Landis",
     "passengers": [],
     "notes": "RFS Flight Lesson 4: Developing Confidence. First lesson back in Seattle and at KBFI"
@@ -695,7 +695,7 @@
     "day_fullstop_landings": 1,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": null,
+    "route": "Maneuvers around KBFI: (KBFI -> KBFI)",
     "instructor": "Matthew Kopiko",
     "passengers": [],
     "notes": "San Carlos Lesson 4B: Traffic pattern normal approach; 4C: Landing. Last lesson at San Carlos"
@@ -716,7 +716,7 @@
     "day_fullstop_landings": 0,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": null,
+    "route": "Maneuvers around KBFI: (KBFI -> KBFI)",
     "instructor": "Matthew Kopiko",
     "passengers": [],
     "notes": "San Carlos 4G: Traffic Pattern and Normal Ops; 4C: Landing"
@@ -737,7 +737,7 @@
     "day_fullstop_landings": 0,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": null,
+    "route": "Maneuvers around KBFI: (KBFI -> KBFI)",
     "instructor": "Daniel Stellini",
     "passengers": [],
     "notes": "San Carlos 3G Progress check pass!"
@@ -758,7 +758,7 @@
     "day_fullstop_landings": 0,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": null,
+    "route": "Maneuvers around KBFI: (KBFI -> KBFI)",
     "instructor": "Daniel Stellini",
     "passengers": [
       "Olga Davidov"
@@ -781,7 +781,7 @@
     "day_fullstop_landings": 0,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": null,
+    "route": "Maneuvers around KBFI: (KBFI -> KBFI)",
     "instructor": "Matthew Kopiko",
     "passengers": [],
     "notes": "San Carlos 3F: Steep turns and slips"
@@ -802,7 +802,7 @@
     "day_fullstop_landings": 0,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": null,
+    "route": "Maneuvers around KBFI: (KBFI -> KBFI)",
     "instructor": "Matthew Kopiko",
     "passengers": [],
     "notes": "San Carlos Lesson 3E: Ground Reference Maneuvers"
@@ -823,7 +823,7 @@
     "day_fullstop_landings": 0,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": null,
+    "route": "Maneuvers around KBFI: (KBFI -> KBFI)",
     "instructor": "Matthew Kopiko",
     "passengers": [],
     "notes": "San Carlos 3G: Power On/Off Stalls"
@@ -844,7 +844,7 @@
     "day_fullstop_landings": 0,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": null,
+    "route": "Maneuvers around KBFI: (KBFI -> KBFI)",
     "instructor": "Matthew Kopiko",
     "passengers": [],
     "notes": "San Carlos 3B: Slow Flight"
@@ -865,7 +865,7 @@
     "day_fullstop_landings": 0,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": null,
+    "route": "Maneuvers around KBFI: (KBFI -> KBFI)",
     "instructor": "Matthew Kopiko",
     "passengers": [],
     "notes": "San Carlos Lesson 2D: Ground Operations; 2E: Takeoff"
@@ -886,7 +886,7 @@
     "day_fullstop_landings": 0,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": null,
+    "route": "Maneuvers around KBFI: (KBFI -> KBFI)",
     "instructor": "Matthew Kopiko",
     "passengers": [],
     "notes": "San Carlos Lesson 2B-4: Fundamentals; 2D-F: Ground Operations"
@@ -907,7 +907,7 @@
     "day_fullstop_landings": 0,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": null,
+    "route": "Maneuvers around KBFI: (KBFI -> KBFI)",
     "instructor": "Matthew Kopiko",
     "passengers": [],
     "notes": "Basic controls/stability. San Carlos Lesson 2A & 2C"
@@ -928,7 +928,7 @@
     "day_fullstop_landings": 1,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": null,
+    "route": "Maneuvers around KBFI: (KBFI -> KBFI)",
     "instructor": "Erika Bengard",
     "passengers": [],
     "notes": "Maneuver Demonstrations. Last flight at KRNT, 5 days later in SF"
@@ -949,7 +949,7 @@
     "day_fullstop_landings": 1,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": null,
+    "route": "Maneuvers around KBFI: (KBFI -> KBFI)",
     "instructor": "Erika Bengard",
     "passengers": [],
     "notes": "Steep turns, slow flight, performance landings"
@@ -970,7 +970,7 @@
     "day_fullstop_landings": 1,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": null,
+    "route": "Maneuvers around KBFI: (KBFI -> KBFI)",
     "instructor": "Erika Bengard",
     "passengers": [],
     "notes": "Abnormal Emergencies"
@@ -991,7 +991,7 @@
     "day_fullstop_landings": 0,
     "night_landings": 0,
     "night_fullstop_landings": 2,
-    "route": null,
+    "route": "Maneuvers around KBFI: (KBFI -> KBFI)",
     "instructor": "Erika Bengard",
     "passengers": [],
     "notes": "Night XC, landings to full stop"
@@ -1012,7 +1012,7 @@
     "day_fullstop_landings": 1,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": null,
+    "route": "Maneuvers around KBFI: (KBFI -> KBFI)",
     "instructor": "Erika Bengard",
     "passengers": [],
     "notes": "VFR into IMC, Emergency Review, Performance landings"
@@ -1033,7 +1033,7 @@
     "day_fullstop_landings": 0,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": null,
+    "route": "Maneuvers around KBFI: (KBFI -> KBFI)",
     "instructor": "Erika Bengard",
     "passengers": [],
     "notes": "XC to Friday Harbor! No landings to due winds :("
@@ -1054,7 +1054,7 @@
     "day_fullstop_landings": 1,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": null,
+    "route": "Maneuvers around KBFI: (KBFI -> KBFI)",
     "instructor": "Erika Bengard",
     "passengers": [],
     "notes": "Pre solo warmup!"
@@ -1075,7 +1075,7 @@
     "day_fullstop_landings": 1,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": null,
+    "route": "Maneuvers around KBFI: (KBFI -> KBFI)",
     "instructor": null,
     "passengers": [],
     "notes": "First Solo!!"
@@ -1096,7 +1096,7 @@
     "day_fullstop_landings": 0,
     "night_landings": 0,
     "night_fullstop_landings": 8,
-    "route": null,
+    "route": "Maneuvers around KBFI: (KBFI -> KBFI)",
     "instructor": "Erika Bengard",
     "passengers": [],
     "notes": "All 2.1 hrs nighttime and all 8 landings to full stop. Night time landings."
@@ -1117,7 +1117,7 @@
     "day_fullstop_landings": 1,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": null,
+    "route": "Maneuvers around KBFI: (KBFI -> KBFI)",
     "instructor": "Erika Bengard",
     "passengers": [],
     "notes": "RFS Flight Lesson 28: Basic VFR into IMC"
@@ -1138,7 +1138,7 @@
     "day_fullstop_landings": 1,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": null,
+    "route": "Maneuvers around KBFI: (KBFI -> KBFI)",
     "instructor": "Erika Bengard",
     "passengers": [],
     "notes": "Performance Takeoffs + Landings"
@@ -1159,7 +1159,7 @@
     "day_fullstop_landings": 1,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": null,
+    "route": "Maneuvers around KBFI: (KBFI -> KBFI)",
     "instructor": "Kevin Lamp",
     "passengers": [],
     "notes": "RFS Stage 1 Check pass!"
@@ -1180,7 +1180,7 @@
     "day_fullstop_landings": 1,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": null,
+    "route": "Maneuvers around KBFI: (KBFI -> KBFI)",
     "instructor": "Erika Bengard",
     "passengers": [],
     "notes": "RFS Flight Lesson 20: Single Pilot Resource Management"
@@ -1201,7 +1201,7 @@
     "day_fullstop_landings": 1,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": null,
+    "route": "Maneuvers around KBFI: (KBFI -> KBFI)",
     "instructor": "Erika Bengard",
     "passengers": [],
     "notes": "Emergencies + Slips"
@@ -1222,7 +1222,7 @@
     "day_fullstop_landings": 1,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": null,
+    "route": "Maneuvers around KBFI: (KBFI -> KBFI)",
     "instructor": "Erika Bengard",
     "passengers": [],
     "notes": "Landings + Effects of Wind (Ground Ref)"
@@ -1243,7 +1243,7 @@
     "day_fullstop_landings": 1,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": null,
+    "route": "Maneuvers around KBFI: (KBFI -> KBFI)",
     "instructor": "Erika Bengard",
     "passengers": [],
     "notes": "Landings and Go Arounds"
@@ -1264,7 +1264,7 @@
     "day_fullstop_landings": 1,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": null,
+    "route": "Maneuvers around KBFI: (KBFI -> KBFI)",
     "instructor": "Rafael Urrea",
     "passengers": [],
     "notes": "Landings/Go Arounds. Last lesson with Rafael :("
@@ -1285,7 +1285,7 @@
     "day_fullstop_landings": 1,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": null,
+    "route": "Maneuvers around KBFI: (KBFI -> KBFI)",
     "instructor": "Rafael Urrea",
     "passengers": [],
     "notes": "Power on/off stalls, steep turns, slow flight, emergency procedures, turns around a point, and landings"
@@ -1306,7 +1306,7 @@
     "day_fullstop_landings": 1,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": null,
+    "route": "Maneuvers around KBFI: (KBFI -> KBFI)",
     "instructor": "Erika Bengard",
     "passengers": [],
     "notes": "Landings, slips"
@@ -1327,7 +1327,7 @@
     "day_fullstop_landings": 1,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": null,
+    "route": "Maneuvers around KBFI: (KBFI -> KBFI)",
     "instructor": "Carlos Lazo",
     "passengers": [],
     "notes": "RFS Flight Lesson 14: Review for Solo I. Proficiency, maneuvers, and landing w/ Carlos."
@@ -1348,7 +1348,7 @@
     "day_fullstop_landings": 1,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": null,
+    "route": "Maneuvers around KBFI: (KBFI -> KBFI)",
     "instructor": "Erika Bengard",
     "passengers": [],
     "notes": "RFS Flight Lesson 7: The Traffic Pattern"
@@ -1369,7 +1369,7 @@
     "day_fullstop_landings": 1,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": null,
+    "route": "Maneuvers around KBFI: (KBFI -> KBFI)",
     "instructor": "Rafael Urrea",
     "passengers": [],
     "notes": "RFS Flight Lesson 15: Review For Solo II"
@@ -1390,7 +1390,7 @@
     "day_fullstop_landings": 1,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": null,
+    "route": "Maneuvers around KBFI: (KBFI -> KBFI)",
     "instructor": "Rafael Urrea",
     "passengers": [],
     "notes": "RFS Flight Lesson 11: Emergency Landings"
@@ -1411,7 +1411,7 @@
     "day_fullstop_landings": 1,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": null,
+    "route": "Maneuvers around KBFI: (KBFI -> KBFI)",
     "instructor": "Rafael Urrea",
     "passengers": [],
     "notes": "RFS Flight Lesson 7: The Traffic Pattern"
@@ -1432,7 +1432,7 @@
     "day_fullstop_landings": 1,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": null,
+    "route": "Maneuvers around KBFI: (KBFI -> KBFI)",
     "instructor": "Micky Yevgrafov",
     "passengers": [],
     "notes": "Ground Ref, flew around the whole time looking for a spot to do it..."
@@ -1453,7 +1453,7 @@
     "day_fullstop_landings": 0,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": null,
+    "route": "Maneuvers around KBFI: (KBFI -> KBFI)",
     "instructor": "Rafael Urrea",
     "passengers": [],
     "notes": "RFS Flight Lesson 7: The Traffic Pattern"
@@ -1474,7 +1474,7 @@
     "day_fullstop_landings": 0,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": null,
+    "route": "Maneuvers around KBFI: (KBFI -> KBFI)",
     "instructor": "Rafael Urrea",
     "passengers": [],
     "notes": "RFS Flight Lesson 8: Effects of Wind"
@@ -1495,7 +1495,7 @@
     "day_fullstop_landings": 0,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": null,
+    "route": "Maneuvers around KBFI: (KBFI -> KBFI)",
     "instructor": "Rafael Urrea",
     "passengers": [],
     "notes": "RFS Flight Lesson 13: Exploring the Envelope"
@@ -1516,7 +1516,7 @@
     "day_fullstop_landings": 0,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": null,
+    "route": "Maneuvers around KBFI: (KBFI -> KBFI)",
     "instructor": "Rafael Urrea",
     "passengers": [],
     "notes": "RFS Flight Lesson 4: Developing Confidence"
@@ -1537,7 +1537,7 @@
     "day_fullstop_landings": 0,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": null,
+    "route": "Maneuvers around KBFI: (KBFI -> KBFI)",
     "instructor": "Kevin Lamp",
     "passengers": [],
     "notes": "RFS Flight Lesson 4: Developing Confidence"
@@ -1558,7 +1558,7 @@
     "day_fullstop_landings": 0,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": [],
+    "route": "Maneuvers around KBFI: (KBFI -> KBFI)",
     "instructor": "Tyler Tentschert",
     "passengers": [],
     "notes": "FL1 Orientation RFS"
@@ -1579,7 +1579,7 @@
     "day_fullstop_landings": 2,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": [],
+    "route": "Maneuvers around KBFI: (KBFI -> KBFI)",
     "instructor": "Brandon Gockel",
     "passengers": [],
     "notes": "Discovery Flight #2"
@@ -1600,7 +1600,7 @@
     "day_fullstop_landings": 1,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": [],
+    "route": "Maneuvers around KBFI: (KBFI -> KBFI)",
     "instructor": "Brandon Gockel",
     "passengers": [],
     "notes": "Discovery Flight"
