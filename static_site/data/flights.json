@@ -290,7 +290,7 @@
     "day_fullstop_landings": 3,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": "Maneuvers around Boeing Field: (KBFI -> KBFI)",
+    "route": "Boeing Field - Scappoose - Olympia: (KBFI -> KSPB -> KOLM -> KBFI)",
     "instructor": null,
     "passengers": [],
     "notes": "Long XC Solo KBFI -> KSPB -> KOLM -> BKFI. All full stop landings."
@@ -355,7 +355,7 @@
     "day_fullstop_landings": 2,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": "Maneuvers around Boeing Field: (KBFI -> KBFI)",
+    "route": "Boeing Field - Port Angeles: (KBFI -> KCLM -> KBFI)",
     "instructor": null,
     "passengers": [],
     "notes": "First XC Solo flight to Port Angeles!"
