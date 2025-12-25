@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from flights.models import Flight, Ground, Simulator, SimulatorFlight
+from flights.models import Flight, Ground, SimulatorFlight
 
 
 class FlightAdmin(admin.ModelAdmin):
@@ -27,16 +27,6 @@ class GroundAdmin(admin.ModelAdmin):
         "date",
         "ground_time",
         "subject",
-    )
-
-
-class SimulatorAdmin(admin.ModelAdmin):
-    list_display = (
-        "__str__",
-        "pilot",
-        "date",
-        "sim_time",
-        "plane",
     )
 
 
