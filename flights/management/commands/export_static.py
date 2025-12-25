@@ -118,7 +118,7 @@ class Command(BaseCommand):
                 'day_fullstop_landings': flight.day_fullstop_landings,
                 'night_landings': flight.night_landings,
                 'night_fullstop_landings': flight.night_fullstop_landings,
-                'route': flight.route,
+                'route': str(flight.route),
                 'instructor': str(flight.instructor) if flight.instructor else None,
                 'passengers': [str(p) for p in flight.passengers.all()],
                 'notes': flight.notes,
