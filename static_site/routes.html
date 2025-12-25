@@ -1,0 +1,224 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Routes Map - Flight Logbook</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    
+    <link rel="stylesheet" href="assets/css/dashboard.css">
+    
+
+    
+<!-- Leaflet CSS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""/>
+<style>
+    #map {
+        height: 600px;
+        width: 100%;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .route-info {
+        background-color: #f8f9fa;
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+    }
+</style>
+
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            
+            <a class="navbar-brand" href="index.html">Flight Logbook</a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        
+                        <a class="nav-link " href="index.html">Dashboard</a>
+                        
+                    </li>
+                    <li class="nav-item">
+                        
+                        <a class="nav-link " href="logbook.html">Logbook</a>
+                        
+                    </li>
+                    <li class="nav-item">
+                        
+                        <a class="nav-link active" href="routes.html">Routes</a>
+                        
+                    </li>
+                    
+                </ul>
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://github.com/beirern/flight-logbook" target="_blank" rel="noopener noreferrer" title="View on GitHub">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-github" viewBox="0 0 16 16">
+                                <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.19 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8"/>
+                            </svg>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container-fluid py-4">
+        
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Flight Routes Map</h1>
+        
+        <small class="text-muted">Last updated: 2025-12-25 21:00:32Z</small>
+        
+    </div>
+
+    
+    <div class="route-info">
+        <p class="mb-0">
+            <strong>Showing unique routes:</strong>
+            <span id="route-count">Loading...</span>
+        </p>
+    </div>
+
+    <div id="map"></div>
+    
+</div>
+
+    </main>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+    <!-- Chart.js Date Adapter -->
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3.0.0/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+
+    <!-- Chart.js Annotation Plugin -->
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.0.1/dist/chartjs-plugin-annotation.min.js"></script>
+
+    
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+        crossorigin=""></script>
+
+<script>
+    // Initialize the map
+    const map = L.map('map').setView([47.6062, -122.3321], 8); // Default to Seattle area
+
+    // Add OpenStreetMap tiles
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        maxZoom: 19
+    }).addTo(map);
+
+    // Parse routes data from Django template
+    
+    // In static mode, fetch from JSON file
+    fetch('data/routes.json')
+        .then(response => response.json())
+        .then(routes => {
+            renderRoutes(routes);
+        })
+        .catch(error => {
+            console.error('Error loading routes:', error);
+        });
+    
+
+    function renderRoutes(routes) {
+        if (!routes || routes.length === 0) {
+            document.getElementById('route-count').textContent = '0';
+            return;
+        }
+
+        document.getElementById('route-count').textContent = routes.length;
+
+        // Create a bounds object to fit all routes
+        const bounds = L.latLngBounds();
+
+        // Define colors for routes (cycling through them)
+        const colors = ['#3388ff', '#ff6b6b', '#4ecdc4', '#45b7d1', '#f9ca24', '#6c5ce7', '#fd79a8'];
+
+        routes.forEach((route, index) => {
+            if (!route.waypoints || route.waypoints.length === 0) {
+                return;
+            }
+
+            const color = colors[index % colors.length];
+
+            // Create coordinates array for the polyline
+            const coordinates = route.waypoints.map(wp => [wp.lat, wp.lon]);
+
+            // Add route line
+            const polyline = L.polyline(coordinates, {
+                color: color,
+                weight: 3,
+                opacity: 0.7
+            }).addTo(map);
+
+            // Bind tooltip (hover) and popup (click) to the polyline with flight count
+            const flightText = route.flight_count === 1 ? 'flight' : 'flights';
+            const tooltipContent = `${route.name} (${route.flight_count} ${flightText})`;
+            const popupContent = `
+                <strong>${route.name}</strong><br>
+                <small>Flown ${route.flight_count} ${flightText}</small>
+            `;
+
+            polyline.bindTooltip(tooltipContent);
+            polyline.bindPopup(popupContent);
+
+            // Add markers for waypoints
+            route.waypoints.forEach((waypoint, wpIndex) => {
+                const marker = L.circleMarker([waypoint.lat, waypoint.lon], {
+                    radius: 6,
+                    fillColor: color,
+                    color: '#fff',
+                    weight: 2,
+                    opacity: 1,
+                    fillOpacity: 0.8
+                }).addTo(map);
+
+                const visitText = waypoint.visit_count === 1 ? 'visit' : 'visits';
+                const markerTooltip = `${waypoint.code} (${waypoint.visit_count} ${visitText})`;
+                const markerPopup = `
+                    <strong>${waypoint.code}</strong><br>
+                    ${waypoint.name}<br>
+                    <small>${waypoint.lat.toFixed(4)}, ${waypoint.lon.toFixed(4)}</small><br>
+                    <small><strong>${waypoint.visit_count}</strong> ${visitText}</small>
+                `;
+
+                marker.bindTooltip(markerTooltip);
+                marker.bindPopup(markerPopup);
+
+                // Extend bounds
+                bounds.extend([waypoint.lat, waypoint.lon]);
+            });
+        });
+
+        // Fit map to show all routes
+        if (bounds.isValid()) {
+            map.fitBounds(bounds, { padding: [50, 50] });
+        }
+    }
+</script>
+
+</body>
+</html>
