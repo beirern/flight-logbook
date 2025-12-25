@@ -3,6 +3,7 @@ from django.db import models
 
 from pilots.models import Pilot
 from planes.models import Plane, Simulator
+from routes.models import Route
 
 
 # Create your models here.
@@ -23,7 +24,7 @@ class Flight(models.Model):
     time_end = models.TimeField(null=True, blank=True)
     flight_time = models.DecimalField(max_digits=19, decimal_places=1)
     plane = models.ForeignKey(Plane, on_delete=models.CASCADE)
-    route = models.JSONField(null=True, blank=True)
+    route = models.ForeignKey(Route, on_delete=models.CASCADE)
     pic_time = models.DecimalField(max_digits=19, decimal_places=1)
     sic_time = models.DecimalField(max_digits=19, decimal_places=1)
     flight_training_received = models.DecimalField(max_digits=19, decimal_places=1)
@@ -40,7 +41,7 @@ class Flight(models.Model):
     duration = models.DurationField(null=True, blank=True)
 
     def __str__(self):
-        return f"{self.date}: {self.plane} {self.flight_time}"
+        return f"{self.date}: {self.plane} {self.flight_time} {self.route}"
 
 
 class Ground(models.Model):
@@ -61,7 +62,7 @@ class Ground(models.Model):
         return f"{self.date}: {self.subject} {self.ground_time}"
 
 
-class Simulator(models.Model):
+class SimulatorFlight(models.Model):
     pilot = models.ForeignKey(
         Pilot, related_name="as_sim_pilot", on_delete=models.CASCADE
     )
@@ -73,7 +74,7 @@ class Simulator(models.Model):
     time_end = models.TimeField(null=True, blank=True)
     sim_time = models.DecimalField(max_digits=19, decimal_places=1)
     plane = models.ForeignKey(Simulator, on_delete=models.CASCADE)
-    route = models.JSONField(null=True, blank=True)
+    route = models.ForeignKey(Route, on_delete=models.CASCADE)
     simulated_instrument_time = models.DecimalField(
         max_digits=19,
         decimal_places=1,

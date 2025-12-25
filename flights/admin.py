@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from flights.models import Flight, Ground, Simulator
+from flights.models import Flight, Ground, SimulatorFlight
 
 
 class FlightAdmin(admin.ModelAdmin):
@@ -8,6 +8,7 @@ class FlightAdmin(admin.ModelAdmin):
         "__str__",
         "pilot",
         "date",
+        "route",
         "flight_time",
         "plane",
         "pic_time",
@@ -42,4 +43,4 @@ class SimulatorAdmin(admin.ModelAdmin):
 # Register your models here.
 admin.site.register(Flight, FlightAdmin)
 admin.site.register(Ground, GroundAdmin)
-admin.site.register(Simulator, SimulatorAdmin)
+admin.site.register(SimulatorFlight, SimulatorAdmin)
