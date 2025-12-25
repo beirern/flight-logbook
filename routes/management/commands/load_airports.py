@@ -8,7 +8,7 @@ Usage:
 from django.core.management.base import BaseCommand
 import csv
 
-from airports.models import Airport
+from routes.models import Airport
 
 
 class Command(BaseCommand):
