@@ -32,6 +32,7 @@ class Command(BaseCommand):
                     name = row["name"]
                     latitude = float(row["latitude_deg"])
                     longitude = float(row["longitude_deg"])
+                    country = row["iso_country"]
                     municipality = row["municipality"]
                     if row["icao_code"]:
                         code = row["icao_code"]
@@ -44,6 +45,7 @@ class Command(BaseCommand):
                             name=name,
                             latitude=latitude,
                             longitude=longitude,
+                            country=country,
                             municipality=municipality,
                         )
                     )
@@ -74,6 +76,7 @@ class Command(BaseCommand):
             or not row["latitude_deg"]
             or not row["longitude_deg"]
             or not row["municipality"]
+            or not row["iso_country"]
         ):
             return False
         return True
