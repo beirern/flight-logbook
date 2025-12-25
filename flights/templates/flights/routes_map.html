@@ -1,0 +1,163 @@
+{% extends "flights/base.html" %}
+
+{% block title %}Routes Map - Flight Logbook{% endblock %}
+
+{% block nav_routes %}active{% endblock %}
+
+{% block extra_css %}
+<!-- Leaflet CSS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""/>
+<style>
+    #map {
+        height: 600px;
+        width: 100%;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    .route-info {
+        background-color: #f8f9fa;
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Flight Routes Map</h1>
+        {% if is_static and last_updated %}
+        <small class="text-muted">Last updated: {{ last_updated }}Z</small>
+        {% endif %}
+    </div>
+
+    {% if error %}
+    <div class="alert alert-warning" role="alert">
+        {{ error }}
+    </div>
+    {% else %}
+    <div class="route-info">
+        <p class="mb-0">
+            <strong>Showing unique routes:</strong>
+            <span id="route-count">Loading...</span>
+        </p>
+    </div>
+
+    <div id="map"></div>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+        crossorigin=""></script>
+
+<script>
+    // Initialize the map
+    const map = L.map('map').setView([47.6062, -122.3321], 8); // Default to Seattle area
+
+    // Add OpenStreetMap tiles
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        maxZoom: 19
+    }).addTo(map);
+
+    // Parse routes data from Django template
+    {% if is_static %}
+    // In static mode, fetch from JSON file
+    fetch('data/routes.json')
+        .then(response => response.json())
+        .then(routes => {
+            renderRoutes(routes);
+        })
+        .catch(error => {
+            console.error('Error loading routes:', error);
+        });
+    {% else %}
+    // In Django mode, use template variable
+    const routes = {{ routes_json|safe }};
+    renderRoutes(routes);
+    {% endif %}
+
+    function renderRoutes(routes) {
+        if (!routes || routes.length === 0) {
+            document.getElementById('route-count').textContent = '0';
+            return;
+        }
+
+        document.getElementById('route-count').textContent = routes.length;
+
+        // Create a bounds object to fit all routes
+        const bounds = L.latLngBounds();
+
+        // Define colors for routes (cycling through them)
+        const colors = ['#3388ff', '#ff6b6b', '#4ecdc4', '#45b7d1', '#f9ca24', '#6c5ce7', '#fd79a8'];
+
+        routes.forEach((route, index) => {
+            if (!route.waypoints || route.waypoints.length === 0) {
+                return;
+            }
+
+            const color = colors[index % colors.length];
+
+            // Create coordinates array for the polyline
+            const coordinates = route.waypoints.map(wp => [wp.lat, wp.lon]);
+
+            // Add route line
+            const polyline = L.polyline(coordinates, {
+                color: color,
+                weight: 3,
+                opacity: 0.7
+            }).addTo(map);
+
+            // Bind tooltip (hover) and popup (click) to the polyline with flight count
+            const flightText = route.flight_count === 1 ? 'flight' : 'flights';
+            const tooltipContent = `${route.name} (${route.flight_count} ${flightText})`;
+            const popupContent = `
+                <strong>${route.name}</strong><br>
+                <small>Flown ${route.flight_count} ${flightText}</small>
+            `;
+
+            polyline.bindTooltip(tooltipContent);
+            polyline.bindPopup(popupContent);
+
+            // Add markers for waypoints
+            route.waypoints.forEach((waypoint, wpIndex) => {
+                const marker = L.circleMarker([waypoint.lat, waypoint.lon], {
+                    radius: 6,
+                    fillColor: color,
+                    color: '#fff',
+                    weight: 2,
+                    opacity: 1,
+                    fillOpacity: 0.8
+                }).addTo(map);
+
+                const visitText = waypoint.visit_count === 1 ? 'visit' : 'visits';
+                const markerTooltip = `${waypoint.code} (${waypoint.visit_count} ${visitText})`;
+                const markerPopup = `
+                    <strong>${waypoint.code}</strong><br>
+                    ${waypoint.name}<br>
+                    <small>${waypoint.lat.toFixed(4)}, ${waypoint.lon.toFixed(4)}</small><br>
+                    <small><strong>${waypoint.visit_count}</strong> ${visitText}</small>
+                `;
+
+                marker.bindTooltip(markerTooltip);
+                marker.bindPopup(markerPopup);
+
+                // Extend bounds
+                bounds.extend([waypoint.lat, waypoint.lon]);
+            });
+        });
+
+        // Fit map to show all routes
+        if (bounds.isValid()) {
+            map.fitBounds(bounds, { padding: [50, 50] });
+        }
+    }
+</script>
+{% endblock %}

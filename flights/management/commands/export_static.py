@@ -31,6 +31,7 @@ from flights.utils.statistics import (
     get_total_times,
 )
 from pilots.models import Pilot
+from routes.models import Route
 
 
 class Command(BaseCommand):
@@ -191,6 +192,62 @@ class Command(BaseCommand):
 
         self.stdout.write(self.style.SUCCESS('  ✓ Exported leaderboards'))
 
+        # Export routes data for map
+        flights_with_routes = Flight.objects.filter(pilot=pilot).select_related('route').prefetch_related('route__waypoints')
+        unique_routes = {}
+        route_counts = {}
+        airport_visits = {}
+
+        for flight in flights_with_routes:
+            if flight.route:
+                route_id = flight.route.id
+
+                # Count flights for this route
+                route_counts[route_id] = route_counts.get(route_id, 0) + 1
+
+                # Count airport visits for this flight
+                waypoints = flight.route.waypoints.all()
+                for waypoint in waypoints:
+                    airport_visits[waypoint.code] = airport_visits.get(waypoint.code, 0) + 1
+
+                if route_id not in unique_routes:
+                    route = flight.route
+                    waypoints = route.waypoints.all().order_by('routewaypoint__sequence')
+
+                    waypoints_data = []
+                    for waypoint in waypoints:
+                        if waypoint.latitude and waypoint.longitude:
+                            waypoints_data.append({
+                                'code': waypoint.code,
+                                'name': waypoint.name,
+                                'lat': float(waypoint.latitude),
+                                'lon': float(waypoint.longitude),
+                                'visit_count': 0,  # Will be updated below
+                            })
+
+                    if waypoints_data:
+                        unique_routes[route_id] = {
+                            'id': route.id,
+                            'name': route.name,
+                            'waypoints': waypoints_data,
+                            'flight_count': 0,  # Will be updated below
+                        }
+
+        # Add flight counts to unique routes
+        for route_id in unique_routes:
+            unique_routes[route_id]['flight_count'] = route_counts.get(route_id, 0)
+
+            # Add visit counts to waypoints
+            for waypoint in unique_routes[route_id]['waypoints']:
+                waypoint['visit_count'] = airport_visits.get(waypoint['code'], 0)
+
+        routes_list = list(unique_routes.values())
+
+        with open(data_dir / 'routes.json', 'w') as f:
+            json.dump(routes_list, f, indent=2)
+
+        self.stdout.write(self.style.SUCCESS(f'  ✓ Exported {len(routes_list)} unique routes'))
+
     def _serialize_currency(self, currency):
         """Serialize currency data (convert dates to ISO format)."""
         return {
@@ -276,6 +333,18 @@ class Command(BaseCommand):
             f.write(logbook_html)
 
         self.stdout.write(self.style.SUCCESS('  ✓ Rendered logbook (logbook.html)'))
+
+        # Render routes map
+        routes_context = {
+            'is_static': True,
+            'last_updated': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+        }
+
+        routes_html = render_to_string('flights/routes_map.html', routes_context)
+        with open(output_dir / 'routes.html', 'w') as f:
+            f.write(routes_html)
+
+        self.stdout.write(self.style.SUCCESS('  ✓ Rendered routes map (routes.html)'))
 
     def _copy_static_assets(self, output_dir):
         """Copy static assets (CSS, JS, images) to output directory."""
