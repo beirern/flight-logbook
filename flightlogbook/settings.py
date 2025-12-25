@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     "medicals.apps.MedicalsConfig",
     "pilots.apps.PilotsConfig",
     "planes.apps.PlanesConfig",
+    "airports.apps.AirportsConfig",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
