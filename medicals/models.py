@@ -1,7 +1,6 @@
 from django.db import models
 
 
-# Create your models here.
 class Medical(models.Model):
     class ClassNumbers(models.IntegerChoices):
         FIRST = 1

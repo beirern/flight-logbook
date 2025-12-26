@@ -3,7 +3,6 @@ from medicals.models import Medical
 from licenses.models import License
 
 
-# Create your models here.
 class Pilot(models.Model):
     class RoleChoices(models.TextChoices):
         PILOT = "PI"
