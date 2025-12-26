@@ -20,6 +20,9 @@ from flights.models import Flight
 from flights.utils.currency_calculator import check_medical_status, check_passenger_currency
 from flights.utils.statistics import (
     get_aircraft_breakdown,
+    get_aircraft_class_breakdown,
+    get_aircraft_highlights,
+    get_aircraft_type_statistics,
     get_commercial_license_progress,
     get_cumulative_time_data,
     get_days_since_last_flight,
@@ -29,6 +32,7 @@ from flights.utils.statistics import (
     get_monthly_breakdown,
     get_passenger_leaderboard,
     get_recent_flights,
+    get_sel_total_hours,
     get_total_times,
 )
 from pilots.models import Pilot
@@ -212,6 +216,20 @@ class Command(BaseCommand):
 
         self.stdout.write(self.style.SUCCESS('  ✓ Exported leaderboards'))
 
+        # Export aircraft statistics
+        aircraft_stats = {
+            'sel_hours': get_sel_total_hours(pilot),
+            'class_breakdown': get_aircraft_class_breakdown(pilot),
+            'type_stats': get_aircraft_type_statistics(pilot),
+            'highlights': get_aircraft_highlights(pilot),
+            'aircraft_breakdown': get_aircraft_breakdown(pilot),
+        }
+
+        with open(data_dir / 'aircraft.json', 'w') as f:
+            json.dump(aircraft_stats, f, indent=2)
+
+        self.stdout.write(self.style.SUCCESS('  ✓ Exported aircraft statistics'))
+
         # Export routes data for map
         flights_with_routes = Flight.objects.filter(pilot=pilot).select_related('route').prefetch_related('route__waypoints')
         unique_routes = {}
@@ -312,7 +330,6 @@ class Command(BaseCommand):
         ir_progress = get_instrument_rating_progress(pilot)
         commercial_progress = get_commercial_license_progress(pilot)
         instrument_breakdown = get_instrument_breakdown(pilot)
-        aircraft_breakdown = get_aircraft_breakdown(pilot)
         recent_flights = get_recent_flights(pilot, limit=10)
         days_since_last_flight = get_days_since_last_flight(pilot)
         passenger_leaderboard = get_passenger_leaderboard(pilot, limit=10)
@@ -336,7 +353,6 @@ class Command(BaseCommand):
             'monthly_hours': json.dumps(monthly_hours),
             'instrument_breakdown': instrument_breakdown,
             'cumulative_data': json.dumps(cumulative_data),
-            'aircraft_breakdown': aircraft_breakdown,
             'recent_flights': recent_flights,
             'days_since_last_flight': days_since_last_flight,
             'passenger_leaderboard': passenger_leaderboard,
@@ -377,6 +393,39 @@ class Command(BaseCommand):
             f.write(routes_html)
 
         self.stdout.write(self.style.SUCCESS('  ✓ Rendered routes map (routes.html)'))
+
+        # Render aircraft page
+        sel_hours = get_sel_total_hours(pilot)
+        aircraft_class_breakdown = get_aircraft_class_breakdown(pilot)
+        aircraft_type_statistics = get_aircraft_type_statistics(pilot)
+        aircraft_highlights = get_aircraft_highlights(pilot)
+        aircraft_breakdown = get_aircraft_breakdown(pilot)
+
+        # Prepare chart data
+        class_labels = list(aircraft_class_breakdown.keys())
+        class_hours = [aircraft_class_breakdown[c]['hours'] for c in class_labels]
+
+        type_labels = [stat['type'] for stat in aircraft_type_statistics]
+        type_hours = [stat['hours'] for stat in aircraft_type_statistics]
+
+        aircraft_context = {
+            'sel_hours': sel_hours,
+            'aircraft_class_breakdown': aircraft_class_breakdown,
+            'aircraft_type_statistics': aircraft_type_statistics,
+            'aircraft_highlights': aircraft_highlights,
+            'aircraft_breakdown': aircraft_breakdown,
+            'class_labels': json.dumps(class_labels),
+            'class_hours': json.dumps(class_hours),
+            'type_labels': json.dumps(type_labels),
+            'type_hours': json.dumps(type_hours),
+            'is_static': True,
+        }
+
+        aircraft_html = render_to_string('flights/aircraft.html', aircraft_context)
+        with open(output_dir / 'aircraft.html', 'w') as f:
+            f.write(aircraft_html)
+
+        self.stdout.write(self.style.SUCCESS('  ✓ Rendered aircraft page (aircraft.html)'))
 
     def _copy_static_assets(self, output_dir):
         """Copy static assets (CSS, JS, images) to output directory."""

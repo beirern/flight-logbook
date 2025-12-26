@@ -458,39 +458,6 @@
         </div>
     </div>
 
-    <!-- Aircraft Breakdown -->
-    {% if aircraft_breakdown %}
-    <div class="row mb-4">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-header">
-                    <h5>Aircraft Experience</h5>
-                </div>
-                <div class="card-body">
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>Aircraft</th>
-                                <th>Type</th>
-                                <th>Total Hours</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for aircraft in aircraft_breakdown %}
-                            <tr>
-                                <td>{{ aircraft.tail_number }}</td>
-                                <td>{{ aircraft.type }}</td>
-                                <td>{{ aircraft.hours|floatformat:1 }}</td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-    {% endif %}
-
     <!-- Recent Flights -->
     {% if recent_flights %}
     <div class="row mb-4">

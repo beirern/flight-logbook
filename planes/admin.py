@@ -4,7 +4,7 @@ from planes.models import Plane, Simulator
 
 
 class PlaneAdmin(admin.ModelAdmin):
-    list_display = ("tail_number", "type")
+    list_display = ("tail_number", "type", "plane_class")
 
 
 class SimulatorAdmin(admin.ModelAdmin):

@@ -42,18 +42,26 @@
                     </li>
                     <li class="nav-item">
                         {% if is_static %}
-                        <a class="nav-link {% block nav_logbook %}{% endblock %}" href="logbook.html">Logbook</a>
-                        {% else %}
-                        <a class="nav-link {% if request.resolver_match.url_name == 'logbook' %}active{% endif %}"
-                           href="{% url 'logbook' %}">Logbook</a>
-                        {% endif %}
-                    </li>
-                    <li class="nav-item">
-                        {% if is_static %}
                         <a class="nav-link {% block nav_routes %}{% endblock %}" href="routes.html">Routes</a>
                         {% else %}
                         <a class="nav-link {% if request.resolver_match.url_name == 'routes_map' %}active{% endif %}"
                            href="{% url 'routes_map' %}">Routes</a>
+                        {% endif %}
+                    </li>
+                    <li class="nav-item">
+                        {% if is_static %}
+                        <a class="nav-link {% block nav_aircraft %}{% endblock %}" href="aircraft.html">Aircraft</a>
+                        {% else %}
+                        <a class="nav-link {% if request.resolver_match.url_name == 'aircraft' %}active{% endif %}"
+                           href="{% url 'aircraft' %}">Aircraft</a>
+                        {% endif %}
+                    </li>
+                    <li class="nav-item">
+                        {% if is_static %}
+                        <a class="nav-link {% block nav_logbook %}{% endblock %}" href="logbook.html">Logbook</a>
+                        {% else %}
+                        <a class="nav-link {% if request.resolver_match.url_name == 'logbook' %}active{% endif %}"
+                           href="{% url 'logbook' %}">Logbook</a>
                         {% endif %}
                     </li>
                     {% if not is_static %}

@@ -1,0 +1,285 @@
+{% extends "flights/base.html" %}
+{% load static %}
+
+{% block title %}Aircraft - Flight Logbook{% endblock %}
+{% block nav_aircraft %}active{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <h1 class="mb-4">Aircraft Experience</h1>
+
+    {% if error %}
+    <div class="alert alert-danger">{{ error }}</div>
+    {% else %}
+
+    <!-- SEL Hours Hero Card -->
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h5 class="card-title text-muted">Total SEL Hours</h5>
+                    <h2 class="display-4">{{ sel_hours }}</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Aircraft Class Breakdown Table -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Aircraft Class Breakdown</h5>
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Class</th>
+                                <th>Hours</th>
+                                <th>Flights</th>
+                                <th>Percentage</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for class_name, data in aircraft_class_breakdown.items %}
+                            <tr>
+                                <td>{{ class_name }}</td>
+                                <td>{{ data.hours }}</td>
+                                <td>{{ data.flight_count }}</td>
+                                <td>{{ data.percentage }}%</td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="4" class="text-center">No aircraft data available</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Charts Row -->
+    <div class="row mb-4">
+        <!-- Aircraft Class Pie Chart -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Class Distribution</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="aircraftClassChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Aircraft Type Bar Chart -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Hours by Type</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="aircraftTypeChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Aircraft Highlights -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Aircraft Highlights</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <h6>Most Flown Aircraft</h6>
+                            {% if aircraft_highlights.most_flown %}
+                            <p><strong>{{ aircraft_highlights.most_flown.tail_number }}</strong> ({{ aircraft_highlights.most_flown.type }})<br>
+                            {{ aircraft_highlights.most_flown.hours }} hours</p>
+                            {% else %}
+                            <p>No data</p>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-4">
+                            <h6>Least Flown Aircraft</h6>
+                            {% if aircraft_highlights.least_flown %}
+                            <p><strong>{{ aircraft_highlights.least_flown.tail_number }}</strong> ({{ aircraft_highlights.least_flown.type }})<br>
+                            {{ aircraft_highlights.least_flown.hours }} hours</p>
+                            {% else %}
+                            <p>No data</p>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-4">
+                            <h6>Total Unique Aircraft</h6>
+                            <p class="display-6">{{ aircraft_highlights.total_aircraft }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Aircraft Type Statistics Table -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Aircraft Type Statistics</h5>
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Type</th>
+                                <th>Class</th>
+                                <th>Hours</th>
+                                <th>Flights</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for stat in aircraft_type_statistics %}
+                            <tr>
+                                <td>{{ stat.type }}</td>
+                                <td>{{ stat.plane_class }}</td>
+                                <td>{{ stat.hours }}</td>
+                                <td>{{ stat.flight_count }}</td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="4" class="text-center">No aircraft data available</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Aircraft Experience Table (from Dashboard) -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Aircraft Experience by Tail Number</h5>
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Aircraft</th>
+                                <th>Type</th>
+                                <th>Location</th>
+                                <th>Total Hours</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for aircraft in aircraft_breakdown %}
+                            <tr>
+                                <td>{{ aircraft.tail_number }}</td>
+                                <td>{{ aircraft.type }}</td>
+                                <td>{{ aircraft.location|default:"—" }}</td>
+                                <td>{{ aircraft.hours|floatformat:1 }}</td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="4" class="text-center">No aircraft data available</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Aircraft Class Pie Chart
+    const classCtx = document.getElementById('aircraftClassChart').getContext('2d');
+    new Chart(classCtx, {
+        type: 'pie',
+        data: {
+            labels: {{ class_labels|safe }},
+            datasets: [{
+                data: {{ class_hours|safe }},
+                backgroundColor: [
+                    'rgba(54, 162, 235, 0.6)',   // Blue for SEL
+                    'rgba(75, 192, 192, 0.6)',   // Teal for MEL
+                ],
+                borderColor: [
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(75, 192, 192, 1)',
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return context.label + ': ' + context.parsed + ' hours';
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    // Aircraft Type Horizontal Bar Chart
+    const typeCtx = document.getElementById('aircraftTypeChart').getContext('2d');
+    new Chart(typeCtx, {
+        type: 'bar',
+        data: {
+            labels: {{ type_labels|safe }},
+            datasets: [{
+                label: 'Hours',
+                data: {{ type_hours|safe }},
+                backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            indexAxis: 'y',
+            responsive: true,
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return context.parsed.x + ' hours';
+                        }
+                    }
+                }
+            },
+            scales: {
+                x: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Hours'
+                    }
+                }
+            }
+        }
+    });
+</script>
+{% endblock %}
