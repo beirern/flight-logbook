@@ -17,10 +17,14 @@ from flights.utils.statistics import (
     get_instrument_breakdown,
     get_instrument_rating_progress,
     get_monthly_breakdown,
+    get_monthly_people_frequency,
     get_passenger_leaderboard,
+    get_people_insights,
+    get_people_role_distribution,
     get_recent_flights,
     get_sel_total_hours,
     get_total_times,
+    get_unique_people_counts,
 )
 from pilots.models import Pilot
 from routes.models import Route
@@ -79,8 +83,6 @@ def dashboard(request):
     instrument_breakdown = get_instrument_breakdown(pilot)
     recent_flights = get_recent_flights(pilot, limit=10)
     days_since_last_flight = get_days_since_last_flight(pilot)
-    passenger_leaderboard = get_passenger_leaderboard(pilot, limit=10)
-    instructor_leaderboard = get_instructor_leaderboard(pilot, limit=10)
 
     # Get monthly data for charts
     monthly_data = get_monthly_breakdown(pilot, months=12)
@@ -102,8 +104,6 @@ def dashboard(request):
         'cumulative_data': json.dumps(cumulative_data),
         'recent_flights': recent_flights,
         'days_since_last_flight': days_since_last_flight,
-        'passenger_leaderboard': passenger_leaderboard,
-        'instructor_leaderboard': instructor_leaderboard,
     }
 
     return render(request, 'flights/dashboard.html', context)
@@ -258,3 +258,59 @@ def aircraft(request):
     }
 
     return render(request, 'flights/aircraft.html', context)
+
+
+def people(request):
+    """
+    People page showing statistics about passengers and instructors.
+    """
+    try:
+        pilot = Pilot.objects.get(pk=1)
+    except Pilot.DoesNotExist:
+        return render(request, 'flights/people.html', {
+            'error': 'No pilot found. Please create a pilot in the admin.',
+            'unique_people_counts': {},
+            'people_role_distribution': {},
+            'passenger_leaderboard': [],
+            'instructor_leaderboard': [],
+            'people_insights': {},
+            'monthly_people_data': [],
+        })
+
+    # Gather people statistics
+    unique_people_counts = get_unique_people_counts(pilot)
+    people_role_distribution = get_people_role_distribution(pilot)
+    passenger_leaderboard = get_passenger_leaderboard(pilot, limit=10)
+    instructor_leaderboard = get_instructor_leaderboard(pilot, limit=10)
+    people_insights = get_people_insights(pilot)
+    monthly_people_data = get_monthly_people_frequency(pilot, months=12)
+
+    # Prepare chart data for role distribution pie chart
+    role_labels = ['Solo', 'With Passengers', 'With Instructor']
+    role_counts = [
+        people_role_distribution['solo_flights'],
+        people_role_distribution['passenger_flights'],
+        people_role_distribution['instruction_flights']
+    ]
+
+    # Prepare chart data for monthly trends
+    monthly_labels = [entry['month'] for entry in monthly_people_data]
+    monthly_total_flights = [entry['total_flights'] for entry in monthly_people_data]
+    monthly_passenger_flights = [entry['flights_with_passengers'] for entry in monthly_people_data]
+    monthly_instruction_flights = [entry['flights_with_instruction'] for entry in monthly_people_data]
+
+    context = {
+        'unique_people_counts': unique_people_counts,
+        'people_role_distribution': people_role_distribution,
+        'passenger_leaderboard': passenger_leaderboard,
+        'instructor_leaderboard': instructor_leaderboard,
+        'people_insights': people_insights,
+        'role_labels': json.dumps(role_labels),
+        'role_counts': json.dumps(role_counts),
+        'monthly_labels': json.dumps(monthly_labels),
+        'monthly_total_flights': json.dumps(monthly_total_flights),
+        'monthly_passenger_flights': json.dumps(monthly_passenger_flights),
+        'monthly_instruction_flights': json.dumps(monthly_instruction_flights),
+    }
+
+    return render(request, 'flights/people.html', context)

@@ -1,0 +1,302 @@
+{% extends "flights/base.html" %}
+{% load static %}
+
+{% block title %}People - Flight Logbook{% endblock %}
+{% block nav_people %}active{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <h1 class="mb-4">People</h1>
+
+    {% if error %}
+    <div class="alert alert-danger">{{ error }}</div>
+    {% else %}
+
+    <!-- Hero Stats Row -->
+    <div class="row mb-4">
+        <div class="col-md-3 col-sm-6 mb-3">
+            <div class="card stat-card">
+                <div class="card-body text-center">
+                    <h6 class="card-subtitle mb-2 text-muted">Total Unique People</h6>
+                    <h2 class="card-title">{{ unique_people_counts.total_unique_people }}</h2>
+                    <p class="card-text">people</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6 mb-3">
+            <div class="card stat-card">
+                <div class="card-body text-center">
+                    <h6 class="card-subtitle mb-2 text-muted">Unique Passengers</h6>
+                    <h2 class="card-title">{{ unique_people_counts.unique_passengers }}</h2>
+                    <p class="card-text">passengers</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6 mb-3">
+            <div class="card stat-card">
+                <div class="card-body text-center">
+                    <h6 class="card-subtitle mb-2 text-muted">Unique Instructors</h6>
+                    <h2 class="card-title">{{ unique_people_counts.unique_instructors }}</h2>
+                    <p class="card-text">instructors</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6 mb-3">
+            <div class="card stat-card">
+                <div class="card-body text-center">
+                    <h6 class="card-subtitle mb-2 text-muted">Flights with Others</h6>
+                    <h2 class="card-title">{{ unique_people_counts.total_interactions }}</h2>
+                    <p class="card-text">flights</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Insights Row -->
+    <div class="row mb-4">
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-header bg-info text-white">
+                    <h5>Most Frequent Passenger</h5>
+                </div>
+                <div class="card-body">
+                    {% if people_insights.most_frequent_passenger %}
+                    <p class="mb-1"><strong>{{ people_insights.most_frequent_passenger.pilot.first_name }} {{ people_insights.most_frequent_passenger.pilot.last_name }}</strong></p>
+                    <p class="mb-1">{{ people_insights.most_frequent_passenger.flight_count }} flights &middot; {{ people_insights.most_frequent_passenger.total_time }} hrs</p>
+                    <p class="text-muted mb-0">{{ people_insights.most_frequent_passenger.percentage }}% of all passenger flights</p>
+                    {% else %}
+                    <p class="text-muted">No passengers recorded yet</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-header bg-info text-white">
+                    <h5>Most Frequent Instructor</h5>
+                </div>
+                <div class="card-body">
+                    {% if people_insights.most_frequent_instructor %}
+                    <p class="mb-1"><strong>{{ people_insights.most_frequent_instructor.pilot.first_name }} {{ people_insights.most_frequent_instructor.pilot.last_name }}</strong></p>
+                    <p class="mb-1">{{ people_insights.most_frequent_instructor.flight_count }} flights &middot; {{ people_insights.most_frequent_instructor.total_time }} hrs</p>
+                    <p class="text-muted mb-0">{{ people_insights.most_frequent_instructor.percentage }}% of all instruction flights</p>
+                    {% else %}
+                    <p class="text-muted">No instructors recorded yet</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-header bg-info text-white">
+                    <h5>Flying Patterns</h5>
+                </div>
+                <div class="card-body">
+                    <p class="mb-1"><strong>{{ people_insights.passenger_flight_percentage }}%</strong> of flights have passengers</p>
+                    <p class="mb-0"><strong>{{ people_insights.instruction_flight_percentage }}%</strong> of flights are with an instructor</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Leaderboards Row -->
+    <div class="row mb-4">
+        <!-- Passenger Leaderboard -->
+        <div class="col-md-6 mb-3">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5>Passenger Leaderboard</h5>
+                </div>
+                <div class="card-body">
+                    {% if passenger_leaderboard %}
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>Flights</th>
+                                <th>Total Time</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for entry in passenger_leaderboard %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ entry.pilot.first_name }} {{ entry.pilot.last_name }}</td>
+                                <td>{{ entry.flight_count }}</td>
+                                <td>{{ entry.total_time }} hrs</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    {% else %}
+                    <p class="text-muted">No passengers recorded yet</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Instructor Leaderboard -->
+        <div class="col-md-6 mb-3">
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h5>Instructor Leaderboard</h5>
+                </div>
+                <div class="card-body">
+                    {% if instructor_leaderboard %}
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>Flights</th>
+                                <th>Total Time</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for entry in instructor_leaderboard %}
+                            <tr>
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ entry.pilot.first_name }} {{ entry.pilot.last_name }}</td>
+                                <td>{{ entry.flight_count }}</td>
+                                <td>{{ entry.total_time }} hrs</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    {% else %}
+                    <p class="text-muted">No instructors recorded yet</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Charts Row -->
+    <div class="row mb-4">
+        <!-- Role Distribution Pie Chart -->
+        <div class="col-md-6 mb-3">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Flight Type Distribution</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="roleDistributionChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Monthly Trends Chart -->
+        <div class="col-md-6 mb-3">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Monthly People Interaction Trends</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="monthlyTrendsChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Role Distribution Pie Chart
+    const roleCtx = document.getElementById('roleDistributionChart').getContext('2d');
+    new Chart(roleCtx, {
+        type: 'pie',
+        data: {
+            labels: {{ role_labels|safe }},
+            datasets: [{
+                data: {{ role_counts|safe }},
+                backgroundColor: [
+                    'rgba(108, 117, 125, 0.6)',  // Gray for Solo
+                    'rgba(54, 162, 235, 0.6)',   // Blue for Passengers
+                    'rgba(75, 192, 192, 0.6)',   // Teal for Instruction
+                ],
+                borderColor: [
+                    'rgba(108, 117, 125, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(75, 192, 192, 1)',
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return context.label + ': ' + context.parsed + ' flights';
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    // Monthly Trends Chart
+    const trendsCtx = document.getElementById('monthlyTrendsChart').getContext('2d');
+    new Chart(trendsCtx, {
+        type: 'line',
+        data: {
+            labels: {{ monthly_labels|safe }},
+            datasets: [
+                {
+                    label: 'Total Flights',
+                    data: {{ monthly_total_flights|safe }},
+                    borderColor: 'rgba(108, 117, 125, 1)',
+                    backgroundColor: 'rgba(108, 117, 125, 0.1)',
+                    borderWidth: 2,
+                    tension: 0.1
+                },
+                {
+                    label: 'With Passengers',
+                    data: {{ monthly_passenger_flights|safe }},
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    backgroundColor: 'rgba(54, 162, 235, 0.1)',
+                    borderWidth: 2,
+                    tension: 0.1
+                },
+                {
+                    label: 'With Instructor',
+                    data: {{ monthly_instruction_flights|safe }},
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    backgroundColor: 'rgba(75, 192, 192, 0.1)',
+                    borderWidth: 2,
+                    tension: 0.1
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                },
+                tooltip: {
+                    mode: 'index',
+                    intersect: false
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Number of Flights'
+                    }
+                }
+            }
+        }
+    });
+</script>
+{% endblock %}
