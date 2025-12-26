@@ -1,5 +1,7 @@
 from django.db import models
 
+from pilots.models import Pilot
+
 
 class Medical(models.Model):
     class ClassNumbers(models.IntegerChoices):
@@ -8,11 +10,15 @@ class Medical(models.Model):
         THIRD = 3
 
     classNumber = models.IntegerField(choices=ClassNumbers.choices)
-    expiration_years = models.PositiveSmallIntegerField(null=True, blank=True)
+    number = models.IntegerField()
+    pilot = models.ForeignKey(Pilot, on_delete=models.CASCADE, related_name="medical")
 
     def __str__(self):
+        res = str(self.pilot)
         if self.classNumber == 1:
-            return "First Class"
+            res += " First Class"
         elif self.classNumber == 2:
-            return "Second Class"
-        return "Third Class"
+            res += " Second Class"
+        else:
+            res += " Third Class"
+        return res
