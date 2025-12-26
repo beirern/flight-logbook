@@ -363,6 +363,20 @@
         </div>
     </div>
 
+    <!-- Instructor Time Progression Chart -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Instructor Time Progression</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="instructorProgressionChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="row mb-4">
         <div class="col-md-6 mb-3">
             <div class="card">
@@ -430,6 +444,95 @@
 
 {% block extra_js %}
 <script>
+    // Instructor Time Progression Chart
+    const instructorProgressionCtx = document.getElementById('instructorProgressionChart');
+    const instructorProgressionData = {{ instructor_progression|safe }};
+
+    // Define a color palette for instructors
+    const instructorColors = [
+        'rgba(255, 99, 132, 1)',    // Red
+        'rgba(54, 162, 235, 1)',    // Blue
+        'rgba(255, 206, 86, 1)',    // Yellow
+        'rgba(75, 192, 192, 1)',    // Teal
+        'rgba(153, 102, 255, 1)',   // Purple
+        'rgba(255, 159, 64, 1)',    // Orange
+        'rgba(0, 200, 0, 1)',       // Green
+        'rgba(201, 203, 207, 1)',   // Gray
+        'rgba(100, 100, 100, 1)',   // Dark Gray
+        'rgba(255, 0, 255, 1)'      // Magenta
+    ];
+
+    // Build datasets for each instructor
+    const instructorDatasets = [];
+    let colorIndex = 0;
+
+    for (const instructorId in instructorProgressionData.instructors) {
+        const instructor = instructorProgressionData.instructors[instructorId];
+        const color = instructorColors[colorIndex % instructorColors.length];
+
+        instructorDatasets.push({
+            label: instructor.name,
+            data: instructor.data,
+            borderColor: color,
+            backgroundColor: color.replace('1)', '0.2)'),
+            fill: false,
+            tension: 0.1,
+            pointRadius: 3,
+            pointHoverRadius: 5
+        });
+
+        colorIndex++;
+    }
+
+    new Chart(instructorProgressionCtx, {
+        type: 'line',
+        data: {
+            datasets: instructorDatasets
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            interaction: {
+                mode: 'index',
+                intersect: false
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Cumulative Hours with Instructor'
+                    }
+                },
+                x: {
+                    type: 'time',
+                    time: {
+                        unit: 'month',
+                        displayFormats: {
+                            month: 'MMM yyyy'
+                        }
+                    },
+                    title: {
+                        display: true,
+                        text: 'Date'
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    position: 'bottom'
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return context.dataset.label + ': ' + context.parsed.y.toFixed(1) + ' hrs';
+                        }
+                    }
+                }
+            }
+        }
+    });
+
     // Monthly Activity Chart
     const monthlyCtx = document.getElementById('monthlyChart');
     new Chart(monthlyCtx, {
