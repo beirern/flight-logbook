@@ -563,3 +563,78 @@ def get_people_insights(pilot):
         )
 
     return insights
+
+
+def get_instructor_time_progression(pilot):
+    """Get cumulative time progression data for each instructor showing when instructors 'overtake' each other."""
+    from pilots.models import Pilot
+
+    # Get all flights with instructors, ordered chronologically
+    flights = Flight.objects.filter(
+        pilot=pilot,
+        instructor__isnull=False
+    ).select_related('instructor').filter(
+        Q(instructor__role=Pilot.RoleChoices.INSTRUCTOR) |
+        Q(instructor__role=Pilot.RoleChoices.EXAMINER)
+    ).order_by('date')
+
+    # Build cumulative time for each instructor
+    instructor_cumulative = {}
+    progression_data = []
+
+    for flight in flights:
+        instructor_id = flight.instructor.id
+        instructor_name = str(flight.instructor)
+
+        # Initialize instructor if not seen before
+        if instructor_id not in instructor_cumulative:
+            instructor_cumulative[instructor_id] = {
+                'name': instructor_name,
+                'cumulative_time': 0
+            }
+
+        # Add flight time to instructor's cumulative total
+        instructor_cumulative[instructor_id]['cumulative_time'] += float(flight.flight_time)
+
+        # Record this data point
+        progression_data.append({
+            'date': flight.date.strftime('%Y-%m-%d'),
+            'instructor_id': instructor_id,
+            'instructor_name': instructor_name,
+            'cumulative_time': round(instructor_cumulative[instructor_id]['cumulative_time'], 1)
+        })
+
+    # Build datasets for Chart.js - one dataset per instructor
+    instructors = {}
+    for data_point in progression_data:
+        instructor_id = data_point['instructor_id']
+        if instructor_id not in instructors:
+            instructors[instructor_id] = {
+                'name': data_point['instructor_name'],
+                'data': []
+            }
+
+    # For each unique date, record each instructor's cumulative time at that point
+    # This ensures smooth lines even when an instructor doesn't fly on a particular date
+    unique_dates = sorted(set(d['date'] for d in progression_data))
+
+    for date in unique_dates:
+        # Get the latest cumulative time for each instructor up to this date
+        for instructor_id in instructors:
+            # Find the last data point for this instructor up to this date
+            instructor_data_up_to_date = [
+                d for d in progression_data
+                if d['instructor_id'] == instructor_id and d['date'] <= date
+            ]
+
+            if instructor_data_up_to_date:
+                latest = instructor_data_up_to_date[-1]
+                instructors[instructor_id]['data'].append({
+                    'x': date,
+                    'y': latest['cumulative_time']
+                })
+
+    return {
+        'instructors': instructors,
+        'progression_data': progression_data
+    }

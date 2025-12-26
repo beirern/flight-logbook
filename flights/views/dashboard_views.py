@@ -14,6 +14,7 @@ from flights.utils.statistics import (
     get_cumulative_time_data,
     get_days_since_last_flight,
     get_instructor_leaderboard,
+    get_instructor_time_progression,
     get_instrument_breakdown,
     get_instrument_rating_progress,
     get_monthly_breakdown,
@@ -92,6 +93,9 @@ def dashboard(request):
     # Get cumulative time data for line chart
     cumulative_data = get_cumulative_time_data(pilot)
 
+    # Get instructor time progression data
+    instructor_progression = get_instructor_time_progression(pilot)
+
     context = {
         'total_times': total_times,
         'currency': currency,
@@ -102,6 +106,7 @@ def dashboard(request):
         'monthly_hours': json.dumps(monthly_hours),
         'instrument_breakdown': instrument_breakdown,
         'cumulative_data': json.dumps(cumulative_data),
+        'instructor_progression': json.dumps(instructor_progression),
         'recent_flights': recent_flights,
         'days_since_last_flight': days_since_last_flight,
     }
