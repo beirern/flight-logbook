@@ -64,33 +64,52 @@ def check_medical_status(pilot):
     from medicals.models import Medical
 
     try:
-        latest_medical = Medical.objects.filter(pilot=pilot).order_by('-date_issued').first()
+        latest_medical = Medical.objects.filter(pilot=pilot).order_by('-examination_date').first()
 
         if not latest_medical:
             return {
                 'has_medical': False,
-                'class': None,
+                'original_class': None,
+                'current_class': None,
+                'examination_date': None,
                 'expiry': None,
+                'first_class_expiry': None,
+                'second_class_expiry': None,
+                'third_class_expiry': None,
                 'days_remaining': None,
                 'status': 'none'
             }
 
-        days_remaining = (latest_medical.date_expires - datetime.now().date()).days
+        current_privilege = latest_medical.get_current_privilege_level()
+        next_expiry = latest_medical.get_next_expiration_date()
+
+        if next_expiry:
+            days_remaining = (next_expiry - datetime.now().date()).days
+        else:
+            days_remaining = None
 
         # Determine status color coding
-        if days_remaining < 0:
+        if current_privilege is None:
             status = 'expired'
-        elif days_remaining < 30:
-            status = 'critical'
-        elif days_remaining < 60:
-            status = 'warning'
+        elif days_remaining is not None:
+            if days_remaining < 30:
+                status = 'critical'
+            elif days_remaining < 60:
+                status = 'warning'
+            else:
+                status = 'current'
         else:
-            status = 'current'
+            status = 'expired'
 
         return {
             'has_medical': True,
-            'class': latest_medical.medical_class,
-            'expiry': latest_medical.date_expires,
+            'original_class': latest_medical.classNumber,
+            'current_class': current_privilege,
+            'examination_date': latest_medical.examination_date,
+            'expiry': next_expiry,
+            'first_class_expiry': latest_medical.get_first_class_expiry(),
+            'second_class_expiry': latest_medical.get_second_class_expiry(),
+            'third_class_expiry': latest_medical.get_third_class_expiry(),
             'days_remaining': days_remaining,
             'status': status
         }
@@ -99,8 +118,13 @@ def check_medical_status(pilot):
         # If medicals app doesn't have the expected structure
         return {
             'has_medical': False,
-            'class': None,
+            'original_class': None,
+            'current_class': None,
+            'examination_date': None,
             'expiry': None,
+            'first_class_expiry': None,
+            'second_class_expiry': None,
+            'third_class_expiry': None,
             'days_remaining': None,
             'status': 'none'
         }
