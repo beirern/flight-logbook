@@ -1,4 +1,5 @@
 import json
+import math
 
 from django.shortcuts import render
 
@@ -19,6 +20,25 @@ from flights.utils.statistics import (
 )
 from pilots.models import Pilot
 from routes.models import Route
+
+
+def haversine_distance(lat1, lon1, lat2, lon2):
+    """
+    Calculate the great circle distance in nautical miles between two points
+    on the earth (specified in decimal degrees).
+    """
+    # Convert decimal degrees to radians
+    lat1, lon1, lat2, lon2 = map(math.radians, [lat1, lon1, lat2, lon2])
+
+    # Haversine formula
+    dlat = lat2 - lat1
+    dlon = lon2 - lon1
+    a = math.sin(dlat/2)**2 + math.cos(lat1) * math.cos(lat2) * math.sin(dlon/2)**2
+    c = 2 * math.asin(math.sqrt(a))
+
+    # Radius of earth in nautical miles
+    nm = 3440.065
+    return c * nm
 
 
 def dashboard(request):
@@ -163,11 +183,19 @@ def routes_map(request):
                         })
 
                 if waypoints_data:
+                    # Calculate total distance for the route
+                    total_distance = 0
+                    for i in range(len(waypoints_data) - 1):
+                        wp1 = waypoints_data[i]
+                        wp2 = waypoints_data[i + 1]
+                        total_distance += haversine_distance(wp1['lat'], wp1['lon'], wp2['lat'], wp2['lon'])
+
                     unique_routes[route_id] = {
                         'id': route.id,
                         'name': route.name,
                         'waypoints': waypoints_data,
                         'flight_count': 0,  # Will be updated below
+                        'distance': round(total_distance, 1),  # Distance in nautical miles
                     }
 
     # Add flight counts to unique routes
