@@ -389,3 +389,177 @@ def get_aircraft_highlights(pilot):
         'least_flown': aircraft_breakdown[-1],  # Last item
         'total_aircraft': len(aircraft_breakdown)
     }
+
+
+def get_unique_people_counts(pilot):
+    """Get counts of unique people the pilot has flown with."""
+    from pilots.models import Pilot
+
+    flights = Flight.objects.filter(pilot=pilot).prefetch_related('passengers').select_related('instructor')
+
+    unique_passengers = set()
+    unique_instructors = set()
+    total_interactions = 0
+
+    for flight in flights:
+        # Count passengers
+        passengers = flight.passengers.filter(role=Pilot.RoleChoices.PASSENGER)
+        for passenger in passengers:
+            unique_passengers.add(passenger.id)
+
+        # Count instructors
+        if flight.instructor and flight.instructor.role in [Pilot.RoleChoices.INSTRUCTOR, Pilot.RoleChoices.EXAMINER]:
+            unique_instructors.add(flight.instructor.id)
+
+        # Count total interactions (flights with people)
+        if passengers.exists() or flight.instructor:
+            total_interactions += 1
+
+    return {
+        'unique_passengers': len(unique_passengers),
+        'unique_instructors': len(unique_instructors),
+        'total_unique_people': len(unique_passengers | unique_instructors),
+        'total_interactions': total_interactions
+    }
+
+
+def get_people_role_distribution(pilot):
+    """Get distribution of flights by type (solo, with passengers, with instructor)."""
+    from pilots.models import Pilot
+
+    flights = Flight.objects.filter(pilot=pilot).prefetch_related('passengers').select_related('instructor')
+
+    solo_flights = 0
+    passenger_flights = 0
+    instruction_flights = 0
+
+    for flight in flights:
+        has_passengers = flight.passengers.filter(role=Pilot.RoleChoices.PASSENGER).exists()
+        has_instructor = flight.instructor and flight.instructor.role in [Pilot.RoleChoices.INSTRUCTOR, Pilot.RoleChoices.EXAMINER]
+
+        if has_passengers:
+            passenger_flights += 1
+        if has_instructor:
+            instruction_flights += 1
+        if not has_passengers and not has_instructor:
+            solo_flights += 1
+
+    return {
+        'solo_flights': solo_flights,
+        'passenger_flights': passenger_flights,
+        'instruction_flights': instruction_flights
+    }
+
+
+def get_monthly_people_frequency(pilot, months=12):
+    """Get monthly breakdown of flights with people for the last N months."""
+    from pilots.models import Pilot
+    from dateutil.relativedelta import relativedelta
+
+    # Get current date and calculate start date
+    now = datetime.now().date()
+    start_date = now - relativedelta(months=months-1)
+    start_date = start_date.replace(day=1)
+
+    # Get flights in date range
+    flights = Flight.objects.filter(
+        pilot=pilot,
+        date__gte=start_date
+    ).prefetch_related('passengers').select_related('instructor').order_by('date')
+
+    # Build monthly data structure
+    monthly_data = {}
+    current = start_date
+    for _ in range(months):
+        month_key = datetime(current.year, current.month, 1).date()
+        monthly_data[month_key] = {
+            'month': current.strftime('%b %Y'),
+            'total_flights': 0,
+            'flights_with_passengers': 0,
+            'flights_with_instruction': 0,
+            'unique_passengers': set(),
+            'unique_instructors': set()
+        }
+        current = current + relativedelta(months=1)
+
+    # Process flights
+    for flight in flights:
+        month_key = datetime(flight.date.year, flight.date.month, 1).date()
+        if month_key in monthly_data:
+            monthly_data[month_key]['total_flights'] += 1
+
+            # Check for passengers
+            passengers = flight.passengers.filter(role=Pilot.RoleChoices.PASSENGER)
+            if passengers.exists():
+                monthly_data[month_key]['flights_with_passengers'] += 1
+                for passenger in passengers:
+                    monthly_data[month_key]['unique_passengers'].add(passenger.id)
+
+            # Check for instructor
+            if flight.instructor and flight.instructor.role in [Pilot.RoleChoices.INSTRUCTOR, Pilot.RoleChoices.EXAMINER]:
+                monthly_data[month_key]['flights_with_instruction'] += 1
+                monthly_data[month_key]['unique_instructors'].add(flight.instructor.id)
+
+    # Convert sets to counts and return as list
+    result = []
+    for month_key in sorted(monthly_data.keys()):
+        data = monthly_data[month_key]
+        result.append({
+            'month': data['month'],
+            'total_flights': data['total_flights'],
+            'flights_with_passengers': data['flights_with_passengers'],
+            'flights_with_instruction': data['flights_with_instruction'],
+            'unique_passengers': len(data['unique_passengers']),
+            'unique_instructors': len(data['unique_instructors'])
+        })
+
+    return result
+
+
+def get_people_insights(pilot):
+    """Get insights about flying patterns with people."""
+    from pilots.models import Pilot
+
+    # Get leaderboards
+    passenger_leaderboard = get_passenger_leaderboard(pilot, limit=1)
+    instructor_leaderboard = get_instructor_leaderboard(pilot, limit=1)
+
+    # Get total flight count
+    total_flights = Flight.objects.filter(pilot=pilot).count()
+
+    # Get counts by type
+    flights = Flight.objects.filter(pilot=pilot).prefetch_related('passengers').select_related('instructor')
+
+    flights_with_passengers = 0
+    flights_with_instruction = 0
+
+    for flight in flights:
+        if flight.passengers.filter(role=Pilot.RoleChoices.PASSENGER).exists():
+            flights_with_passengers += 1
+        if flight.instructor and flight.instructor.role in [Pilot.RoleChoices.INSTRUCTOR, Pilot.RoleChoices.EXAMINER]:
+            flights_with_instruction += 1
+
+    # Calculate percentages
+    passenger_percentage = round((flights_with_passengers / total_flights * 100) if total_flights > 0 else 0, 1)
+    instruction_percentage = round((flights_with_instruction / total_flights * 100) if total_flights > 0 else 0, 1)
+
+    # Build insights
+    insights = {
+        'most_frequent_passenger': passenger_leaderboard[0] if passenger_leaderboard else None,
+        'most_frequent_instructor': instructor_leaderboard[0] if instructor_leaderboard else None,
+        'passenger_flight_percentage': passenger_percentage,
+        'instruction_flight_percentage': instruction_percentage
+    }
+
+    # Add percentages to leaderboard entries
+    if insights['most_frequent_passenger']:
+        insights['most_frequent_passenger']['percentage'] = round(
+            (insights['most_frequent_passenger']['flight_count'] / flights_with_passengers * 100) if flights_with_passengers > 0 else 0, 1
+        )
+
+    if insights['most_frequent_instructor']:
+        insights['most_frequent_instructor']['percentage'] = round(
+            (insights['most_frequent_instructor']['flight_count'] / flights_with_instruction * 100) if flights_with_instruction > 0 else 0, 1
+        )
+
+    return insights

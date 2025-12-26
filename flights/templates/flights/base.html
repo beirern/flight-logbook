@@ -50,6 +50,14 @@
                     </li>
                     <li class="nav-item">
                         {% if is_static %}
+                        <a class="nav-link {% block nav_people %}{% endblock %}" href="people.html">People</a>
+                        {% else %}
+                        <a class="nav-link {% if request.resolver_match.url_name == 'people' %}active{% endif %}"
+                           href="{% url 'people' %}">People</a>
+                        {% endif %}
+                    </li>
+                    <li class="nav-item">
+                        {% if is_static %}
                         <a class="nav-link {% block nav_aircraft %}{% endblock %}" href="aircraft.html">Aircraft</a>
                         {% else %}
                         <a class="nav-link {% if request.resolver_match.url_name == 'aircraft' %}active{% endif %}"
