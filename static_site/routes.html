@@ -54,12 +54,22 @@
                     </li>
                     <li class="nav-item">
                         
-                        <a class="nav-link " href="logbook.html">Logbook</a>
+                        <a class="nav-link active" href="routes.html">Routes</a>
                         
                     </li>
                     <li class="nav-item">
                         
-                        <a class="nav-link active" href="routes.html">Routes</a>
+                        <a class="nav-link " href="people.html">People</a>
+                        
+                    </li>
+                    <li class="nav-item">
+                        
+                        <a class="nav-link " href="aircraft.html">Aircraft</a>
+                        
+                    </li>
+                    <li class="nav-item">
+                        
+                        <a class="nav-link " href="logbook.html">Logbook</a>
                         
                     </li>
                     
@@ -84,16 +94,46 @@
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1>Flight Routes Map</h1>
         
-        <small class="text-muted">Last updated: 2025-12-25 21:00:32Z</small>
+        <small class="text-muted">Last updated: 2025-12-26 05:56:58Z</small>
         
     </div>
 
     
     <div class="route-info">
         <p class="mb-0">
-            <strong>Showing unique routes:</strong>
+            <strong>Unique routes:</strong>
             <span id="route-count">Loading...</span>
         </p>
+    </div>
+
+    <!-- Routes Table -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5 class="mb-0">Routes</h5>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>Route</th>
+                            <th>Flights</th>
+                            <th>Distance (NM)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="routes-table-body">
+                        <tr>
+                            <td colspan="3" class="text-center">Loading...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- Pagination Controls -->
+            <nav aria-label="Routes pagination">
+                <ul class="pagination justify-content-center mb-0" id="pagination">
+                </ul>
+            </nav>
+        </div>
     </div>
 
     <div id="map"></div>
@@ -121,6 +161,11 @@
         crossorigin=""></script>
 
 <script>
+    // Initialize variables
+    let allRoutes = [];
+    let currentPage = 1;
+    const routesPerPage = 5;
+
     // Initialize the map
     const map = L.map('map').setView([47.6062, -122.3321], 8); // Default to Seattle area
 
@@ -130,34 +175,111 @@
         maxZoom: 19
     }).addTo(map);
 
-    // Parse routes data from Django template
-    
-    // In static mode, fetch from JSON file
-    fetch('data/routes.json')
-        .then(response => response.json())
-        .then(routes => {
-            renderRoutes(routes);
-        })
-        .catch(error => {
-            console.error('Error loading routes:', error);
-        });
-    
-
     function renderRoutes(routes) {
         if (!routes || routes.length === 0) {
             document.getElementById('route-count').textContent = '0';
+            document.getElementById('routes-table-body').innerHTML = '<tr><td colspan="3" class="text-center">No routes found</td></tr>';
             return;
         }
 
+        allRoutes = routes;
         document.getElementById('route-count').textContent = routes.length;
 
+        // Sort routes by distance (descending)
+        allRoutes.sort((a, b) => b.distance - a.distance);
+
+        // Render table and pagination
+        renderTable();
+        renderPagination();
+
+        // Render map
+        renderMap();
+    }
+
+    function renderTable() {
+        const start = (currentPage - 1) * routesPerPage;
+        const end = start + routesPerPage;
+        const pageRoutes = allRoutes.slice(start, end);
+
+        const tbody = document.getElementById('routes-table-body');
+        tbody.innerHTML = '';
+
+        pageRoutes.forEach(route => {
+            const row = document.createElement('tr');
+            const flightText = route.flight_count === 1 ? 'flight' : 'flights';
+
+            row.innerHTML = `
+                <td>${route.name}</td>
+                <td>${route.flight_count} ${flightText}</td>
+                <td>${route.distance} NM</td>
+            `;
+
+            tbody.appendChild(row);
+        });
+    }
+
+    function renderPagination() {
+        const totalPages = Math.ceil(allRoutes.length / routesPerPage);
+        const pagination = document.getElementById('pagination');
+        pagination.innerHTML = '';
+
+        if (totalPages <= 1) {
+            return;
+        }
+
+        // Previous button
+        const prevLi = document.createElement('li');
+        prevLi.className = `page-item ${currentPage === 1 ? 'disabled' : ''}`;
+        prevLi.innerHTML = `<a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a>`;
+        if (currentPage > 1) {
+            prevLi.querySelector('a').addEventListener('click', (e) => {
+                e.preventDefault();
+                currentPage--;
+                renderTable();
+                renderPagination();
+            });
+        }
+        pagination.appendChild(prevLi);
+
+        // Page numbers
+        for (let i = 1; i <= totalPages; i++) {
+            const li = document.createElement('li');
+            li.className = `page-item ${i === currentPage ? 'active' : ''}`;
+            li.innerHTML = `<a class="page-link" href="#">${i}</a>`;
+
+            li.querySelector('a').addEventListener('click', (e) => {
+                e.preventDefault();
+                currentPage = i;
+                renderTable();
+                renderPagination();
+            });
+
+            pagination.appendChild(li);
+        }
+
+        // Next button
+        const nextLi = document.createElement('li');
+        nextLi.className = `page-item ${currentPage === totalPages ? 'disabled' : ''}`;
+        nextLi.innerHTML = `<a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">&raquo;</span></a>`;
+        if (currentPage < totalPages) {
+            nextLi.querySelector('a').addEventListener('click', (e) => {
+                e.preventDefault();
+                currentPage++;
+                renderTable();
+                renderPagination();
+            });
+        }
+        pagination.appendChild(nextLi);
+    }
+
+    function renderMap() {
         // Create a bounds object to fit all routes
         const bounds = L.latLngBounds();
 
         // Define colors for routes (cycling through them)
         const colors = ['#3388ff', '#ff6b6b', '#4ecdc4', '#45b7d1', '#f9ca24', '#6c5ce7', '#fd79a8'];
 
-        routes.forEach((route, index) => {
+        allRoutes.forEach((route, index) => {
             if (!route.waypoints || route.waypoints.length === 0) {
                 return;
             }
@@ -179,7 +301,8 @@
             const tooltipContent = `${route.name} (${route.flight_count} ${flightText})`;
             const popupContent = `
                 <strong>${route.name}</strong><br>
-                <small>Flown ${route.flight_count} ${flightText}</small>
+                <small>Flown ${route.flight_count} ${flightText}</small><br>
+                <small>Distance: ${route.distance} NM</small>
             `;
 
             polyline.bindTooltip(tooltipContent);
@@ -218,6 +341,19 @@
             map.fitBounds(bounds, { padding: [50, 50] });
         }
     }
+
+    // Parse routes data from Django template
+    
+    // In static mode, fetch from JSON file
+    fetch('data/routes.json')
+        .then(response => response.json())
+        .then(routes => {
+            renderRoutes(routes);
+        })
+        .catch(error => {
+            console.error('Error loading routes:', error);
+        });
+    
 </script>
 
 </body>

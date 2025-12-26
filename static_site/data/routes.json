@@ -8,17 +8,18 @@
         "name": "Renton Municipal Airport",
         "lat": 47.4930992126,
         "lon": -122.216003418,
-        "visit_count": 66
+        "visit_count": 46
       },
       {
         "code": "KRNT",
         "name": "Renton Municipal Airport",
         "lat": 47.4930992126,
         "lon": -122.216003418,
-        "visit_count": 66
+        "visit_count": 46
       }
     ],
-    "flight_count": 23
+    "flight_count": 24,
+    "distance": 0.0
   },
   {
     "id": 3,
@@ -29,24 +30,25 @@
         "name": "Renton Municipal Airport",
         "lat": 47.4930992126,
         "lon": -122.216003418,
-        "visit_count": 66
+        "visit_count": 46
       },
       {
         "code": "KS50",
         "name": "Auburn Municipal Airport",
         "lat": 47.327702,
         "lon": -122.226997,
-        "visit_count": 5
+        "visit_count": 11
       },
       {
         "code": "KRNT",
         "name": "Renton Municipal Airport",
         "lat": 47.4930992126,
         "lon": -122.216003418,
-        "visit_count": 66
+        "visit_count": 46
       }
     ],
-    "flight_count": 4
+    "flight_count": 4,
+    "distance": 19.9
   },
   {
     "id": 4,
@@ -57,24 +59,25 @@
         "name": "Renton Municipal Airport",
         "lat": 47.4930992126,
         "lon": -122.216003418,
-        "visit_count": 66
+        "visit_count": 46
       },
       {
         "code": "KTIW",
         "name": "Tacoma Narrows Airport",
         "lat": 47.267407,
         "lon": -122.577295,
-        "visit_count": 1
+        "visit_count": 2
       },
       {
         "code": "KRNT",
         "name": "Renton Municipal Airport",
         "lat": 47.4930992126,
         "lon": -122.216003418,
-        "visit_count": 66
+        "visit_count": 46
       }
     ],
-    "flight_count": 1
+    "flight_count": 1,
+    "distance": 40.0
   },
   {
     "id": 5,
@@ -85,7 +88,7 @@
         "name": "Renton Municipal Airport",
         "lat": 47.4930992126,
         "lon": -122.216003418,
-        "visit_count": 66
+        "visit_count": 46
       },
       {
         "code": "KPLU",
@@ -99,10 +102,11 @@
         "name": "Renton Municipal Airport",
         "lat": 47.4930992126,
         "lon": -122.216003418,
-        "visit_count": 66
+        "visit_count": 46
       }
     ],
-    "flight_count": 1
+    "flight_count": 1,
+    "distance": 47.1
   },
   {
     "id": 7,
@@ -113,7 +117,7 @@
         "name": "Renton Municipal Airport",
         "lat": 47.4930992126,
         "lon": -122.216003418,
-        "visit_count": 66
+        "visit_count": 46
       },
       {
         "code": "KPLU",
@@ -127,17 +131,18 @@
         "name": "Auburn Municipal Airport",
         "lat": 47.327702,
         "lon": -122.226997,
-        "visit_count": 5
+        "visit_count": 11
       },
       {
         "code": "KRNT",
         "name": "Renton Municipal Airport",
         "lat": 47.4930992126,
         "lon": -122.216003418,
-        "visit_count": 66
+        "visit_count": 46
       }
     ],
-    "flight_count": 1
+    "flight_count": 1,
+    "distance": 47.1
   },
   {
     "id": 8,
@@ -148,7 +153,7 @@
         "name": "Renton Municipal Airport",
         "lat": 47.4930992126,
         "lon": -122.216003418,
-        "visit_count": 66
+        "visit_count": 46
       },
       {
         "code": "KFHR",
@@ -162,10 +167,11 @@
         "name": "Renton Municipal Airport",
         "lat": 47.4930992126,
         "lon": -122.216003418,
-        "visit_count": 66
+        "visit_count": 46
       }
     ],
-    "flight_count": 1
+    "flight_count": 1,
+    "distance": 139.8
   },
   {
     "id": 9,
@@ -176,7 +182,7 @@
         "name": "Renton Municipal Airport",
         "lat": 47.4930992126,
         "lon": -122.216003418,
-        "visit_count": 66
+        "visit_count": 46
       },
       {
         "code": "KBVS",
@@ -190,10 +196,11 @@
         "name": "Renton Municipal Airport",
         "lat": 47.4930992126,
         "lon": -122.216003418,
-        "visit_count": 66
+        "visit_count": 46
       }
     ],
-    "flight_count": 1
+    "flight_count": 1,
+    "distance": 118.6
   },
   {
     "id": 6,
@@ -204,24 +211,25 @@
         "name": "Renton Municipal Airport",
         "lat": 47.4930992126,
         "lon": -122.216003418,
-        "visit_count": 66
+        "visit_count": 46
       },
       {
         "code": "KS36",
         "name": "Norman Grier Field",
         "lat": 47.337102,
         "lon": -122.103996,
-        "visit_count": 1
+        "visit_count": 3
       },
       {
         "code": "KRNT",
         "name": "Renton Municipal Airport",
         "lat": 47.4930992126,
         "lon": -122.216003418,
-        "visit_count": 66
+        "visit_count": 46
       }
     ],
-    "flight_count": 1
+    "flight_count": 1,
+    "distance": 20.8
   },
   {
     "id": 10,
@@ -232,17 +240,18 @@
         "name": "San Carlos Airport",
         "lat": 37.51313,
         "lon": -122.250838,
-        "visit_count": 22
+        "visit_count": 11
       },
       {
         "code": "KSQL",
         "name": "San Carlos Airport",
         "lat": 37.51313,
         "lon": -122.250838,
-        "visit_count": 22
+        "visit_count": 11
       }
     ],
-    "flight_count": 11
+    "flight_count": 11,
+    "distance": 0.0
   },
   {
     "id": 1,
@@ -253,17 +262,236 @@
         "name": "Boeing Field King County International Airport",
         "lat": 47.529999,
         "lon": -122.302002,
-        "visit_count": 64
+        "visit_count": 28
       },
       {
         "code": "KBFI",
         "name": "Boeing Field King County International Airport",
         "lat": 47.529999,
         "lon": -122.302002,
-        "visit_count": 64
+        "visit_count": 28
       }
     ],
-    "flight_count": 30
+    "flight_count": 5,
+    "distance": 0.0
+  },
+  {
+    "id": 11,
+    "name": "Boeing Field - Renton Landing Work",
+    "waypoints": [
+      {
+        "code": "KBFI",
+        "name": "Boeing Field King County International Airport",
+        "lat": 47.529999,
+        "lon": -122.302002,
+        "visit_count": 28
+      },
+      {
+        "code": "KRNT",
+        "name": "Renton Municipal Airport",
+        "lat": 47.4930992126,
+        "lon": -122.216003418,
+        "visit_count": 46
+      },
+      {
+        "code": "KBFI",
+        "name": "Boeing Field King County International Airport",
+        "lat": 47.529999,
+        "lon": -122.302002,
+        "visit_count": 28
+      }
+    ],
+    "flight_count": 8,
+    "distance": 8.3
+  },
+  {
+    "id": 12,
+    "name": "Boeing Field - Harvey Field",
+    "waypoints": [
+      {
+        "code": "KBFI",
+        "name": "Boeing Field King County International Airport",
+        "lat": 47.529999,
+        "lon": -122.302002,
+        "visit_count": 28
+      },
+      {
+        "code": "S43",
+        "name": "Harvey Field",
+        "lat": 47.908199,
+        "lon": -122.105003,
+        "visit_count": 1
+      },
+      {
+        "code": "KBFI",
+        "name": "Boeing Field King County International Airport",
+        "lat": 47.529999,
+        "lon": -122.302002,
+        "visit_count": 28
+      }
+    ],
+    "flight_count": 1,
+    "distance": 48.1
+  },
+  {
+    "id": 13,
+    "name": "Boeing Field - Norman Grier",
+    "waypoints": [
+      {
+        "code": "KBFI",
+        "name": "Boeing Field King County International Airport",
+        "lat": 47.529999,
+        "lon": -122.302002,
+        "visit_count": 28
+      },
+      {
+        "code": "KS36",
+        "name": "Norman Grier Field",
+        "lat": 47.337102,
+        "lon": -122.103996,
+        "visit_count": 3
+      },
+      {
+        "code": "KBFI",
+        "name": "Boeing Field King County International Airport",
+        "lat": 47.529999,
+        "lon": -122.302002,
+        "visit_count": 28
+      }
+    ],
+    "flight_count": 1,
+    "distance": 28.2
+  },
+  {
+    "id": 14,
+    "name": "Boeing Field - Bremerton",
+    "waypoints": [
+      {
+        "code": "KBFI",
+        "name": "Boeing Field King County International Airport",
+        "lat": 47.529999,
+        "lon": -122.302002,
+        "visit_count": 28
+      },
+      {
+        "code": "KPWT",
+        "name": "Bremerton National Airport",
+        "lat": 47.490200042725,
+        "lon": -122.76499938965,
+        "visit_count": 4
+      },
+      {
+        "code": "KBFI",
+        "name": "Boeing Field King County International Airport",
+        "lat": 47.529999,
+        "lon": -122.302002,
+        "visit_count": 28
+      }
+    ],
+    "flight_count": 4,
+    "distance": 37.9
+  },
+  {
+    "id": 15,
+    "name": "Boeing Field - Tacoma Narrows",
+    "waypoints": [
+      {
+        "code": "KBFI",
+        "name": "Boeing Field King County International Airport",
+        "lat": 47.529999,
+        "lon": -122.302002,
+        "visit_count": 28
+      },
+      {
+        "code": "KTIW",
+        "name": "Tacoma Narrows Airport",
+        "lat": 47.267407,
+        "lon": -122.577295,
+        "visit_count": 2
+      },
+      {
+        "code": "KBFI",
+        "name": "Boeing Field King County International Airport",
+        "lat": 47.529999,
+        "lon": -122.302002,
+        "visit_count": 28
+      }
+    ],
+    "flight_count": 1,
+    "distance": 38.7
+  },
+  {
+    "id": 16,
+    "name": "Boeing Field - Auburn",
+    "waypoints": [
+      {
+        "code": "KBFI",
+        "name": "Boeing Field King County International Airport",
+        "lat": 47.529999,
+        "lon": -122.302002,
+        "visit_count": 28
+      },
+      {
+        "code": "KS50",
+        "name": "Auburn Municipal Airport",
+        "lat": 47.327702,
+        "lon": -122.226997,
+        "visit_count": 11
+      },
+      {
+        "code": "KBFI",
+        "name": "Boeing Field King County International Airport",
+        "lat": 47.529999,
+        "lon": -122.302002,
+        "visit_count": 28
+      }
+    ],
+    "flight_count": 2,
+    "distance": 25.0
+  },
+  {
+    "id": 17,
+    "name": "Boeing Field - Renton FS",
+    "waypoints": [
+      {
+        "code": "KBFI",
+        "name": "Boeing Field King County International Airport",
+        "lat": 47.529999,
+        "lon": -122.302002,
+        "visit_count": 28
+      },
+      {
+        "code": "KRNT",
+        "name": "Renton Municipal Airport",
+        "lat": 47.4930992126,
+        "lon": -122.216003418,
+        "visit_count": 46
+      }
+    ],
+    "flight_count": 1,
+    "distance": 4.1
+  },
+  {
+    "id": 18,
+    "name": "Renton - Boeing Field FS",
+    "waypoints": [
+      {
+        "code": "KRNT",
+        "name": "Renton Municipal Airport",
+        "lat": 47.4930992126,
+        "lon": -122.216003418,
+        "visit_count": 46
+      },
+      {
+        "code": "KBFI",
+        "name": "Boeing Field King County International Airport",
+        "lat": 47.529999,
+        "lon": -122.302002,
+        "visit_count": 28
+      }
+    ],
+    "flight_count": 1,
+    "distance": 4.1
   },
   {
     "id": 19,
@@ -274,7 +502,7 @@
         "name": "Boeing Field King County International Airport",
         "lat": 47.529999,
         "lon": -122.302002,
-        "visit_count": 64
+        "visit_count": 28
       },
       {
         "code": "KCLM",
@@ -288,10 +516,47 @@
         "name": "Boeing Field King County International Airport",
         "lat": 47.529999,
         "lon": -122.302002,
-        "visit_count": 64
+        "visit_count": 28
       }
     ],
-    "flight_count": 1
+    "flight_count": 1,
+    "distance": 119.8
+  },
+  {
+    "id": 20,
+    "name": "Boeing Field - Paine - Renton",
+    "waypoints": [
+      {
+        "code": "KBFI",
+        "name": "Boeing Field King County International Airport",
+        "lat": 47.529999,
+        "lon": -122.302002,
+        "visit_count": 28
+      },
+      {
+        "code": "KPAE",
+        "name": "Seattle Paine Field International Airport",
+        "lat": 47.9063,
+        "lon": -122.281998,
+        "visit_count": 1
+      },
+      {
+        "code": "KRNT",
+        "name": "Renton Municipal Airport",
+        "lat": 47.4930992126,
+        "lon": -122.216003418,
+        "visit_count": 46
+      },
+      {
+        "code": "KBFI",
+        "name": "Boeing Field King County International Airport",
+        "lat": 47.529999,
+        "lon": -122.302002,
+        "visit_count": 28
+      }
+    ],
+    "flight_count": 1,
+    "distance": 51.7
   },
   {
     "id": 21,
@@ -302,7 +567,7 @@
         "name": "Boeing Field King County International Airport",
         "lat": 47.529999,
         "lon": -122.302002,
-        "visit_count": 64
+        "visit_count": 28
       },
       {
         "code": "KSPB",
@@ -323,9 +588,97 @@
         "name": "Boeing Field King County International Airport",
         "lat": 47.529999,
         "lon": -122.302002,
-        "visit_count": 64
+        "visit_count": 28
       }
     ],
-    "flight_count": 1
+    "flight_count": 1,
+    "distance": 221.7
+  },
+  {
+    "id": 22,
+    "name": "Boeing Field - Norman Grier - Auburn",
+    "waypoints": [
+      {
+        "code": "KBFI",
+        "name": "Boeing Field King County International Airport",
+        "lat": 47.529999,
+        "lon": -122.302002,
+        "visit_count": 28
+      },
+      {
+        "code": "KS36",
+        "name": "Norman Grier Field",
+        "lat": 47.337102,
+        "lon": -122.103996,
+        "visit_count": 3
+      },
+      {
+        "code": "KS50",
+        "name": "Auburn Municipal Airport",
+        "lat": 47.327702,
+        "lon": -122.226997,
+        "visit_count": 11
+      },
+      {
+        "code": "KBFI",
+        "name": "Boeing Field King County International Airport",
+        "lat": 47.529999,
+        "lon": -122.302002,
+        "visit_count": 28
+      }
+    ],
+    "flight_count": 1,
+    "distance": 31.7
+  },
+  {
+    "id": 23,
+    "name": "Maneuvers around Auburn",
+    "waypoints": [
+      {
+        "code": "KS50",
+        "name": "Auburn Municipal Airport",
+        "lat": 47.327702,
+        "lon": -122.226997,
+        "visit_count": 11
+      },
+      {
+        "code": "KS50",
+        "name": "Auburn Municipal Airport",
+        "lat": 47.327702,
+        "lon": -122.226997,
+        "visit_count": 11
+      }
+    ],
+    "flight_count": 2,
+    "distance": 0.0
+  },
+  {
+    "id": 24,
+    "name": "Auburn - Renton",
+    "waypoints": [
+      {
+        "code": "KS50",
+        "name": "Auburn Municipal Airport",
+        "lat": 47.327702,
+        "lon": -122.226997,
+        "visit_count": 11
+      },
+      {
+        "code": "KRNT",
+        "name": "Renton Municipal Airport",
+        "lat": 47.4930992126,
+        "lon": -122.216003418,
+        "visit_count": 46
+      },
+      {
+        "code": "KS50",
+        "name": "Auburn Municipal Airport",
+        "lat": 47.327702,
+        "lon": -122.226997,
+        "visit_count": 11
+      }
+    ],
+    "flight_count": 1,
+    "distance": 19.9
   }
 ]

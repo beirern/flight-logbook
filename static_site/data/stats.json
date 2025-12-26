@@ -22,11 +22,16 @@
     "night_expiry": "2025-12-23"
   },
   "medical": {
-    "has_medical": false,
-    "class": null,
-    "expiry": null,
-    "days_remaining": null,
-    "status": "none"
+    "has_medical": true,
+    "original_class": 1,
+    "current_class": 3,
+    "examination_date": "2023-07-19",
+    "expiry": "2028-07-31",
+    "first_class_expiry": "2024-07-31",
+    "second_class_expiry": "2024-07-31",
+    "third_class_expiry": "2028-07-31",
+    "days_remaining": 948,
+    "status": "current"
   },
   "ir_progress": {
     "actual": 0.0,
@@ -65,6 +70,6 @@
     "simulated": 4.4,
     "total": 4.4
   },
-  "days_since_last_flight": 24,
-  "last_updated": "2025-12-25T21:00:32.592044"
+  "days_since_last_flight": 25,
+  "last_updated": "2025-12-26T05:56:58.795651"
 }

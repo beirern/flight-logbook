@@ -15,7 +15,7 @@
     "day_fullstop_landings": 3,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": "Maneuvers around Boeing Field: (KBFI -> KBFI)",
+    "route": "Maneuvers around Auburn: (KS50 -> KS50)",
     "instructor": "Jim Simon",
     "passengers": [],
     "notes": "Private Pilot Checkride pass!!"
@@ -36,7 +36,7 @@
     "day_fullstop_landings": 1,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": "Maneuvers around Boeing Field: (KBFI -> KBFI)",
+    "route": "Auburn - Renton: (KS50 -> KRNT -> KS50)",
     "instructor": "Emily Stednitz",
     "passengers": [],
     "notes": "RFS Flight Lesson 37: practical test prep"
@@ -57,7 +57,7 @@
     "day_fullstop_landings": 1,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": "Maneuvers around Boeing Field: (KBFI -> KBFI)",
+    "route": "Boeing Field - Auburn: (KBFI -> KS50 -> KBFI)",
     "instructor": "Emily Stednitz",
     "passengers": [],
     "notes": "RFS Flight Lesson 37: practical test prep, hood work, steep turns, stalls, ground ref, landings"
@@ -78,7 +78,7 @@
     "day_fullstop_landings": 1,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": "Maneuvers around Boeing Field: (KBFI -> KBFI)",
+    "route": "Maneuvers around Auburn: (KS50 -> KS50)",
     "instructor": "Emily Stednitz",
     "passengers": [],
     "notes": "RFS Flight Lesson 37: practical test prep, slow flight, performance takeoff/landings"
@@ -141,7 +141,7 @@
     "day_fullstop_landings": 1,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": "Maneuvers around Boeing Field: (KBFI -> KBFI)",
+    "route": "Boeing Field - Renton Landing Work: (KBFI -> KRNT -> KBFI)",
     "instructor": "Ian Middleton",
     "passengers": [],
     "notes": "End of Course (EOC) fail. Work on emergency descent, slip, normal landing, coordination"
@@ -162,7 +162,7 @@
     "day_fullstop_landings": 1,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": "Maneuvers around Boeing Field: (KBFI -> KBFI)",
+    "route": "Boeing Field - Renton Landing Work: (KBFI -> KRNT -> KBFI)",
     "instructor": "Emily Stednitz",
     "passengers": [],
     "notes": "RFS Flight Lesson 37: Practical test prep, x-country nav, diversion, slow flight, stalls, ground ref, performance TOL"
@@ -183,7 +183,7 @@
     "day_fullstop_landings": 1,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": "Maneuvers around Boeing Field: (KBFI -> KBFI)",
+    "route": "Boeing Field - Norman Grier - Auburn: (KBFI -> KS36 -> KS50 -> KBFI)",
     "instructor": "Emily Stednitz",
     "passengers": [],
     "notes": "RFS Flight Lesson 37: Practical test prep, steep turns, stalls, performance takeoff/landings, no flap landing, turn around point"
@@ -225,7 +225,7 @@
     "day_fullstop_landings": 1,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": "Maneuvers around Boeing Field: (KBFI -> KBFI)",
+    "route": "Boeing Field - Renton Landing Work: (KBFI -> KRNT -> KBFI)",
     "instructor": "Emily Stednitz",
     "passengers": [],
     "notes": "RFS Flight Lesson 37: Practical test prep 61.107(b)(i)(i-xii)"
@@ -246,7 +246,7 @@
     "day_fullstop_landings": 1,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": "Maneuvers around Boeing Field: (KBFI -> KBFI)",
+    "route": "Boeing Field - Renton Landing Work: (KBFI -> KRNT -> KBFI)",
     "instructor": null,
     "passengers": [],
     "notes": "Maneuver + Landing Practice + Stalls + Ground Ref"
@@ -311,7 +311,7 @@
     "day_fullstop_landings": 0,
     "night_landings": 1,
     "night_fullstop_landings": 3,
-    "route": "Maneuvers around Boeing Field: (KBFI -> KBFI)",
+    "route": "Boeing Field - Paine - Renton: (KBFI -> KPAE -> KRNT -> KBFI)",
     "instructor": "Emily Stednitz",
     "passengers": [
       "Manan Gandhi"
@@ -334,7 +334,7 @@
     "day_fullstop_landings": 1,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": "Maneuvers around Boeing Field: (KBFI -> KBFI)",
+    "route": "Boeing Field - Renton Landing Work: (KBFI -> KRNT -> KBFI)",
     "instructor": null,
     "passengers": [],
     "notes": "Attempted maneuver practice. Landing Practice."
@@ -376,7 +376,7 @@
     "day_fullstop_landings": 1,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": "Maneuvers around Boeing Field: (KBFI -> KBFI)",
+    "route": "Boeing Field - Renton FS: (KBFI -> KRNT)",
     "instructor": "Emily Stednitz",
     "passengers": [],
     "notes": "Pre-solo C172 warmup!"
@@ -397,7 +397,7 @@
     "day_fullstop_landings": 1,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": "Maneuvers around Boeing Field: (KBFI -> KBFI)",
+    "route": "Maneuvers around Renton: (KRNT -> KRNT)",
     "instructor": null,
     "passengers": [],
     "notes": "172 Solo!!"
@@ -418,7 +418,7 @@
     "day_fullstop_landings": 1,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": "Maneuvers around Boeing Field: (KBFI -> KBFI)",
+    "route": "Renton - Boeing Field FS: (KRNT -> KBFI)",
     "instructor": "Emily Stednitz",
     "passengers": [],
     "notes": "Performance takeoff: soft and short landing. Flight back to KBFI post-solo."
@@ -439,7 +439,7 @@
     "day_fullstop_landings": 1,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": "Maneuvers around Boeing Field: (KBFI -> KBFI)",
+    "route": "Boeing Field - Bremerton: (KBFI -> KPWT -> KBFI)",
     "instructor": "Jaimason Sunderman",
     "passengers": [],
     "notes": "Stage 2 check pass!!"
@@ -460,7 +460,7 @@
     "day_fullstop_landings": 1,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": "Maneuvers around Boeing Field: (KBFI -> KBFI)",
+    "route": "Boeing Field - Bremerton: (KBFI -> KPWT -> KBFI)",
     "instructor": "Emily Stednitz",
     "passengers": [],
     "notes": "Soft takeoff/landings, short takeoff/landings, unusual attitudes, hood work"
@@ -481,7 +481,7 @@
     "day_fullstop_landings": 1,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": "Maneuvers around Boeing Field: (KBFI -> KBFI)",
+    "route": "Boeing Field - Auburn: (KBFI -> KS50 -> KBFI)",
     "instructor": "Emily Stednitz",
     "passengers": [],
     "notes": "RFS Flight Lesson 23: short + soft takeoff/landings, unusual attitudes"
@@ -502,7 +502,7 @@
     "day_fullstop_landings": 1,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": "Maneuvers around Boeing Field: (KBFI -> KBFI)",
+    "route": "Boeing Field - Renton Landing Work: (KBFI -> KRNT -> KBFI)",
     "instructor": "Emily Stednitz",
     "passengers": [],
     "notes": "RFS Flight Lesson 23: Short + soft field takeoff/landings"
@@ -523,7 +523,7 @@
     "day_fullstop_landings": 1,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": "Maneuvers around Boeing Field: (KBFI -> KBFI)",
+    "route": "Boeing Field - Tacoma Narrows: (KBFI -> KTIW -> KBFI)",
     "instructor": "Emily Stednitz",
     "passengers": [
       "Richard Zhang"
@@ -546,7 +546,7 @@
     "day_fullstop_landings": 1,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": "Maneuvers around Boeing Field: (KBFI -> KBFI)",
+    "route": "Boeing Field - Bremerton: (KBFI -> KPWT -> KBFI)",
     "instructor": "Emily Stednitz",
     "passengers": [],
     "notes": "RFS Flight Lesson 23: Performance takeoffs/landing, hood work, unusual attitudes"
@@ -567,7 +567,7 @@
     "day_fullstop_landings": 1,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": "Maneuvers around Boeing Field: (KBFI -> KBFI)",
+    "route": "Boeing Field - Bremerton: (KBFI -> KPWT -> KBFI)",
     "instructor": "Jaimason Sunderman",
     "passengers": [],
     "notes": "Stage 2 check fail. Big lesson about being prepared."
@@ -588,7 +588,7 @@
     "day_fullstop_landings": 1,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": "Maneuvers around Boeing Field: (KBFI -> KBFI)",
+    "route": "Boeing Field - Norman Grier: (KBFI -> KS36 -> KBFI)",
     "instructor": "Emily Stednitz",
     "passengers": [],
     "notes": "RFS Flight Lesson 25: Abnormal/Emergency descents, steep turns, unusual attitudes, performance takeoff and landings"
@@ -609,7 +609,7 @@
     "day_fullstop_landings": 0,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": "Maneuvers around Boeing Field: (KBFI -> KBFI)",
+    "route": "Boeing Field - Harvey Field: (KBFI -> S43 -> KBFI)",
     "instructor": "Emily Stednitz",
     "passengers": [
       "Caleb Lee"
@@ -632,7 +632,7 @@
     "day_fullstop_landings": 1,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": "Maneuvers around Boeing Field: (KBFI -> KBFI)",
+    "route": "Boeing Field - Renton Landing Work: (KBFI -> KRNT -> KBFI)",
     "instructor": "Emily Stednitz",
     "passengers": [],
     "notes": "Slow flight, stalls, emergency procedures, 61.87 (d), normal/soft/no-flap landing"
@@ -653,7 +653,7 @@
     "day_fullstop_landings": 1,
     "night_landings": 0,
     "night_fullstop_landings": 0,
-    "route": "Maneuvers around Boeing Field: (KBFI -> KBFI)",
+    "route": "Boeing Field - Renton Landing Work: (KBFI -> KRNT -> KBFI)",
     "instructor": "Cailee Landis",
     "passengers": [],
     "notes": "Landings/takeoff"
