@@ -1,0 +1,464 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>People - Flight Logbook</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    
+    <link rel="stylesheet" href="assets/css/dashboard.css">
+    
+
+    
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            
+            <a class="navbar-brand" href="index.html">Flight Logbook</a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        
+                        <a class="nav-link " href="index.html">Dashboard</a>
+                        
+                    </li>
+                    <li class="nav-item">
+                        
+                        <a class="nav-link " href="routes.html">Routes</a>
+                        
+                    </li>
+                    <li class="nav-item">
+                        
+                        <a class="nav-link active" href="people.html">People</a>
+                        
+                    </li>
+                    <li class="nav-item">
+                        
+                        <a class="nav-link " href="aircraft.html">Aircraft</a>
+                        
+                    </li>
+                    <li class="nav-item">
+                        
+                        <a class="nav-link " href="logbook.html">Logbook</a>
+                        
+                    </li>
+                    
+                </ul>
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://github.com/beirern/flight-logbook" target="_blank" rel="noopener noreferrer" title="View on GitHub">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-github" viewBox="0 0 16 16">
+                                <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.19 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8"/>
+                            </svg>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container-fluid py-4">
+        
+<div class="container-fluid">
+    <h1 class="mb-4">People</h1>
+
+    
+
+    <!-- Hero Stats Row -->
+    <div class="row mb-4">
+        <div class="col-md-3 col-sm-6 mb-3">
+            <div class="card stat-card">
+                <div class="card-body text-center">
+                    <h6 class="card-subtitle mb-2 text-muted">Total Unique People</h6>
+                    <h2 class="card-title">20</h2>
+                    <p class="card-text">people</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6 mb-3">
+            <div class="card stat-card">
+                <div class="card-body text-center">
+                    <h6 class="card-subtitle mb-2 text-muted">Unique Passengers</h6>
+                    <h2 class="card-title">5</h2>
+                    <p class="card-text">passengers</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6 mb-3">
+            <div class="card stat-card">
+                <div class="card-body text-center">
+                    <h6 class="card-subtitle mb-2 text-muted">Unique Instructors</h6>
+                    <h2 class="card-title">15</h2>
+                    <p class="card-text">instructors</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6 mb-3">
+            <div class="card stat-card">
+                <div class="card-body text-center">
+                    <h6 class="card-subtitle mb-2 text-muted">Flights with Others</h6>
+                    <h2 class="card-title">70</h2>
+                    <p class="card-text">flights</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Insights Row -->
+    <div class="row mb-4">
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-header bg-info text-white">
+                    <h5>Most Frequent Passenger</h5>
+                </div>
+                <div class="card-body">
+                    
+                    <p class="mb-1"><strong>Caleb Lee</strong></p>
+                    <p class="mb-1">1 flights &middot; 1.7 hrs</p>
+                    <p class="text-muted mb-0">20.0% of all passenger flights</p>
+                    
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-header bg-info text-white">
+                    <h5>Most Frequent Instructor</h5>
+                </div>
+                <div class="card-body">
+                    
+                    <p class="mb-1"><strong>Emily Stednitz</strong></p>
+                    <p class="mb-1">19 flights &middot; 27.8 hrs</p>
+                    <p class="text-muted mb-0">27.1% of all instruction flights</p>
+                    
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-header bg-info text-white">
+                    <h5>Flying Patterns</h5>
+                </div>
+                <div class="card-body">
+                    <p class="mb-1"><strong>6.6%</strong> of flights have passengers</p>
+                    <p class="mb-0"><strong>92.1%</strong> of flights are with an instructor</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Leaderboards Row -->
+    <div class="row mb-4">
+        <!-- Passenger Leaderboard -->
+        <div class="col-md-6 mb-3">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5>Passenger Leaderboard</h5>
+                </div>
+                <div class="card-body">
+                    
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>Flights</th>
+                                <th>Total Time</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            <tr>
+                                <td>1</td>
+                                <td>Caleb Lee</td>
+                                <td>1</td>
+                                <td>1.7 hrs</td>
+                            </tr>
+                            
+                            <tr>
+                                <td>2</td>
+                                <td>Manan Gandhi</td>
+                                <td>1</td>
+                                <td>1.5 hrs</td>
+                            </tr>
+                            
+                            <tr>
+                                <td>3</td>
+                                <td>Ryan Liu</td>
+                                <td>1</td>
+                                <td>1.3 hrs</td>
+                            </tr>
+                            
+                            <tr>
+                                <td>4</td>
+                                <td>Richard Zhang</td>
+                                <td>1</td>
+                                <td>1.1 hrs</td>
+                            </tr>
+                            
+                            <tr>
+                                <td>5</td>
+                                <td>Olga Davidov</td>
+                                <td>1</td>
+                                <td>0.3 hrs</td>
+                            </tr>
+                            
+                        </tbody>
+                    </table>
+                    
+                </div>
+            </div>
+        </div>
+
+        <!-- Instructor Leaderboard -->
+        <div class="col-md-6 mb-3">
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h5>Instructor Leaderboard</h5>
+                </div>
+                <div class="card-body">
+                    
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>Flights</th>
+                                <th>Total Time</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            <tr>
+                                <td>1</td>
+                                <td>Emily Stednitz</td>
+                                <td>19</td>
+                                <td>27.8 hrs</td>
+                            </tr>
+                            
+                            <tr>
+                                <td>2</td>
+                                <td>Erika Bengard</td>
+                                <td>16</td>
+                                <td>24.9 hrs</td>
+                            </tr>
+                            
+                            <tr>
+                                <td>3</td>
+                                <td>Rafael Urrea</td>
+                                <td>9</td>
+                                <td>12.1 hrs</td>
+                            </tr>
+                            
+                            <tr>
+                                <td>4</td>
+                                <td>Matthew Kopiko</td>
+                                <td>9</td>
+                                <td>11.8 hrs</td>
+                            </tr>
+                            
+                            <tr>
+                                <td>5</td>
+                                <td>Cailee Landis</td>
+                                <td>2</td>
+                                <td>2.8 hrs</td>
+                            </tr>
+                            
+                            <tr>
+                                <td>6</td>
+                                <td>Kevin Lamp</td>
+                                <td>2</td>
+                                <td>2.5 hrs</td>
+                            </tr>
+                            
+                            <tr>
+                                <td>7</td>
+                                <td>Ian Middleton</td>
+                                <td>2</td>
+                                <td>2.5 hrs</td>
+                            </tr>
+                            
+                            <tr>
+                                <td>8</td>
+                                <td>Jaimason Sunderman</td>
+                                <td>2</td>
+                                <td>2.4 hrs</td>
+                            </tr>
+                            
+                            <tr>
+                                <td>9</td>
+                                <td>Brandon Gockel</td>
+                                <td>2</td>
+                                <td>2.0 hrs</td>
+                            </tr>
+                            
+                            <tr>
+                                <td>10</td>
+                                <td>Daniel Stellini</td>
+                                <td>2</td>
+                                <td>1.1 hrs</td>
+                            </tr>
+                            
+                        </tbody>
+                    </table>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Charts Row -->
+    <div class="row mb-4">
+        <!-- Role Distribution Pie Chart -->
+        <div class="col-md-6 mb-3">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Flight Type Distribution</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="roleDistributionChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Monthly Trends Chart -->
+        <div class="col-md-6 mb-3">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Monthly People Interaction Trends</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="monthlyTrendsChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+</div>
+
+    </main>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+    <!-- Chart.js Date Adapter -->
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3.0.0/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+
+    <!-- Chart.js Annotation Plugin -->
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.0.1/dist/chartjs-plugin-annotation.min.js"></script>
+
+    
+<script>
+    // Role Distribution Pie Chart
+    const roleCtx = document.getElementById('roleDistributionChart').getContext('2d');
+    new Chart(roleCtx, {
+        type: 'pie',
+        data: {
+            labels: ["Solo", "With Passengers", "With Instructor"],
+            datasets: [{
+                data: [6, 5, 70],
+                backgroundColor: [
+                    'rgba(108, 117, 125, 0.6)',  // Gray for Solo
+                    'rgba(54, 162, 235, 0.6)',   // Blue for Passengers
+                    'rgba(75, 192, 192, 0.6)',   // Teal for Instruction
+                ],
+                borderColor: [
+                    'rgba(108, 117, 125, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(75, 192, 192, 1)',
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return context.label + ': ' + context.parsed + ' flights';
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    // Monthly Trends Chart
+    const trendsCtx = document.getElementById('monthlyTrendsChart').getContext('2d');
+    new Chart(trendsCtx, {
+        type: 'line',
+        data: {
+            labels: ["Jan 2025", "Feb 2025", "Mar 2025", "Apr 2025", "May 2025", "Jun 2025", "Jul 2025", "Aug 2025", "Sep 2025", "Oct 2025", "Nov 2025", "Dec 2025"],
+            datasets: [
+                {
+                    label: 'Total Flights',
+                    data: [1, 2, 5, 3, 0, 0, 2, 7, 11, 8, 3, 1],
+                    borderColor: 'rgba(108, 117, 125, 1)',
+                    backgroundColor: 'rgba(108, 117, 125, 0.1)',
+                    borderWidth: 2,
+                    tension: 0.1
+                },
+                {
+                    label: 'With Passengers',
+                    data: [0, 0, 1, 0, 0, 0, 0, 2, 2, 0, 0, 0],
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    backgroundColor: 'rgba(54, 162, 235, 0.1)',
+                    borderWidth: 2,
+                    tension: 0.1
+                },
+                {
+                    label: 'With Instructor',
+                    data: [1, 2, 5, 3, 0, 0, 2, 7, 7, 7, 3, 1],
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    backgroundColor: 'rgba(75, 192, 192, 0.1)',
+                    borderWidth: 2,
+                    tension: 0.1
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'bottom',
+                },
+                tooltip: {
+                    mode: 'index',
+                    intersect: false
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Number of Flights'
+                    }
+                }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>
