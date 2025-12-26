@@ -5,7 +5,6 @@ from planes.models import Plane, Simulator
 from routes.models import Route
 
 
-# Create your models here.
 class Flight(models.Model):
     pilot = models.ForeignKey(
         Pilot, related_name="as_flight_pilot", on_delete=models.CASCADE

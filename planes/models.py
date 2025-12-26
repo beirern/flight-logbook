@@ -1,7 +1,6 @@
 from django.db import models
 
 
-# Create your models here.
 class Plane(models.Model):
     class PlaneClass(models.TextChoices):
         SEL = "Single Engine Land"
