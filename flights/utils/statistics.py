@@ -70,17 +70,25 @@ def get_instrument_breakdown(pilot):
 
 
 def get_aircraft_breakdown(pilot):
-    """Get flight hours broken down by aircraft with type information."""
-    flights = Flight.objects.filter(pilot=pilot).select_related('plane')
+    """Get flight hours broken down by aircraft with type and location information."""
+    flights = Flight.objects.filter(pilot=pilot).select_related('plane', 'route').prefetch_related('route__route_steps__waypoint').order_by('plane', '-date')
 
     aircraft_data = {}
     for flight in flights:
         plane_name = str(flight.plane)
         if plane_name not in aircraft_data:
+            # Get first waypoint from route for location
+            location = None
+            if flight.route:
+                first_waypoint = flight.route.route_steps.order_by('sequence').first()
+                if first_waypoint:
+                    location = first_waypoint.waypoint.code
+
             aircraft_data[plane_name] = {
                 'tail_number': plane_name,
                 'type': flight.plane.type,
-                'hours': 0
+                'hours': 0,
+                'location': location  # Location from most recent flight (since ordered by -date)
             }
         aircraft_data[plane_name]['hours'] += float(flight.flight_time)
 
@@ -289,3 +297,78 @@ def get_instructor_leaderboard(pilot, limit=10):
         entry['total_time'] = round(entry['total_time'], 1)
 
     return leaderboard
+
+
+def get_sel_total_hours(pilot):
+    """Calculate total Single Engine Land (SEL) hours for a pilot."""
+    flights = Flight.objects.filter(
+        pilot=pilot,
+        plane__plane_class='Single Engine Land'
+    ).select_related('plane')
+
+    sel_total = flights.aggregate(Sum('flight_time'))['flight_time__sum'] or 0
+    return round(float(sel_total), 1)
+
+
+def get_aircraft_class_breakdown(pilot):
+    """Get breakdown of flight hours by aircraft class (SEL/MEL)."""
+    flights = Flight.objects.filter(pilot=pilot).select_related('plane')
+
+    class_data = flights.values('plane__plane_class').annotate(
+        hours=Sum('flight_time'),
+        flight_count=Count('id')
+    )
+
+    # Calculate total hours for percentage calculation
+    total_hours = sum(float(entry['hours']) for entry in class_data)
+
+    # Build structured breakdown
+    breakdown = {}
+    for entry in class_data:
+        plane_class = entry['plane__plane_class']
+        hours = float(entry['hours'])
+        breakdown[plane_class] = {
+            'hours': round(hours, 1),
+            'flight_count': entry['flight_count'],
+            'percentage': round((hours / total_hours * 100) if total_hours > 0 else 0, 1)
+        }
+
+    return breakdown
+
+
+def get_aircraft_type_statistics(pilot):
+    """Get statistics for each aircraft type flown."""
+    flights = Flight.objects.filter(pilot=pilot).select_related('plane')
+
+    type_data = flights.values('plane__type', 'plane__plane_class').annotate(
+        hours=Sum('flight_time'),
+        flight_count=Count('id')
+    ).order_by('-hours')
+
+    return [
+        {
+            'type': entry['plane__type'],
+            'plane_class': entry['plane__plane_class'],
+            'hours': round(float(entry['hours']), 1),
+            'flight_count': entry['flight_count']
+        }
+        for entry in type_data
+    ]
+
+
+def get_aircraft_highlights(pilot):
+    """Get highlights about aircraft usage (most/least flown, total unique)."""
+    aircraft_breakdown = get_aircraft_breakdown(pilot)
+
+    if not aircraft_breakdown:
+        return {
+            'most_flown': None,
+            'least_flown': None,
+            'total_aircraft': 0
+        }
+
+    return {
+        'most_flown': aircraft_breakdown[0],  # First item (sorted by hours descending)
+        'least_flown': aircraft_breakdown[-1],  # Last item
+        'total_aircraft': len(aircraft_breakdown)
+    }
