@@ -27,13 +27,18 @@ from flights.utils.statistics import (
     get_cumulative_time_data,
     get_days_since_last_flight,
     get_instructor_leaderboard,
+    get_instructor_time_progression,
     get_instrument_breakdown,
     get_instrument_rating_progress,
     get_monthly_breakdown,
+    get_monthly_people_frequency,
     get_passenger_leaderboard,
+    get_people_insights,
+    get_people_role_distribution,
     get_recent_flights,
     get_sel_total_hours,
     get_total_times,
+    get_unique_people_counts,
 )
 from pilots.models import Pilot
 from routes.models import Route
@@ -348,6 +353,9 @@ class Command(BaseCommand):
         # Get cumulative time data for line chart
         cumulative_data = get_cumulative_time_data(pilot)
 
+        # Get instructor time progression data
+        instructor_progression = get_instructor_time_progression(pilot)
+
         dashboard_context = {
             'total_times': total_times,
             'currency': currency,
@@ -358,6 +366,7 @@ class Command(BaseCommand):
             'monthly_hours': json.dumps(monthly_hours),
             'instrument_breakdown': instrument_breakdown,
             'cumulative_data': json.dumps(cumulative_data),
+            'instructor_progression': json.dumps(instructor_progression),
             'recent_flights': recent_flights,
             'days_since_last_flight': days_since_last_flight,
             'passenger_leaderboard': passenger_leaderboard,
@@ -431,6 +440,47 @@ class Command(BaseCommand):
             f.write(aircraft_html)
 
         self.stdout.write(self.style.SUCCESS('  ✓ Rendered aircraft page (aircraft.html)'))
+
+        # Render people page
+        unique_people_counts = get_unique_people_counts(pilot)
+        people_role_distribution = get_people_role_distribution(pilot)
+        people_insights = get_people_insights(pilot)
+        monthly_people_data = get_monthly_people_frequency(pilot, months=12)
+
+        # Prepare chart data for role distribution pie chart
+        role_labels = ['Solo', 'With Passengers', 'With Instructor']
+        role_counts = [
+            people_role_distribution['solo_flights'],
+            people_role_distribution['passenger_flights'],
+            people_role_distribution['instruction_flights']
+        ]
+
+        # Prepare chart data for monthly trends
+        people_monthly_labels = [entry['month'] for entry in monthly_people_data]
+        monthly_total_flights = [entry['total_flights'] for entry in monthly_people_data]
+        monthly_passenger_flights = [entry['flights_with_passengers'] for entry in monthly_people_data]
+        monthly_instruction_flights = [entry['flights_with_instruction'] for entry in monthly_people_data]
+
+        people_context = {
+            'unique_people_counts': unique_people_counts,
+            'people_role_distribution': people_role_distribution,
+            'passenger_leaderboard': passenger_leaderboard,
+            'instructor_leaderboard': instructor_leaderboard,
+            'people_insights': people_insights,
+            'role_labels': json.dumps(role_labels),
+            'role_counts': json.dumps(role_counts),
+            'monthly_labels': json.dumps(people_monthly_labels),
+            'monthly_total_flights': json.dumps(monthly_total_flights),
+            'monthly_passenger_flights': json.dumps(monthly_passenger_flights),
+            'monthly_instruction_flights': json.dumps(monthly_instruction_flights),
+            'is_static': True,
+        }
+
+        people_html = render_to_string('flights/people.html', people_context)
+        with open(output_dir / 'people.html', 'w') as f:
+            f.write(people_html)
+
+        self.stdout.write(self.style.SUCCESS('  ✓ Rendered people page (people.html)'))
 
     def _copy_static_assets(self, output_dir):
         """Copy static assets (CSS, JS, images) to output directory."""
