@@ -10,7 +10,9 @@ class Medical(models.Model):
         THIRD = 3
 
     classNumber = models.IntegerField(choices=ClassNumbers.choices)
-    number = models.IntegerField()
+    examination_date = models.DateField()
+    examiner_name = models.CharField(max_length=50)
+    examiner_designation_number = models.CharField(max_length=9)
     pilot = models.ForeignKey(Pilot, on_delete=models.CASCADE, related_name="medical")
 
     def __str__(self):
