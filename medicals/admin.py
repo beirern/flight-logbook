@@ -4,7 +4,7 @@ from medicals.models import Medical
 
 
 class MedicalAdmin(admin.ModelAdmin):
-    list_display = ("__str__", "classNumber", "expiration_years")
+    list_display = ("__str__", "classNumber", "pilot")
 
 
 # Register your models here.
