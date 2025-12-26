@@ -138,10 +138,14 @@ def routes_map(request):
             # Count flights for this route
             route_counts[route_id] = route_counts.get(route_id, 0) + 1
 
-            # Count airport visits for this flight
+            # Count airport visits for this flight (each airport only counted once per flight)
             waypoints = flight.route.waypoints.all()
+            unique_airports_in_flight = set()
             for waypoint in waypoints:
-                airport_visits[waypoint.code] = airport_visits.get(waypoint.code, 0) + 1
+                unique_airports_in_flight.add(waypoint.code)
+
+            for airport_code in unique_airports_in_flight:
+                airport_visits[airport_code] = airport_visits.get(airport_code, 0) + 1
 
             if route_id not in unique_routes:
                 route = flight.route
