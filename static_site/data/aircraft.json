@@ -1,0 +1,215 @@
+{
+  "sel_hours": 106.4,
+  "class_breakdown": {
+    "Single Engine Land": {
+      "hours": 106.4,
+      "flight_count": 76,
+      "percentage": 100.0
+    }
+  },
+  "type_stats": [
+    {
+      "type": "C172",
+      "plane_class": "Single Engine Land",
+      "hours": 62.6,
+      "flight_count": 45
+    },
+    {
+      "type": "C162",
+      "plane_class": "Single Engine Land",
+      "hours": 43.8,
+      "flight_count": 31
+    }
+  ],
+  "highlights": {
+    "most_flown": {
+      "tail_number": "N13312",
+      "type": "C172",
+      "hours": 9.8,
+      "location": "KBFI"
+    },
+    "least_flown": {
+      "tail_number": "N75879",
+      "type": "C172",
+      "hours": 0.7,
+      "location": "KRNT"
+    },
+    "total_aircraft": 29
+  },
+  "aircraft_breakdown": [
+    {
+      "tail_number": "N13312",
+      "type": "C172",
+      "hours": 9.8,
+      "location": "KBFI"
+    },
+    {
+      "tail_number": "N82MH",
+      "type": "C172",
+      "hours": 9.4,
+      "location": "KBFI"
+    },
+    {
+      "tail_number": "N162HA",
+      "type": "C162",
+      "hours": 8.3,
+      "location": "KRNT"
+    },
+    {
+      "tail_number": "N1152Z",
+      "type": "C172",
+      "hours": 6.9,
+      "location": "KBFI"
+    },
+    {
+      "tail_number": "N5689M",
+      "type": "C162",
+      "hours": 6.4,
+      "location": "KRNT"
+    },
+    {
+      "tail_number": "N121W",
+      "type": "C172",
+      "hours": 6.2,
+      "location": "KBFI"
+    },
+    {
+      "tail_number": "N137ME",
+      "type": "C172",
+      "hours": 5.7,
+      "location": "KSQL"
+    },
+    {
+      "tail_number": "N5199D",
+      "type": "C162",
+      "hours": 5.4,
+      "location": "KRNT"
+    },
+    {
+      "tail_number": "N297PL",
+      "type": "C172",
+      "hours": 5.0,
+      "location": "KBFI"
+    },
+    {
+      "tail_number": "N6043M",
+      "type": "C162",
+      "hours": 4.699999999999999,
+      "location": "KRNT"
+    },
+    {
+      "tail_number": "N444VW",
+      "type": "C172",
+      "hours": 4.6,
+      "location": "KBFI"
+    },
+    {
+      "tail_number": "N52165",
+      "type": "C162",
+      "hours": 3.7,
+      "location": "KRNT"
+    },
+    {
+      "tail_number": "N5213U",
+      "type": "C162",
+      "hours": 3.2,
+      "location": "KRNT"
+    },
+    {
+      "tail_number": "N9283A",
+      "type": "C172",
+      "hours": 3.0999999999999996,
+      "location": "KS50"
+    },
+    {
+      "tail_number": "N4585P",
+      "type": "C172",
+      "hours": 2.9,
+      "location": "KSQL"
+    },
+    {
+      "tail_number": "N5211Y",
+      "type": "C162",
+      "hours": 2.8,
+      "location": "KRNT"
+    },
+    {
+      "tail_number": "N5202B",
+      "type": "C162",
+      "hours": 2.5999999999999996,
+      "location": "KRNT"
+    },
+    {
+      "tail_number": "N6067Z",
+      "type": "C162",
+      "hours": 2.5999999999999996,
+      "location": "KRNT"
+    },
+    {
+      "tail_number": "N278CA",
+      "type": "C172",
+      "hours": 1.9000000000000001,
+      "location": "KBFI"
+    },
+    {
+      "tail_number": "N6058V",
+      "type": "C162",
+      "hours": 1.5,
+      "location": "KRNT"
+    },
+    {
+      "tail_number": "N5210A",
+      "type": "C172",
+      "hours": 1.5,
+      "location": "KSQL"
+    },
+    {
+      "tail_number": "N602ND",
+      "type": "C172",
+      "hours": 1.3,
+      "location": "KRNT"
+    },
+    {
+      "tail_number": "N3029F",
+      "type": "C162",
+      "hours": 1.3,
+      "location": "KRNT"
+    },
+    {
+      "tail_number": "N52056",
+      "type": "C162",
+      "hours": 1.3,
+      "location": "KRNT"
+    },
+    {
+      "tail_number": "N2365P",
+      "type": "C172",
+      "hours": 1.2,
+      "location": "KSQL"
+    },
+    {
+      "tail_number": "N410B5",
+      "type": "C172",
+      "hours": 0.8,
+      "location": "KSQL"
+    },
+    {
+      "tail_number": "N410BS",
+      "type": "C172",
+      "hours": 0.8,
+      "location": "KSQL"
+    },
+    {
+      "tail_number": "N633ND",
+      "type": "C172",
+      "hours": 0.8,
+      "location": "KS50"
+    },
+    {
+      "tail_number": "N75879",
+      "type": "C172",
+      "hours": 0.7,
+      "location": "KRNT"
+    }
+  ]
+}
