@@ -34,9 +34,15 @@ def get_total_times(pilot):
 
 
 def get_monthly_breakdown(pilot, months=12):
-    """Get flight hours broken down by month for the last N months."""
-    start_date = datetime.now().date() - timedelta(days=30 * months)
+    """Get flight hours broken down by month for the last N months, including months with 0 hours."""
+    from dateutil.relativedelta import relativedelta
 
+    # Get current date and calculate start date
+    now = datetime.now().date()
+    start_date = now - relativedelta(months=months-1)
+    start_date = start_date.replace(day=1)  # Start from first day of the month
+
+    # Query flights and group by month
     monthly = Flight.objects.filter(
         pilot=pilot,
         date__gte=start_date
@@ -46,13 +52,24 @@ def get_monthly_breakdown(pilot, months=12):
         hours=Sum('flight_time')
     ).order_by('month')
 
-    return [
-        {
-            'month': entry['month'].strftime('%b %Y'),
-            'hours': float(entry['hours']) if entry['hours'] else 0
-        }
+    # Create a dictionary of month -> hours from database results
+    hours_by_month = {
+        entry['month']: float(entry['hours']) if entry['hours'] else 0
         for entry in monthly
-    ]
+    }
+
+    # Generate all months in the range and fill in 0 for missing months
+    result = []
+    current = start_date
+    for _ in range(months):
+        month_key = datetime(current.year, current.month, 1).date()
+        result.append({
+            'month': current.strftime('%b %Y'),
+            'hours': hours_by_month.get(month_key, 0)
+        })
+        current = current + relativedelta(months=1)
+
+    return result
 
 
 def get_instrument_breakdown(pilot):
