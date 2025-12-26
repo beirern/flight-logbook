@@ -313,8 +313,13 @@ class Command(BaseCommand):
         """Serialize medical data (convert dates to ISO format)."""
         return {
             'has_medical': medical['has_medical'],
-            'class': medical['class'],
+            'original_class': medical['original_class'],
+            'current_class': medical['current_class'],
+            'examination_date': medical['examination_date'].isoformat() if medical['examination_date'] else None,
             'expiry': medical['expiry'].isoformat() if medical['expiry'] else None,
+            'first_class_expiry': medical['first_class_expiry'].isoformat() if medical['first_class_expiry'] else None,
+            'second_class_expiry': medical['second_class_expiry'].isoformat() if medical['second_class_expiry'] else None,
+            'third_class_expiry': medical['third_class_expiry'].isoformat() if medical['third_class_expiry'] else None,
             'days_remaining': medical['days_remaining'],
             'status': medical['status'],
         }
