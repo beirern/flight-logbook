@@ -25,7 +25,7 @@
     15.4,
     13.5,
     4.4,
-    1.2
+    2.7
   ],
   "cumulative_data": [
     {
@@ -559,6 +559,13 @@
       "pic": 11.4,
       "dual": 95.0,
       "instrument": 4.4
+    },
+    {
+      "date": "2025-12-23",
+      "total": 107.9,
+      "pic": 12.9,
+      "dual": 96.5,
+      "instrument": 4.4
     }
   ],
   "aircraft_breakdown": [
@@ -576,6 +583,11 @@
       "name": "N162HA",
       "type": "C162",
       "hours": 8.3
+    },
+    {
+      "name": "N5199D",
+      "type": "C162",
+      "hours": 6.9
     },
     {
       "name": "N1152Z",
@@ -596,11 +608,6 @@
       "name": "N137ME",
       "type": "C172",
       "hours": 5.7
-    },
-    {
-      "name": "N5199D",
-      "type": "C162",
-      "hours": 5.4
     },
     {
       "name": "N297PL",
