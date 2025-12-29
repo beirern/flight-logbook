@@ -72,7 +72,7 @@ class SimulatorFlight(models.Model):
     time_end = models.TimeField(null=True, blank=True)
     sim_time = models.DecimalField(max_digits=19, decimal_places=1)
     plane = models.ForeignKey(Simulator, on_delete=models.CASCADE)
-    route = models.ForeignKey(Route, on_delete=models.CASCADE)
+    route = models.ForeignKey(Route, on_delete=models.CASCADE, null=True, blank=True)
     simulated_instrument_time = models.DecimalField(
         max_digits=19,
         decimal_places=1,
