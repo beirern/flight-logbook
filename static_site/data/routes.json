@@ -8,14 +8,14 @@
         "name": "Renton Municipal Airport",
         "lat": 47.4930992126,
         "lon": -122.216003418,
-        "visit_count": 46
+        "visit_count": 47
       },
       {
         "code": "KRNT",
         "name": "Renton Municipal Airport",
         "lat": 47.4930992126,
         "lon": -122.216003418,
-        "visit_count": 46
+        "visit_count": 47
       }
     ],
     "flight_count": 24,
@@ -30,7 +30,7 @@
         "name": "Renton Municipal Airport",
         "lat": 47.4930992126,
         "lon": -122.216003418,
-        "visit_count": 46
+        "visit_count": 47
       },
       {
         "code": "KS50",
@@ -44,7 +44,7 @@
         "name": "Renton Municipal Airport",
         "lat": 47.4930992126,
         "lon": -122.216003418,
-        "visit_count": 46
+        "visit_count": 47
       }
     ],
     "flight_count": 4,
@@ -59,7 +59,7 @@
         "name": "Renton Municipal Airport",
         "lat": 47.4930992126,
         "lon": -122.216003418,
-        "visit_count": 46
+        "visit_count": 47
       },
       {
         "code": "KTIW",
@@ -73,7 +73,7 @@
         "name": "Renton Municipal Airport",
         "lat": 47.4930992126,
         "lon": -122.216003418,
-        "visit_count": 46
+        "visit_count": 47
       }
     ],
     "flight_count": 1,
@@ -88,7 +88,7 @@
         "name": "Renton Municipal Airport",
         "lat": 47.4930992126,
         "lon": -122.216003418,
-        "visit_count": 46
+        "visit_count": 47
       },
       {
         "code": "KPLU",
@@ -102,7 +102,7 @@
         "name": "Renton Municipal Airport",
         "lat": 47.4930992126,
         "lon": -122.216003418,
-        "visit_count": 46
+        "visit_count": 47
       }
     ],
     "flight_count": 1,
@@ -117,7 +117,7 @@
         "name": "Renton Municipal Airport",
         "lat": 47.4930992126,
         "lon": -122.216003418,
-        "visit_count": 46
+        "visit_count": 47
       },
       {
         "code": "KPLU",
@@ -138,7 +138,7 @@
         "name": "Renton Municipal Airport",
         "lat": 47.4930992126,
         "lon": -122.216003418,
-        "visit_count": 46
+        "visit_count": 47
       }
     ],
     "flight_count": 1,
@@ -153,7 +153,7 @@
         "name": "Renton Municipal Airport",
         "lat": 47.4930992126,
         "lon": -122.216003418,
-        "visit_count": 46
+        "visit_count": 47
       },
       {
         "code": "KFHR",
@@ -167,7 +167,7 @@
         "name": "Renton Municipal Airport",
         "lat": 47.4930992126,
         "lon": -122.216003418,
-        "visit_count": 46
+        "visit_count": 47
       }
     ],
     "flight_count": 1,
@@ -182,7 +182,7 @@
         "name": "Renton Municipal Airport",
         "lat": 47.4930992126,
         "lon": -122.216003418,
-        "visit_count": 46
+        "visit_count": 47
       },
       {
         "code": "KBVS",
@@ -196,7 +196,7 @@
         "name": "Renton Municipal Airport",
         "lat": 47.4930992126,
         "lon": -122.216003418,
-        "visit_count": 46
+        "visit_count": 47
       }
     ],
     "flight_count": 1,
@@ -211,7 +211,7 @@
         "name": "Renton Municipal Airport",
         "lat": 47.4930992126,
         "lon": -122.216003418,
-        "visit_count": 46
+        "visit_count": 47
       },
       {
         "code": "KS36",
@@ -225,7 +225,7 @@
         "name": "Renton Municipal Airport",
         "lat": 47.4930992126,
         "lon": -122.216003418,
-        "visit_count": 46
+        "visit_count": 47
       }
     ],
     "flight_count": 1,
@@ -262,14 +262,14 @@
         "name": "Boeing Field King County International Airport",
         "lat": 47.529999,
         "lon": -122.302002,
-        "visit_count": 28
+        "visit_count": 29
       },
       {
         "code": "KBFI",
         "name": "Boeing Field King County International Airport",
         "lat": 47.529999,
         "lon": -122.302002,
-        "visit_count": 28
+        "visit_count": 29
       }
     ],
     "flight_count": 5,
@@ -284,24 +284,24 @@
         "name": "Boeing Field King County International Airport",
         "lat": 47.529999,
         "lon": -122.302002,
-        "visit_count": 28
+        "visit_count": 29
       },
       {
         "code": "KRNT",
         "name": "Renton Municipal Airport",
         "lat": 47.4930992126,
         "lon": -122.216003418,
-        "visit_count": 46
+        "visit_count": 47
       },
       {
         "code": "KBFI",
         "name": "Boeing Field King County International Airport",
         "lat": 47.529999,
         "lon": -122.302002,
-        "visit_count": 28
+        "visit_count": 29
       }
     ],
-    "flight_count": 8,
+    "flight_count": 9,
     "distance": 8.3
   },
   {
@@ -313,7 +313,7 @@
         "name": "Boeing Field King County International Airport",
         "lat": 47.529999,
         "lon": -122.302002,
-        "visit_count": 28
+        "visit_count": 29
       },
       {
         "code": "S43",
@@ -327,7 +327,7 @@
         "name": "Boeing Field King County International Airport",
         "lat": 47.529999,
         "lon": -122.302002,
-        "visit_count": 28
+        "visit_count": 29
       }
     ],
     "flight_count": 1,
@@ -342,7 +342,7 @@
         "name": "Boeing Field King County International Airport",
         "lat": 47.529999,
         "lon": -122.302002,
-        "visit_count": 28
+        "visit_count": 29
       },
       {
         "code": "KS36",
@@ -356,7 +356,7 @@
         "name": "Boeing Field King County International Airport",
         "lat": 47.529999,
         "lon": -122.302002,
-        "visit_count": 28
+        "visit_count": 29
       }
     ],
     "flight_count": 1,
@@ -371,7 +371,7 @@
         "name": "Boeing Field King County International Airport",
         "lat": 47.529999,
         "lon": -122.302002,
-        "visit_count": 28
+        "visit_count": 29
       },
       {
         "code": "KPWT",
@@ -385,7 +385,7 @@
         "name": "Boeing Field King County International Airport",
         "lat": 47.529999,
         "lon": -122.302002,
-        "visit_count": 28
+        "visit_count": 29
       }
     ],
     "flight_count": 4,
@@ -400,7 +400,7 @@
         "name": "Boeing Field King County International Airport",
         "lat": 47.529999,
         "lon": -122.302002,
-        "visit_count": 28
+        "visit_count": 29
       },
       {
         "code": "KTIW",
@@ -414,7 +414,7 @@
         "name": "Boeing Field King County International Airport",
         "lat": 47.529999,
         "lon": -122.302002,
-        "visit_count": 28
+        "visit_count": 29
       }
     ],
     "flight_count": 1,
@@ -429,7 +429,7 @@
         "name": "Boeing Field King County International Airport",
         "lat": 47.529999,
         "lon": -122.302002,
-        "visit_count": 28
+        "visit_count": 29
       },
       {
         "code": "KS50",
@@ -443,7 +443,7 @@
         "name": "Boeing Field King County International Airport",
         "lat": 47.529999,
         "lon": -122.302002,
-        "visit_count": 28
+        "visit_count": 29
       }
     ],
     "flight_count": 2,
@@ -458,14 +458,14 @@
         "name": "Boeing Field King County International Airport",
         "lat": 47.529999,
         "lon": -122.302002,
-        "visit_count": 28
+        "visit_count": 29
       },
       {
         "code": "KRNT",
         "name": "Renton Municipal Airport",
         "lat": 47.4930992126,
         "lon": -122.216003418,
-        "visit_count": 46
+        "visit_count": 47
       }
     ],
     "flight_count": 1,
@@ -480,14 +480,14 @@
         "name": "Renton Municipal Airport",
         "lat": 47.4930992126,
         "lon": -122.216003418,
-        "visit_count": 46
+        "visit_count": 47
       },
       {
         "code": "KBFI",
         "name": "Boeing Field King County International Airport",
         "lat": 47.529999,
         "lon": -122.302002,
-        "visit_count": 28
+        "visit_count": 29
       }
     ],
     "flight_count": 1,
@@ -502,7 +502,7 @@
         "name": "Boeing Field King County International Airport",
         "lat": 47.529999,
         "lon": -122.302002,
-        "visit_count": 28
+        "visit_count": 29
       },
       {
         "code": "KCLM",
@@ -516,7 +516,7 @@
         "name": "Boeing Field King County International Airport",
         "lat": 47.529999,
         "lon": -122.302002,
-        "visit_count": 28
+        "visit_count": 29
       }
     ],
     "flight_count": 1,
@@ -531,7 +531,7 @@
         "name": "Boeing Field King County International Airport",
         "lat": 47.529999,
         "lon": -122.302002,
-        "visit_count": 28
+        "visit_count": 29
       },
       {
         "code": "KPAE",
@@ -545,14 +545,14 @@
         "name": "Renton Municipal Airport",
         "lat": 47.4930992126,
         "lon": -122.216003418,
-        "visit_count": 46
+        "visit_count": 47
       },
       {
         "code": "KBFI",
         "name": "Boeing Field King County International Airport",
         "lat": 47.529999,
         "lon": -122.302002,
-        "visit_count": 28
+        "visit_count": 29
       }
     ],
     "flight_count": 1,
@@ -567,7 +567,7 @@
         "name": "Boeing Field King County International Airport",
         "lat": 47.529999,
         "lon": -122.302002,
-        "visit_count": 28
+        "visit_count": 29
       },
       {
         "code": "KSPB",
@@ -588,7 +588,7 @@
         "name": "Boeing Field King County International Airport",
         "lat": 47.529999,
         "lon": -122.302002,
-        "visit_count": 28
+        "visit_count": 29
       }
     ],
     "flight_count": 1,
@@ -603,7 +603,7 @@
         "name": "Boeing Field King County International Airport",
         "lat": 47.529999,
         "lon": -122.302002,
-        "visit_count": 28
+        "visit_count": 29
       },
       {
         "code": "KS36",
@@ -624,7 +624,7 @@
         "name": "Boeing Field King County International Airport",
         "lat": 47.529999,
         "lon": -122.302002,
-        "visit_count": 28
+        "visit_count": 29
       }
     ],
     "flight_count": 1,
@@ -668,7 +668,7 @@
         "name": "Renton Municipal Airport",
         "lat": 47.4930992126,
         "lon": -122.216003418,
-        "visit_count": 46
+        "visit_count": 47
       },
       {
         "code": "KS50",

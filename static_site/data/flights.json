@@ -1,5 +1,26 @@
 [
   {
+    "date": "2025-12-23",
+    "plane": "N5199D",
+    "flight_time": 1.5,
+    "pic_time": 1.5,
+    "sic_time": 0.0,
+    "dual_time": 1.5,
+    "xc_time": 0.0,
+    "day_time": 1.5,
+    "night_time": 0.0,
+    "actual_instrument_time": 0.0,
+    "simulated_instrument_time": 0.0,
+    "day_landings": 3,
+    "day_fullstop_landings": 1,
+    "night_landings": 0,
+    "night_fullstop_landings": 0,
+    "route": "Boeing Field - Renton Landing Work: (KBFI -> KRNT -> KBFI)",
+    "instructor": "Emily Stednitz",
+    "passengers": [],
+    "notes": "Flight Proficiency in C162. Slow Flight, steep turns, landings"
+  },
+  {
     "date": "2025-12-01",
     "plane": "N9283A",
     "flight_time": 1.2,

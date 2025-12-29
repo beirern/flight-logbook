@@ -1,9 +1,9 @@
 {
-  "sel_hours": 106.4,
+  "sel_hours": 107.9,
   "class_breakdown": {
     "Single Engine Land": {
-      "hours": 106.4,
-      "flight_count": 76,
+      "hours": 107.9,
+      "flight_count": 77,
       "percentage": 100.0
     }
   },
@@ -17,8 +17,8 @@
     {
       "type": "C162",
       "plane_class": "Single Engine Land",
-      "hours": 43.8,
-      "flight_count": 31
+      "hours": 45.3,
+      "flight_count": 32
     }
   ],
   "highlights": {
@@ -56,6 +56,12 @@
       "location": "KRNT"
     },
     {
+      "tail_number": "N5199D",
+      "type": "C162",
+      "hours": 6.9,
+      "location": "KBFI"
+    },
+    {
       "tail_number": "N1152Z",
       "type": "C172",
       "hours": 6.9,
@@ -78,12 +84,6 @@
       "type": "C172",
       "hours": 5.7,
       "location": "KSQL"
-    },
-    {
-      "tail_number": "N5199D",
-      "type": "C162",
-      "hours": 5.4,
-      "location": "KRNT"
     },
     {
       "tail_number": "N297PL",
