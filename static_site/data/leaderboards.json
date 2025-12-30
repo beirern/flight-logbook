@@ -30,52 +30,62 @@
     {
       "name": "Emily Stednitz",
       "flight_count": 20,
-      "total_time": 29.3
+      "ground_count": 12,
+      "total_time": 42.6
     },
     {
       "name": "Erika Bengard",
       "flight_count": 16,
-      "total_time": 24.9
+      "ground_count": 7,
+      "total_time": 37.0
     },
     {
       "name": "Rafael Urrea",
       "flight_count": 9,
+      "ground_count": 0,
       "total_time": 12.1
     },
     {
       "name": "Matthew Kopiko",
       "flight_count": 9,
+      "ground_count": 0,
       "total_time": 11.8
+    },
+    {
+      "name": "Jaimason Sunderman",
+      "flight_count": 2,
+      "ground_count": 1,
+      "total_time": 4.5
     },
     {
       "name": "Cailee Landis",
       "flight_count": 2,
+      "ground_count": 0,
       "total_time": 2.8
     },
     {
       "name": "Kevin Lamp",
       "flight_count": 2,
+      "ground_count": 0,
       "total_time": 2.5
     },
     {
       "name": "Ian Middleton",
       "flight_count": 2,
+      "ground_count": 0,
       "total_time": 2.5
-    },
-    {
-      "name": "Jaimason Sunderman",
-      "flight_count": 2,
-      "total_time": 2.4
     },
     {
       "name": "Brandon Gockel",
       "flight_count": 2,
+      "ground_count": 0,
       "total_time": 2.0
     },
     {
-      "name": "Daniel Stellini",
-      "flight_count": 2,
-      "total_time": 1.1
+      "name": "Elliot Mcnear",
+      "flight_count": 0,
+      "ground_count": 1,
+      "total_time": 1.5
     }
   ]
 }

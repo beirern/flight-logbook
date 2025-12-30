@@ -75,7 +75,7 @@
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1>Flight Dashboard</h1>
         
-        <small class="text-muted">Last updated: 2025-12-29 06:47:45Z</small>
+        <small class="text-muted">Last updated: 2025-12-30 18:20:06Z</small>
         
     </div>
 
@@ -103,7 +103,7 @@
             <div class="card stat-card">
                 <div class="card-body text-center">
                     <h6 class="card-subtitle mb-2 text-muted">Instrument Time</h6>
-                    <h2 class="card-title">4.4</h2>
+                    <h2 class="card-title">8.0</h2>
                     <p class="card-text">hours</p>
                 </div>
             </div>
@@ -130,7 +130,7 @@
             <div class="card stat-card">
                 <div class="card-body text-center">
                     <h6 class="card-subtitle mb-2 text-muted">Days Since Last Flight</h6>
-                    <h2 class="card-title">6</h2>
+                    <h2 class="card-title">7</h2>
                     <p class="card-text">days</p>
                 </div>
             </div>
@@ -142,9 +142,13 @@
         <div class="col-md-6 mb-3">
             <div class="card">
                 <div class="card-header bg-primary text-white">
-                    <h5>Passenger Currency (§FAR 61.57a)</h5>
+                    <h5>Currency & Certificates</h5>
                 </div>
                 <div class="card-body">
+                    <!-- License Currency -->
+                    
+
+                    <!-- Day Currency -->
                     <div class="mb-3">
                         <h6>Day Currency (90 days)</h6>
                         <div class="d-flex justify-content-between align-items-center">
@@ -166,6 +170,8 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- Night Currency -->
                     <div>
                         <h6>Night Currency (90 days)</h6>
                         <div class="d-flex justify-content-between align-items-center">
@@ -219,7 +225,7 @@
                                 <p class="mb-0">
                                     <strong>Days Remaining:</strong>
                                     <span class="text-success">
-                                        945 days
+                                        944 days
                                     </span>
                                 </p>
                             </div>
@@ -273,17 +279,17 @@
                         <div class="col-md-6">
                             <h6>Instrument Time</h6>
                             <div class="d-flex justify-content-between align-items-center mb-2">
-                                <span>4.4/40 hours</span>
-                                <span class="badge bg-success">11.0% Complete</span>
+                                <span>8.0/40 hours</span>
+                                <span class="badge bg-success">20.0% Complete</span>
                             </div>
                             <div class="progress mb-2" style="height: 25px;">
                                 <div class="progress-bar bg-success"
                                      role="progressbar"
-                                     style="width: 11.0%">
-                                    4.4/40 hrs
+                                     style="width: 20.0%">
+                                    8.0/40 hrs
                                 </div>
                             </div>
-                            <small class="text-muted">Remaining: 35.6 hrs</small>
+                            <small class="text-muted">Remaining: 32.0 hrs</small>
                         </div>
                         <div class="col-md-6">
                             <h6>Cross Country PIC Time</h6>
@@ -302,17 +308,24 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-3">
+                        <div class="col-md-12 mb-2">
                             <strong>Actual Instrument:</strong> 0.0 hrs
                         </div>
-                        <div class="col-md-3">
-                            <strong>Simulated:</strong> 4.4 hrs
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <strong>Simulated (Flight):</strong> 4.4 hrs (fully creditable)
                         </div>
-                        <div class="col-md-3">
-                            <strong>Creditable Simulated:</strong> 4.4 hrs (max 20)
+                        <div class="col-md-6">
+                            <strong>Simulated (Simulator):</strong> 3.6 hrs (max 20 creditable)
                         </div>
-                        <div class="col-md-3">
-                            <strong>Total Instrument:</strong> 4.4 hrs
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-6">
+                            <strong>Total Simulated:</strong> 8.0 hrs
+                        </div>
+                        <div class="col-md-6">
+                            <strong>Creditable Simulated:</strong> 8.0 hrs
                         </div>
                     </div>
                 </div>
@@ -721,16 +734,18 @@
     new Chart(instrumentCtx, {
         type: 'pie',
         data: {
-            labels: ['Actual Instrument', 'Simulated Instrument'],
+            labels: ['Actual Instrument', 'Simulated (Flight)', 'Simulated (Simulator)'],
             datasets: [{
-                data: [0.0, 4.4],
+                data: [0.0, 4.4, 3.6],
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.6)',
-                    'rgba(54, 162, 235, 0.6)'
+                    'rgba(54, 162, 235, 0.6)',
+                    'rgba(75, 192, 192, 0.6)'
                 ],
                 borderColor: [
                     'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)'
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(75, 192, 192, 1)'
                 ],
                 borderWidth: 1
             }]
