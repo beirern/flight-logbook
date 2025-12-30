@@ -17,7 +17,7 @@ from django.core.management.base import BaseCommand
 from django.template.loader import render_to_string
 
 from flights.models import Flight
-from flights.utils.currency_calculator import check_medical_status, check_passenger_currency
+from flights.utils.currency_calculator import check_license_status, check_medical_status, check_passenger_currency
 from flights.utils.statistics import (
     get_aircraft_breakdown,
     get_aircraft_class_breakdown,
@@ -164,6 +164,7 @@ class Command(BaseCommand):
             'total_times': get_total_times(pilot),
             'currency': self._serialize_currency(check_passenger_currency(pilot)),
             'medical': self._serialize_medical(check_medical_status(pilot)),
+            'license': self._serialize_license(check_license_status(pilot)),
             'ir_progress': get_instrument_rating_progress(pilot),
             'commercial_progress': get_commercial_license_progress(pilot),
             'instrument_breakdown': get_instrument_breakdown(pilot),
@@ -330,6 +331,16 @@ class Command(BaseCommand):
             'status': medical['status'],
         }
 
+    def _serialize_license(self, license):
+        """Serialize license data (convert dates to ISO format)."""
+        return {
+            'has_license': license['has_license'],
+            'license_type': license['license_type'],
+            'expiration': license['expiration'].isoformat() if license['expiration'] else None,
+            'days_remaining': license['days_remaining'],
+            'status': license['status'],
+        }
+
     def _render_html_pages(self, pilot, output_dir):
         """Render HTML pages from Django templates."""
         self.stdout.write('Rendering HTML pages...')
@@ -338,6 +349,7 @@ class Command(BaseCommand):
         total_times = get_total_times(pilot)
         currency = check_passenger_currency(pilot)
         medical = check_medical_status(pilot)
+        license = check_license_status(pilot)
         ir_progress = get_instrument_rating_progress(pilot)
         commercial_progress = get_commercial_license_progress(pilot)
         instrument_breakdown = get_instrument_breakdown(pilot)
@@ -361,6 +373,7 @@ class Command(BaseCommand):
             'total_times': total_times,
             'currency': currency,
             'medical': medical,
+            'license': license,
             'ir_progress': ir_progress,
             'commercial_progress': commercial_progress,
             'monthly_labels': json.dumps(monthly_labels),
