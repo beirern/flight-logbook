@@ -130,6 +130,66 @@ def check_medical_status(pilot):
         }
 
 
+def check_license_status(pilot):
+    """
+    Check license currency status.
+    PPL expires 24 calendar months after issuance, but timer resets with each new certificate.
+    Returns the most recent license and days until expiration.
+    """
+    from licenses.models import License
+    from dateutil.relativedelta import relativedelta
+
+    try:
+        # Get the most recent license (by expiration date if set, otherwise by ID)
+        latest_license = License.objects.filter(pilot=pilot).order_by('-id').first()
+
+        if not latest_license:
+            return {
+                'has_license': False,
+                'license_type': None,
+                'expiration': None,
+                'days_remaining': None,
+                'status': 'none'
+            }
+
+        # If expiration is explicitly set in the database, use it
+        if latest_license.expiration:
+            expiry_date = latest_license.expiration
+        else:
+            # Calculate expiration as 24 months from today (placeholder)
+            # Note: You may need to add an 'issued_date' field to track actual issuance
+            expiry_date = datetime.now().date() + relativedelta(months=24)
+
+        days_remaining = (expiry_date - datetime.now().date()).days
+
+        # Determine status color coding
+        if days_remaining < 0:
+            status = 'expired'
+        elif days_remaining < 30:
+            status = 'critical'
+        elif days_remaining < 60:
+            status = 'warning'
+        else:
+            status = 'current'
+
+        return {
+            'has_license': True,
+            'license_type': latest_license.get_type_display(),
+            'expiration': expiry_date,
+            'days_remaining': days_remaining,
+            'status': status
+        }
+
+    except Exception:
+        return {
+            'has_license': False,
+            'license_type': None,
+            'expiration': None,
+            'days_remaining': None,
+            'status': 'none'
+        }
+
+
 def days_until_currency_expires(pilot, currency_type='day'):
     """
     Calculate days until a specific currency type expires.

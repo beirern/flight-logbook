@@ -210,6 +210,7 @@ class Command(BaseCommand):
                 {
                     'name': str(entry['pilot']),
                     'flight_count': entry['flight_count'],
+                    'ground_count': entry['ground_count'],
                     'total_time': entry['total_time']
                 }
                 for entry in instructor_leaderboard

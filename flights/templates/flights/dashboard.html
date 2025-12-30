@@ -76,9 +76,38 @@
         <div class="col-md-6 mb-3">
             <div class="card">
                 <div class="card-header bg-primary text-white">
-                    <h5>Passenger Currency (§FAR 61.57a)</h5>
+                    <h5>Currency & Certificates</h5>
                 </div>
                 <div class="card-body">
+                    <!-- License Currency -->
+                    {% if license.has_license %}
+                        <div class="mb-3">
+                            <h6>{{ license.license_type }}</h6>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <span class="badge
+                                        {% if license.status == 'current' %}bg-success
+                                        {% elif license.status == 'warning' %}bg-warning
+                                        {% elif license.status == 'critical' %}bg-danger
+                                        {% else %}bg-secondary{% endif %}">
+                                        {{ license.status|upper }}
+                                    </span>
+                                    {% if license.expiration %}
+                                        <span class="ms-2">
+                                            <span class="{% if license.days_remaining < 30 %}text-danger{% elif license.days_remaining < 60 %}text-warning{% else %}text-muted{% endif %}">
+                                                {{ license.days_remaining }} days remaining
+                                            </span>
+                                        </span>
+                                    {% endif %}
+                                </div>
+                                {% if license.expiration %}
+                                    <small class="text-muted">Expires: {{ license.expiration }}</small>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    <!-- Day Currency -->
                     <div class="mb-3">
                         <h6>Day Currency (90 days)</h6>
                         <div class="d-flex justify-content-between align-items-center">
@@ -100,6 +129,8 @@
                             </div>
                         </div>
                     </div>
+
+                    <!-- Night Currency -->
                     <div>
                         <h6>Night Currency (90 days)</h6>
                         <div class="d-flex justify-content-between align-items-center">
@@ -242,17 +273,24 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-md-3">
+                        <div class="col-md-12 mb-2">
                             <strong>Actual Instrument:</strong> {{ ir_progress.actual|floatformat:1 }} hrs
                         </div>
-                        <div class="col-md-3">
-                            <strong>Simulated:</strong> {{ ir_progress.simulated|floatformat:1 }} hrs
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <strong>Simulated (Flight):</strong> {{ ir_progress.flight_simulated|floatformat:1 }} hrs (fully creditable)
                         </div>
-                        <div class="col-md-3">
-                            <strong>Creditable Simulated:</strong> {{ ir_progress.creditable_simulated|floatformat:1 }} hrs (max 20)
+                        <div class="col-md-6">
+                            <strong>Simulated (Simulator):</strong> {{ ir_progress.simulator_simulated|floatformat:1 }} hrs (max 20 creditable)
                         </div>
-                        <div class="col-md-3">
-                            <strong>Total Instrument:</strong> {{ ir_progress.creditable_total|floatformat:1 }} hrs
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-6">
+                            <strong>Total Simulated:</strong> {{ ir_progress.simulated|floatformat:1 }} hrs
+                        </div>
+                        <div class="col-md-6">
+                            <strong>Creditable Simulated:</strong> {{ ir_progress.creditable_simulated|floatformat:1 }} hrs
                         </div>
                     </div>
                 </div>
@@ -567,16 +605,18 @@
     new Chart(instrumentCtx, {
         type: 'pie',
         data: {
-            labels: ['Actual Instrument', 'Simulated Instrument'],
+            labels: ['Actual Instrument', 'Simulated (Flight)', 'Simulated (Simulator)'],
             datasets: [{
-                data: [{{ instrument_breakdown.actual }}, {{ instrument_breakdown.simulated }}],
+                data: [{{ instrument_breakdown.actual }}, {{ instrument_breakdown.flight_simulated }}, {{ instrument_breakdown.simulator_simulated }}],
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.6)',
-                    'rgba(54, 162, 235, 0.6)'
+                    'rgba(54, 162, 235, 0.6)',
+                    'rgba(75, 192, 192, 0.6)'
                 ],
                 borderColor: [
                     'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)'
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(75, 192, 192, 1)'
                 ],
                 borderWidth: 1
             }]
