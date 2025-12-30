@@ -33,6 +33,13 @@
     "days_remaining": 944,
     "status": "current"
   },
+  "license": {
+    "has_license": true,
+    "license_type": "Private Pilot",
+    "expiration": "2028-01-01",
+    "days_remaining": 732,
+    "status": "current"
+  },
   "ir_progress": {
     "actual": 0.0,
     "flight_simulated": 4.4,
@@ -75,5 +82,5 @@
     "total": 8.0
   },
   "days_since_last_flight": 7,
-  "last_updated": "2025-12-30T18:20:06.234725"
+  "last_updated": "2025-12-30T18:24:53.095440"
 }
