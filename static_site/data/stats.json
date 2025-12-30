@@ -30,16 +30,18 @@
     "first_class_expiry": "2024-07-31",
     "second_class_expiry": "2024-07-31",
     "third_class_expiry": "2028-07-31",
-    "days_remaining": 945,
+    "days_remaining": 944,
     "status": "current"
   },
   "ir_progress": {
     "actual": 0.0,
-    "simulated": 4.4,
-    "creditable_simulated": 4.4,
-    "creditable_total": 4.4,
-    "remaining": 35.6,
-    "percentage": 11.0,
+    "flight_simulated": 4.4,
+    "simulator_simulated": 3.6,
+    "simulated": 8.0,
+    "creditable_simulated": 8.0,
+    "creditable_total": 8.0,
+    "remaining": 32.0,
+    "percentage": 20.0,
     "xc_pic_time": 5.7,
     "xc_pic_required": 50,
     "xc_pic_remaining": 44.3,
@@ -67,9 +69,11 @@
   },
   "instrument_breakdown": {
     "actual": 0.0,
-    "simulated": 4.4,
-    "total": 4.4
+    "flight_simulated": 4.4,
+    "simulator_simulated": 3.6,
+    "simulated": 8.0,
+    "total": 8.0
   },
-  "days_since_last_flight": 6,
-  "last_updated": "2025-12-29T06:47:45.690744"
+  "days_since_last_flight": 7,
+  "last_updated": "2025-12-30T18:20:06.234725"
 }
