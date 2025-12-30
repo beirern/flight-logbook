@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 from django.db.models import Count, Q, Sum
 from django.db.models.functions import TruncMonth
 
-from flights.models import Flight
+from flights.models import Flight, Ground, SimulatorFlight
 
 
 def get_total_times(pilot):
@@ -73,16 +73,22 @@ def get_monthly_breakdown(pilot, months=12):
 
 
 def get_instrument_breakdown(pilot):
-    """Get breakdown of instrument time (actual vs simulated)."""
+    """Get breakdown of instrument time (actual vs simulated from flights and simulators)."""
     flights = Flight.objects.filter(pilot=pilot)
+    simulator_flights = SimulatorFlight.objects.filter(pilot=pilot)
 
     actual = flights.aggregate(Sum('actual_instrument_time'))['actual_instrument_time__sum'] or 0
-    simulated = flights.aggregate(Sum('simulated_instrument_time'))['simulated_instrument_time__sum'] or 0
+    flight_simulated = flights.aggregate(Sum('simulated_instrument_time'))['simulated_instrument_time__sum'] or 0
+    simulator_simulated = simulator_flights.aggregate(Sum('simulated_instrument_time'))['simulated_instrument_time__sum'] or 0
+
+    total_simulated = flight_simulated + simulator_simulated
 
     return {
         'actual': round(float(actual), 1),
-        'simulated': round(float(simulated), 1),
-        'total': round(float(actual + simulated), 1)
+        'flight_simulated': round(float(flight_simulated), 1),
+        'simulator_simulated': round(float(simulator_simulated), 1),
+        'simulated': round(float(total_simulated), 1),
+        'total': round(float(actual + total_simulated), 1)
     }
 
 
@@ -208,16 +214,19 @@ def get_commercial_license_progress(pilot):
 
 
 def get_instrument_rating_progress(pilot):
-    """Calculate progress toward instrument rating (40 hours total, max 20 simulated, 50 hours XC PIC)."""
+    """Calculate progress toward instrument rating (40 hours total, max 20 simulated from simulator, 50 hours XC PIC)."""
     instrument_breakdown = get_instrument_breakdown(pilot)
     xc_pic_time = get_xc_pic_time(pilot)
 
     actual = instrument_breakdown['actual']
-    simulated = instrument_breakdown['simulated']
-    total_instrument = instrument_breakdown['total']
+    flight_simulated = instrument_breakdown['flight_simulated']
+    simulator_simulated = instrument_breakdown['simulator_simulated']
+    total_simulated = instrument_breakdown['simulated']
 
-    # For IR, max 20 hours can be simulated
-    creditable_simulated = min(simulated, 20)
+    # For IR, max 20 hours of SIMULATOR simulated time can be credited
+    # Flight simulated time has no limit
+    creditable_simulator_simulated = min(simulator_simulated, 20)
+    creditable_simulated = flight_simulated + creditable_simulator_simulated
     creditable_total = actual + creditable_simulated
 
     remaining = max(0, 40 - creditable_total)
@@ -230,8 +239,10 @@ def get_instrument_rating_progress(pilot):
 
     return {
         'actual': actual,
-        'simulated': simulated,
-        'creditable_simulated': creditable_simulated,
+        'flight_simulated': flight_simulated,
+        'simulator_simulated': simulator_simulated,
+        'simulated': total_simulated,
+        'creditable_simulated': round(creditable_simulated, 1),
         'creditable_total': round(creditable_total, 1),
         'remaining': round(remaining, 1),
         'percentage': round(percentage, 1),
@@ -277,7 +288,7 @@ def get_passenger_leaderboard(pilot, limit=10):
 
 
 def get_instructor_leaderboard(pilot, limit=10):
-    """Get leaderboard of instructors/examiners (Pilots with role I or E) ranked by number of flights."""
+    """Get leaderboard of instructors/examiners (Pilots with role I or E) ranked by total time (flights + ground)."""
     from pilots.models import Pilot
 
     # Get flights where the pilot received instruction
@@ -289,28 +300,62 @@ def get_instructor_leaderboard(pilot, limit=10):
         Q(instructor__role=Pilot.RoleChoices.EXAMINER)
     )
 
+    # Get ground lessons where the pilot received instruction
+    grounds = Ground.objects.filter(
+        pilot=pilot,
+    ).select_related('instructor').filter(
+        Q(instructor__role=Pilot.RoleChoices.INSTRUCTOR) |
+        Q(instructor__role=Pilot.RoleChoices.EXAMINER)
+    )
+
     # Collect instructor statistics
     instructor_stats = {}
+
+    # Process flights
     for flight in flights:
         instructor = flight.instructor
         if instructor.id not in instructor_stats:
             instructor_stats[instructor.id] = {
                 'pilot': instructor,
                 'flight_count': 0,
+                'ground_count': 0,
+                'flight_time': 0,
+                'ground_time': 0,
                 'total_time': 0
             }
         instructor_stats[instructor.id]['flight_count'] += 1
-        instructor_stats[instructor.id]['total_time'] += float(flight.flight_time)
+        flight_time = float(flight.flight_time)
+        instructor_stats[instructor.id]['flight_time'] += flight_time
+        instructor_stats[instructor.id]['total_time'] += flight_time
 
-    # Sort by flight count (descending), then by total time (descending) for ties
+    # Process ground lessons
+    for ground in grounds:
+        instructor = ground.instructor
+        if instructor.id not in instructor_stats:
+            instructor_stats[instructor.id] = {
+                'pilot': instructor,
+                'flight_count': 0,
+                'ground_count': 0,
+                'flight_time': 0,
+                'ground_time': 0,
+                'total_time': 0
+            }
+        instructor_stats[instructor.id]['ground_count'] += 1
+        ground_time = float(ground.ground_time)
+        instructor_stats[instructor.id]['ground_time'] += ground_time
+        instructor_stats[instructor.id]['total_time'] += ground_time
+
+    # Sort by total time (descending)
     leaderboard = sorted(
         instructor_stats.values(),
-        key=lambda x: (x['flight_count'], x['total_time']),
+        key=lambda x: x['total_time'],
         reverse=True
     )[:limit]
 
-    # Round the total times
+    # Round the times
     for entry in leaderboard:
+        entry['flight_time'] = round(entry['flight_time'], 1)
+        entry['ground_time'] = round(entry['ground_time'], 1)
         entry['total_time'] = round(entry['total_time'], 1)
 
     return leaderboard

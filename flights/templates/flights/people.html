@@ -150,6 +150,7 @@
                                 <th>#</th>
                                 <th>Name</th>
                                 <th>Flights</th>
+                                <th>Grounds</th>
                                 <th>Total Time</th>
                             </tr>
                         </thead>
@@ -159,6 +160,7 @@
                                 <td>{{ forloop.counter }}</td>
                                 <td>{{ entry.pilot.first_name }} {{ entry.pilot.last_name }}</td>
                                 <td>{{ entry.flight_count }}</td>
+                                <td>{{ entry.ground_count }}</td>
                                 <td>{{ entry.total_time }} hrs</td>
                             </tr>
                             {% endfor %}
