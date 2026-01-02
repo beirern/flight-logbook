@@ -288,7 +288,7 @@ def get_passenger_leaderboard(pilot, limit=10):
 
 
 def get_instructor_leaderboard(pilot, limit=10):
-    """Get leaderboard of instructors/examiners (Pilots with role I or E) ranked by total time (flights + ground)."""
+    """Get leaderboard of instructors/examiners (Pilots with role I or E) ranked by total time (flights + ground + sim)."""
     from pilots.models import Pilot
 
     # Get flights where the pilot received instruction
@@ -302,6 +302,14 @@ def get_instructor_leaderboard(pilot, limit=10):
 
     # Get ground lessons where the pilot received instruction
     grounds = Ground.objects.filter(
+        pilot=pilot,
+    ).select_related('instructor').filter(
+        Q(instructor__role=Pilot.RoleChoices.INSTRUCTOR) |
+        Q(instructor__role=Pilot.RoleChoices.EXAMINER)
+    )
+
+    # Get simulator flights where the pilot received instruction
+    sim_flights = SimulatorFlight.objects.filter(
         pilot=pilot,
     ).select_related('instructor').filter(
         Q(instructor__role=Pilot.RoleChoices.INSTRUCTOR) |
@@ -344,6 +352,23 @@ def get_instructor_leaderboard(pilot, limit=10):
         ground_time = float(ground.ground_time)
         instructor_stats[instructor.id]['ground_time'] += ground_time
         instructor_stats[instructor.id]['total_time'] += ground_time
+
+    # Process simulator flights (count as ground + sim)
+    for sim_flight in sim_flights:
+        instructor = sim_flight.instructor
+        if instructor.id not in instructor_stats:
+            instructor_stats[instructor.id] = {
+                'pilot': instructor,
+                'flight_count': 0,
+                'ground_count': 0,
+                'flight_time': 0,
+                'ground_time': 0,
+                'total_time': 0
+            }
+        instructor_stats[instructor.id]['ground_count'] += 1
+        sim_time = float(sim_flight.sim_time)
+        instructor_stats[instructor.id]['ground_time'] += sim_time
+        instructor_stats[instructor.id]['total_time'] += sim_time
 
     # Sort by total time (descending)
     leaderboard = sorted(
