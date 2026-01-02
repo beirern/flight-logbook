@@ -1,6 +1,5 @@
 {
   "monthly_labels": [
-    "Jan 2025",
     "Feb 2025",
     "Mar 2025",
     "Apr 2025",
@@ -11,10 +10,10 @@
     "Sep 2025",
     "Oct 2025",
     "Nov 2025",
-    "Dec 2025"
+    "Dec 2025",
+    "Jan 2026"
   ],
   "monthly_hours": [
-    0.8,
     2.7,
     5.9,
     3.5,
@@ -25,7 +24,8 @@
     15.4,
     13.5,
     4.4,
-    2.7
+    5.6,
+    0
   ],
   "cumulative_data": [
     {
@@ -566,6 +566,20 @@
       "pic": 12.9,
       "dual": 96.5,
       "instrument": 4.4
+    },
+    {
+      "date": "2025-12-29",
+      "total": 109.2,
+      "pic": 14.2,
+      "dual": 97.8,
+      "instrument": 5.4
+    },
+    {
+      "date": "2025-12-31",
+      "total": 110.8,
+      "pic": 15.8,
+      "dual": 99.4,
+      "instrument": 6.4
     }
   ],
   "aircraft_breakdown": [
@@ -580,6 +594,11 @@
       "hours": 9.4
     },
     {
+      "name": "N1152Z",
+      "type": "C172",
+      "hours": 8.5
+    },
+    {
       "name": "N162HA",
       "type": "C162",
       "hours": 8.3
@@ -590,14 +609,14 @@
       "hours": 6.9
     },
     {
-      "name": "N1152Z",
-      "type": "C172",
-      "hours": 6.9
-    },
-    {
       "name": "N5689M",
       "type": "C162",
       "hours": 6.4
+    },
+    {
+      "name": "N297PL",
+      "type": "C172",
+      "hours": 6.3
     },
     {
       "name": "N121W",
@@ -608,11 +627,6 @@
       "name": "N137ME",
       "type": "C172",
       "hours": 5.7
-    },
-    {
-      "name": "N297PL",
-      "type": "C172",
-      "hours": 5.0
     },
     {
       "name": "N6043M",

@@ -36,8 +36,8 @@
     {
       "name": "Erika Bengard",
       "flight_count": 16,
-      "ground_count": 7,
-      "total_time": 37.0
+      "ground_count": 8,
+      "total_time": 37.8
     },
     {
       "name": "Rafael Urrea",
@@ -50,6 +50,18 @@
       "flight_count": 9,
       "ground_count": 0,
       "total_time": 11.8
+    },
+    {
+      "name": "Mark Thomas",
+      "flight_count": 2,
+      "ground_count": 4,
+      "total_time": 7.8
+    },
+    {
+      "name": "Elliot Mcnear",
+      "flight_count": 0,
+      "ground_count": 3,
+      "total_time": 4.6
     },
     {
       "name": "Jaimason Sunderman",
@@ -74,18 +86,6 @@
       "flight_count": 2,
       "ground_count": 0,
       "total_time": 2.5
-    },
-    {
-      "name": "Brandon Gockel",
-      "flight_count": 2,
-      "ground_count": 0,
-      "total_time": 2.0
-    },
-    {
-      "name": "Elliot Mcnear",
-      "flight_count": 0,
-      "ground_count": 1,
-      "total_time": 1.5
     }
   ]
 }
