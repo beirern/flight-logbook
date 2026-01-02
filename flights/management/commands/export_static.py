@@ -500,28 +500,30 @@ class Command(BaseCommand):
         """Copy static assets (CSS, JS, images) to output directory."""
         self.stdout.write('Copying static assets...')
 
-        # Check if staticfiles directory exists (after collectstatic)
-        staticfiles_dir = Path(settings.STATIC_ROOT) if hasattr(settings, 'STATIC_ROOT') and settings.STATIC_ROOT else None
+        dest_assets = output_dir / 'assets'
 
-        if staticfiles_dir and staticfiles_dir.exists():
-            # Copy from collected static files
-            dest_assets = output_dir / 'assets'
+        # Copy directly from app's static directory
+        app_static_dir = Path(__file__).parent.parent.parent / 'static' / 'flights'
 
+        if app_static_dir.exists():
             # Copy CSS
-            css_src = staticfiles_dir / 'css'
+            css_src = app_static_dir / 'css'
             if css_src.exists():
                 shutil.copytree(css_src, dest_assets / 'css', dirs_exist_ok=True)
+                self.stdout.write(self.style.SUCCESS('  ✓ Copied CSS files'))
 
-            # Copy JS
-            js_src = staticfiles_dir / 'js'
+            # Copy JS if it exists
+            js_src = app_static_dir / 'js'
             if js_src.exists():
                 shutil.copytree(js_src, dest_assets / 'js', dirs_exist_ok=True)
+                self.stdout.write(self.style.SUCCESS('  ✓ Copied JS files'))
 
             # Copy images if they exist
-            img_src = staticfiles_dir / 'images'
+            img_src = app_static_dir / 'images'
             if img_src.exists():
                 shutil.copytree(img_src, dest_assets / 'images', dirs_exist_ok=True)
+                self.stdout.write(self.style.SUCCESS('  ✓ Copied image files'))
 
-            self.stdout.write(self.style.SUCCESS('  ✓ Static assets copied'))
+            self.stdout.write(self.style.SUCCESS('  ✓ Static assets copied from app directory'))
         else:
-            self.stdout.write(self.style.WARNING('  ⚠ Static files not found. Run "python manage.py collectstatic" first, or assets will be loaded from CDN.'))
+            self.stdout.write(self.style.WARNING(f'  ⚠ Static files directory not found at {app_static_dir}'))
