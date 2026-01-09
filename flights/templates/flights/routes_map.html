@@ -88,6 +88,16 @@
             </nav>
         </div>
     </div>
+
+    <!-- Airport Departure Progression Chart -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5 class="mb-0">Airport Departure Progression</h5>
+        </div>
+        <div class="card-body">
+            <canvas id="airportProgressionChart"></canvas>
+        </div>
+    </div>
     {% endif %}
 </div>
 {% endblock %}
@@ -97,6 +107,10 @@
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
         integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
         crossorigin=""></script>
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns@3.0.0/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
 
 <script>
     // Initialize variables
@@ -295,6 +309,103 @@
     // In Django mode, use template variable
     const routes = {{ routes_json|safe }};
     renderRoutes(routes);
+    {% endif %}
+
+    // Airport Departure Progression Chart
+    const airportProgressionCtx = document.getElementById('airportProgressionChart');
+    {% if airport_progression %}
+    const airportProgressionData = {{ airport_progression|safe }};
+
+    // Aviation color palette for airports
+    const airportColors = [
+        'rgba(205, 127, 50, 1)',    // Bronze
+        'rgba(44, 74, 107, 1)',     // Blue
+        'rgba(181, 166, 66, 1)',    // Brass
+        'rgba(74, 93, 79, 1)',      // Green
+        'rgba(139, 111, 71, 1)',    // Leather
+        'rgba(139, 46, 46, 1)',     // Red
+        'rgba(181, 101, 29, 1)',    // Dark Bronze
+        'rgba(139, 90, 43, 1)',     // Dark Leather
+        'rgba(58, 71, 63, 1)',      // Dark Green
+        'rgba(34, 56, 81, 1)'       // Dark Blue
+    ];
+
+    // Build datasets for each airport
+    const airportDatasets = [];
+    let airportColorIndex = 0;
+
+    for (const airportCode in airportProgressionData.airports) {
+        const airport = airportProgressionData.airports[airportCode];
+        const color = airportColors[airportColorIndex % airportColors.length];
+
+        airportDatasets.push({
+            label: airport.name,
+            data: airport.data,
+            borderColor: color,
+            backgroundColor: color.replace('1)', '0.2)'),
+            fill: false,
+            tension: 0.1,
+            pointRadius: 3,
+            pointHoverRadius: 5
+        });
+
+        airportColorIndex++;
+    }
+
+    new Chart(airportProgressionCtx, {
+        type: 'line',
+        data: {
+            datasets: airportDatasets
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            interaction: {
+                mode: 'index',
+                intersect: false
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Number of Departures'
+                    },
+                    ticks: {
+                        stepSize: 1
+                    }
+                },
+                x: {
+                    type: 'time',
+                    time: {
+                        unit: 'month',
+                        displayFormats: {
+                            month: 'MMM yyyy'
+                        }
+                    },
+                    title: {
+                        display: true,
+                        text: 'Date'
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    position: 'bottom'
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return context.dataset.label + ': ' + context.parsed.y + ' departures';
+                        }
+                    }
+                }
+            }
+        }
+    });
+    {% else %}
+    // If no airport progression data, show message
+    airportProgressionCtx.parentElement.innerHTML = '<p class="text-muted">No airport departure data available</p>';
     {% endif %}
 </script>
 {% endblock %}

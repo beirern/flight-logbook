@@ -23,6 +23,7 @@ from flights.utils.statistics import (
     get_aircraft_class_breakdown,
     get_aircraft_highlights,
     get_aircraft_type_statistics,
+    get_airport_departure_progression,
     get_commercial_license_progress,
     get_cumulative_time_data,
     get_days_since_last_flight,
@@ -411,9 +412,13 @@ class Command(BaseCommand):
         self.stdout.write(self.style.SUCCESS('  ✓ Rendered logbook (logbook.html)'))
 
         # Render routes map
+        # Get airport departure progression data
+        airport_progression = get_airport_departure_progression(pilot)
+
         routes_context = {
             'is_static': True,
             'last_updated': datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+            'airport_progression': json.dumps(airport_progression),
         }
 
         routes_html = render_to_string('flights/routes_map.html', routes_context)

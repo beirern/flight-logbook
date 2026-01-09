@@ -636,7 +636,7 @@ def get_people_insights(pilot):
 
 
 def get_instructor_time_progression(pilot):
-    """Get cumulative time progression data for each instructor showing when instructors 'overtake' each other."""
+    """Get cumulative time progression data for each instructor showing when instructors 'overtake' each other (flights + ground + sim)."""
     from pilots.models import Pilot
 
     # Get all flights with instructors, ordered chronologically
@@ -648,13 +648,62 @@ def get_instructor_time_progression(pilot):
         Q(instructor__role=Pilot.RoleChoices.EXAMINER)
     ).order_by('date')
 
+    # Get ground lessons with instructors, ordered chronologically
+    grounds = Ground.objects.filter(
+        pilot=pilot,
+    ).select_related('instructor').filter(
+        Q(instructor__role=Pilot.RoleChoices.INSTRUCTOR) |
+        Q(instructor__role=Pilot.RoleChoices.EXAMINER)
+    ).order_by('date')
+
+    # Get simulator flights with instructors, ordered chronologically
+    sim_flights = SimulatorFlight.objects.filter(
+        pilot=pilot,
+    ).select_related('instructor').filter(
+        Q(instructor__role=Pilot.RoleChoices.INSTRUCTOR) |
+        Q(instructor__role=Pilot.RoleChoices.EXAMINER)
+    ).order_by('date')
+
+    # Combine all activities into a single timeline
+    all_activities = []
+
+    for flight in flights:
+        all_activities.append({
+            'date': flight.date,
+            'instructor_id': flight.instructor.id,
+            'instructor_name': str(flight.instructor),
+            'time': float(flight.flight_time),
+            'type': 'flight'
+        })
+
+    for ground in grounds:
+        all_activities.append({
+            'date': ground.date,
+            'instructor_id': ground.instructor.id,
+            'instructor_name': str(ground.instructor),
+            'time': float(ground.ground_time),
+            'type': 'ground'
+        })
+
+    for sim_flight in sim_flights:
+        all_activities.append({
+            'date': sim_flight.date,
+            'instructor_id': sim_flight.instructor.id,
+            'instructor_name': str(sim_flight.instructor),
+            'time': float(sim_flight.sim_time),
+            'type': 'sim'
+        })
+
+    # Sort all activities by date
+    all_activities.sort(key=lambda x: x['date'])
+
     # Build cumulative time for each instructor
     instructor_cumulative = {}
     progression_data = []
 
-    for flight in flights:
-        instructor_id = flight.instructor.id
-        instructor_name = str(flight.instructor)
+    for activity in all_activities:
+        instructor_id = activity['instructor_id']
+        instructor_name = activity['instructor_name']
 
         # Initialize instructor if not seen before
         if instructor_id not in instructor_cumulative:
@@ -663,12 +712,12 @@ def get_instructor_time_progression(pilot):
                 'cumulative_time': 0
             }
 
-        # Add flight time to instructor's cumulative total
-        instructor_cumulative[instructor_id]['cumulative_time'] += float(flight.flight_time)
+        # Add time to instructor's cumulative total
+        instructor_cumulative[instructor_id]['cumulative_time'] += activity['time']
 
         # Record this data point
         progression_data.append({
-            'date': flight.date.strftime('%Y-%m-%d'),
+            'date': activity['date'].strftime('%Y-%m-%d'),
             'instructor_id': instructor_id,
             'instructor_name': instructor_name,
             'cumulative_time': round(instructor_cumulative[instructor_id]['cumulative_time'], 1)
@@ -706,5 +755,81 @@ def get_instructor_time_progression(pilot):
 
     return {
         'instructors': instructors,
+        'progression_data': progression_data
+    }
+
+
+def get_airport_departure_progression(pilot):
+    """Get cumulative departure count progression data for each airport showing when airports 'overtake' each other."""
+    from routes.models import RouteWaypoint
+
+    # Get all flights with routes, ordered chronologically
+    flights = Flight.objects.filter(
+        pilot=pilot,
+        route__isnull=False
+    ).select_related('route').prefetch_related('route__route_steps__waypoint').order_by('date')
+
+    # Build cumulative departure count for each airport
+    airport_cumulative = {}
+    progression_data = []
+
+    for flight in flights:
+        # Get the first waypoint of the route (departure airport)
+        first_waypoint = flight.route.route_steps.order_by('sequence').first()
+
+        if first_waypoint:
+            airport_code = first_waypoint.waypoint.code
+            airport_name = first_waypoint.waypoint.name
+
+            # Initialize airport if not seen before
+            if airport_code not in airport_cumulative:
+                airport_cumulative[airport_code] = {
+                    'name': airport_name,
+                    'count': 0
+                }
+
+            # Increment departure count for this airport
+            airport_cumulative[airport_code]['count'] += 1
+
+            # Record this data point
+            progression_data.append({
+                'date': flight.date.strftime('%Y-%m-%d'),
+                'airport_code': airport_code,
+                'airport_name': airport_name,
+                'count': airport_cumulative[airport_code]['count']
+            })
+
+    # Build datasets for Chart.js - one dataset per airport
+    airports = {}
+    for data_point in progression_data:
+        airport_code = data_point['airport_code']
+        if airport_code not in airports:
+            airports[airport_code] = {
+                'name': airport_code,
+                'data': []
+            }
+
+    # For each unique date, record each airport's cumulative count at that point
+    # This ensures smooth lines even when an airport doesn't have a departure on a particular date
+    unique_dates = sorted(set(d['date'] for d in progression_data))
+
+    for date in unique_dates:
+        # Get the latest cumulative count for each airport up to this date
+        for airport_code in airports:
+            # Find the last data point for this airport up to this date
+            airport_data_up_to_date = [
+                d for d in progression_data
+                if d['airport_code'] == airport_code and d['date'] <= date
+            ]
+
+            if airport_data_up_to_date:
+                latest = airport_data_up_to_date[-1]
+                airports[airport_code]['data'].append({
+                    'x': date,
+                    'y': latest['count']
+                })
+
+    return {
+        'airports': airports,
         'progression_data': progression_data
     }
