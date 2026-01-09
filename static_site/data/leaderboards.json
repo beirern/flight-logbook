@@ -40,6 +40,12 @@
       "total_time": 37.8
     },
     {
+      "name": "Mark Thomas",
+      "flight_count": 2,
+      "ground_count": 7,
+      "total_time": 12.4
+    },
+    {
       "name": "Rafael Urrea",
       "flight_count": 9,
       "ground_count": 0,
@@ -50,12 +56,6 @@
       "flight_count": 9,
       "ground_count": 0,
       "total_time": 11.8
-    },
-    {
-      "name": "Mark Thomas",
-      "flight_count": 2,
-      "ground_count": 4,
-      "total_time": 7.8
     },
     {
       "name": "Elliot Mcnear",

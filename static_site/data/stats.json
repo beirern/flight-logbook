@@ -15,7 +15,7 @@
   },
   "currency": {
     "day_current": true,
-    "day_landings": 19,
+    "day_landings": 17,
     "day_expiry": "2026-03-23",
     "night_current": false,
     "night_landings": 0,
@@ -30,25 +30,25 @@
     "first_class_expiry": "2024-07-31",
     "second_class_expiry": "2024-07-31",
     "third_class_expiry": "2028-07-31",
-    "days_remaining": 941,
+    "days_remaining": 934,
     "status": "current"
   },
   "license": {
     "has_license": true,
     "license_type": "Private Pilot",
     "expiration": "2028-01-01",
-    "days_remaining": 729,
+    "days_remaining": 722,
     "status": "current"
   },
   "ir_progress": {
     "actual": 0.0,
     "flight_simulated": 6.4,
-    "simulator_simulated": 6.3,
-    "simulated": 12.7,
-    "creditable_simulated": 12.7,
-    "creditable_total": 12.7,
-    "remaining": 27.3,
-    "percentage": 31.8,
+    "simulator_simulated": 10.5,
+    "simulated": 16.9,
+    "creditable_simulated": 16.9,
+    "creditable_total": 16.9,
+    "remaining": 23.1,
+    "percentage": 42.2,
     "xc_pic_time": 5.7,
     "xc_pic_required": 50,
     "xc_pic_remaining": 44.3,
@@ -77,10 +77,10 @@
   "instrument_breakdown": {
     "actual": 0.0,
     "flight_simulated": 6.4,
-    "simulator_simulated": 6.3,
-    "simulated": 12.7,
-    "total": 12.7
+    "simulator_simulated": 10.5,
+    "simulated": 16.9,
+    "total": 16.9
   },
-  "days_since_last_flight": 2,
-  "last_updated": "2026-01-02T18:08:48.908364"
+  "days_since_last_flight": 9,
+  "last_updated": "2026-01-09T06:51:10.310117"
 }
