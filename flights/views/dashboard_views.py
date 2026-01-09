@@ -10,6 +10,7 @@ from flights.utils.statistics import (
     get_aircraft_class_breakdown,
     get_aircraft_highlights,
     get_aircraft_type_statistics,
+    get_airport_departure_progression,
     get_commercial_license_progress,
     get_cumulative_time_data,
     get_days_since_last_flight,
@@ -215,8 +216,12 @@ def routes_map(request):
         for waypoint in unique_routes[route_id]['waypoints']:
             waypoint['visit_count'] = airport_visits.get(waypoint['code'], 0)
 
+    # Get airport departure progression data
+    airport_progression = get_airport_departure_progression(pilot)
+
     context = {
         'routes_json': json.dumps(list(unique_routes.values())),
+        'airport_progression': json.dumps(airport_progression),
     }
 
     return render(request, 'flights/routes_map.html', context)
