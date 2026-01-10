@@ -37,7 +37,7 @@
         "name": "Auburn Municipal Airport",
         "lat": 47.327702,
         "lon": -122.226997,
-        "visit_count": 11
+        "visit_count": 12
       },
       {
         "code": "KRNT",
@@ -131,7 +131,7 @@
         "name": "Auburn Municipal Airport",
         "lat": 47.327702,
         "lon": -122.226997,
-        "visit_count": 11
+        "visit_count": 12
       },
       {
         "code": "KRNT",
@@ -189,7 +189,7 @@
         "name": "Skagit Regional Airport",
         "lat": 48.470901,
         "lon": -122.420998,
-        "visit_count": 1
+        "visit_count": 2
       },
       {
         "code": "KRNT",
@@ -436,7 +436,7 @@
         "name": "Auburn Municipal Airport",
         "lat": 47.327702,
         "lon": -122.226997,
-        "visit_count": 11
+        "visit_count": 12
       },
       {
         "code": "KBFI",
@@ -617,7 +617,7 @@
         "name": "Auburn Municipal Airport",
         "lat": 47.327702,
         "lon": -122.226997,
-        "visit_count": 11
+        "visit_count": 12
       },
       {
         "code": "KBFI",
@@ -639,14 +639,14 @@
         "name": "Auburn Municipal Airport",
         "lat": 47.327702,
         "lon": -122.226997,
-        "visit_count": 11
+        "visit_count": 12
       },
       {
         "code": "KS50",
         "name": "Auburn Municipal Airport",
         "lat": 47.327702,
         "lon": -122.226997,
-        "visit_count": 11
+        "visit_count": 12
       }
     ],
     "flight_count": 2,
@@ -661,7 +661,7 @@
         "name": "Auburn Municipal Airport",
         "lat": 47.327702,
         "lon": -122.226997,
-        "visit_count": 11
+        "visit_count": 12
       },
       {
         "code": "KRNT",
@@ -675,10 +675,46 @@
         "name": "Auburn Municipal Airport",
         "lat": 47.327702,
         "lon": -122.226997,
-        "visit_count": 11
+        "visit_count": 12
       }
     ],
     "flight_count": 1,
     "distance": 19.9
+  },
+  {
+    "id": 25,
+    "name": "Auburn - Skagit - Arlington - Renton",
+    "waypoints": [
+      {
+        "code": "KS50",
+        "name": "Auburn Municipal Airport",
+        "lat": 47.327702,
+        "lon": -122.226997,
+        "visit_count": 12
+      },
+      {
+        "code": "KBVS",
+        "name": "Skagit Regional Airport",
+        "lat": 48.470901,
+        "lon": -122.420998,
+        "visit_count": 2
+      },
+      {
+        "code": "KAWO",
+        "name": "Arlington Municipal Airport",
+        "lat": 48.161448,
+        "lon": -122.158442,
+        "visit_count": 1
+      },
+      {
+        "code": "KS50",
+        "name": "Auburn Municipal Airport",
+        "lat": 47.327702,
+        "lon": -122.226997,
+        "visit_count": 12
+      }
+    ],
+    "flight_count": 1,
+    "distance": 140.5
   }
 ]

@@ -1,5 +1,26 @@
 [
   {
+    "date": "2026-01-09",
+    "plane": "N6020Y",
+    "flight_time": 2.3,
+    "pic_time": 2.3,
+    "sic_time": 0.0,
+    "dual_time": 0.0,
+    "xc_time": 2.3,
+    "day_time": 0.0,
+    "night_time": 2.3,
+    "actual_instrument_time": 0.0,
+    "simulated_instrument_time": 0.0,
+    "day_landings": 0,
+    "day_fullstop_landings": 0,
+    "night_landings": 0,
+    "night_fullstop_landings": 4,
+    "route": "Auburn - Skagit - Arlington - Renton: (KS50 -> KBVS -> KAWO -> KS50)",
+    "instructor": null,
+    "passengers": [],
+    "notes": "All 4 landings to full-stop. XC PIC time building. Beautiful night."
+  },
+  {
     "date": "2025-12-31",
     "plane": "N1152Z",
     "flight_time": 1.6,

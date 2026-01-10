@@ -1,25 +1,25 @@
 {
   "total_times": {
-    "total_time": 110.8,
-    "pic_time": 15.8,
+    "total_time": 113.1,
+    "pic_time": 18.1,
     "sic_time": 0.0,
     "dual_time": 99.4,
-    "xc_time": 10.8,
+    "xc_time": 13.1,
     "day_time": 105.1,
-    "night_time": 5.7,
+    "night_time": 8.0,
     "actual_instrument": 0.0,
     "simulated_instrument": 6.4,
     "day_landings": 140,
     "night_landings": 1,
-    "total_landings": 218
+    "total_landings": 222
   },
   "currency": {
     "day_current": true,
     "day_landings": 17,
     "day_expiry": "2026-03-23",
-    "night_current": false,
-    "night_landings": 0,
-    "night_expiry": "2025-12-23"
+    "night_current": true,
+    "night_landings": 4,
+    "night_expiry": "2026-04-09"
   },
   "medical": {
     "has_medical": true,
@@ -30,14 +30,14 @@
     "first_class_expiry": "2024-07-31",
     "second_class_expiry": "2024-07-31",
     "third_class_expiry": "2028-07-31",
-    "days_remaining": 934,
+    "days_remaining": 933,
     "status": "current"
   },
   "license": {
     "has_license": true,
     "license_type": "Private Pilot",
     "expiration": "2028-01-01",
-    "days_remaining": 722,
+    "days_remaining": 721,
     "status": "current"
   },
   "ir_progress": {
@@ -49,29 +49,29 @@
     "creditable_total": 16.9,
     "remaining": 23.1,
     "percentage": 42.2,
-    "xc_pic_time": 5.7,
+    "xc_pic_time": 8.0,
     "xc_pic_required": 50,
-    "xc_pic_remaining": 44.3,
-    "xc_pic_percentage": 11.4
+    "xc_pic_remaining": 42.0,
+    "xc_pic_percentage": 16.0
   },
   "commercial_progress": {
     "total_time": {
-      "current": 110.8,
+      "current": 113.1,
       "required": 250,
-      "remaining": 139.2,
-      "percentage": 44.32
+      "remaining": 136.9,
+      "percentage": 45.239999999999995
     },
     "pic_time": {
-      "current": 15.8,
+      "current": 18.1,
       "required": 100,
-      "remaining": 84.2,
-      "percentage": 15.8
+      "remaining": 81.9,
+      "percentage": 18.1
     },
     "xc_pic_time": {
-      "current": 5.7,
+      "current": 8.0,
       "required": 50,
-      "remaining": 44.3,
-      "percentage": 11.4
+      "remaining": 42.0,
+      "percentage": 16.0
     }
   },
   "instrument_breakdown": {
@@ -81,6 +81,6 @@
     "simulated": 16.9,
     "total": 16.9
   },
-  "days_since_last_flight": 9,
-  "last_updated": "2026-01-09T06:51:10.310117"
+  "days_since_last_flight": 1,
+  "last_updated": "2026-01-10T06:31:56.044356"
 }
