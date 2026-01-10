@@ -25,7 +25,7 @@
     13.5,
     4.4,
     5.6,
-    0
+    2.3
   ],
   "cumulative_data": [
     {
@@ -580,6 +580,13 @@
       "pic": 15.8,
       "dual": 99.4,
       "instrument": 6.4
+    },
+    {
+      "date": "2026-01-09",
+      "total": 113.1,
+      "pic": 18.1,
+      "dual": 99.4,
+      "instrument": 6.4
     }
   ],
   "aircraft_breakdown": [
@@ -672,6 +679,11 @@
       "name": "N6067Z",
       "type": "C162",
       "hours": 2.5999999999999996
+    },
+    {
+      "name": "N6020Y",
+      "type": "C162",
+      "hours": 2.3
     },
     {
       "name": "N278CA",
