@@ -133,15 +133,14 @@ def get_recent_flights(pilot, limit=10):
     return flights_with_totals
 
 
-def get_days_since_last_flight(pilot):
-    """Calculate days since the pilot's last flight."""
+def get_last_flight_date(pilot):
+    """Get the date of the pilot's last flight."""
     last_flight = Flight.objects.filter(pilot=pilot).order_by('-date').first()
 
     if not last_flight:
         return None
 
-    days_since = (datetime.now().date() - last_flight.date).days
-    return days_since
+    return last_flight.date
 
 
 def get_cumulative_time_data(pilot):
@@ -671,7 +670,7 @@ def get_instructor_time_progression(pilot):
         all_activities.append({
             'date': flight.date,
             'instructor_id': flight.instructor.id,
-            'instructor_name': str(flight.instructor),
+            'instructor_name': f"{flight.instructor.first_name} {flight.instructor.last_name[0]}.",
             'time': float(flight.flight_time),
             'type': 'flight'
         })
@@ -680,7 +679,7 @@ def get_instructor_time_progression(pilot):
         all_activities.append({
             'date': ground.date,
             'instructor_id': ground.instructor.id,
-            'instructor_name': str(ground.instructor),
+            'instructor_name': f"{ground.instructor.first_name} {ground.instructor.last_name[0]}.",
             'time': float(ground.ground_time),
             'type': 'ground'
         })
@@ -689,7 +688,7 @@ def get_instructor_time_progression(pilot):
         all_activities.append({
             'date': sim_flight.date,
             'instructor_id': sim_flight.instructor.id,
-            'instructor_name': str(sim_flight.instructor),
+            'instructor_name': f"{sim_flight.instructor.first_name} {sim_flight.instructor.last_name[0]}.",
             'time': float(sim_flight.sim_time),
             'type': 'sim'
         })
