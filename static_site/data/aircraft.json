@@ -1,9 +1,9 @@
 {
-  "sel_hours": 113.1,
+  "sel_hours": 115.6,
   "class_breakdown": {
     "Single Engine Land": {
-      "hours": 113.1,
-      "flight_count": 80,
+      "hours": 115.6,
+      "flight_count": 82,
       "percentage": 100.0
     }
   },
@@ -17,8 +17,8 @@
     {
       "type": "C162",
       "plane_class": "Single Engine Land",
-      "hours": 47.6,
-      "flight_count": 33
+      "hours": 50.1,
+      "flight_count": 35
     }
   ],
   "highlights": {
@@ -92,6 +92,12 @@
       "location": "KSQL"
     },
     {
+      "tail_number": "N6020Y",
+      "type": "C162",
+      "hours": 4.8,
+      "location": "KS50"
+    },
+    {
       "tail_number": "N6043M",
       "type": "C162",
       "hours": 4.699999999999999,
@@ -144,12 +150,6 @@
       "type": "C162",
       "hours": 2.5999999999999996,
       "location": "KRNT"
-    },
-    {
-      "tail_number": "N6020Y",
-      "type": "C162",
-      "hours": 2.3,
-      "location": "KS50"
     },
     {
       "tail_number": "N278CA",

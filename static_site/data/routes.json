@@ -23,7 +23,7 @@
   },
   {
     "id": 3,
-    "name": "Renton - Auburn Landing Work",
+    "name": "Renton - Auburn - Renton",
     "waypoints": [
       {
         "code": "KRNT",
@@ -37,7 +37,7 @@
         "name": "Auburn Municipal Airport",
         "lat": 47.327702,
         "lon": -122.226997,
-        "visit_count": 12
+        "visit_count": 14
       },
       {
         "code": "KRNT",
@@ -52,7 +52,7 @@
   },
   {
     "id": 4,
-    "name": "Renton - Tacoma Narrows",
+    "name": "Renton - Tacoma Narrows - Renton",
     "waypoints": [
       {
         "code": "KRNT",
@@ -81,7 +81,7 @@
   },
   {
     "id": 5,
-    "name": "Renton - Pierce County",
+    "name": "Renton - Pierce County - Renton",
     "waypoints": [
       {
         "code": "KRNT",
@@ -110,7 +110,7 @@
   },
   {
     "id": 7,
-    "name": "Renton - Pierce County - Auburn",
+    "name": "Renton - Pierce County - Auburn - Renton",
     "waypoints": [
       {
         "code": "KRNT",
@@ -131,7 +131,7 @@
         "name": "Auburn Municipal Airport",
         "lat": 47.327702,
         "lon": -122.226997,
-        "visit_count": 12
+        "visit_count": 14
       },
       {
         "code": "KRNT",
@@ -146,7 +146,7 @@
   },
   {
     "id": 8,
-    "name": "Renton - Friday Harbor",
+    "name": "Renton - Friday Harbor - Renton",
     "waypoints": [
       {
         "code": "KRNT",
@@ -175,7 +175,7 @@
   },
   {
     "id": 9,
-    "name": "Renton - Skagit",
+    "name": "Renton - Skagit - Renton",
     "waypoints": [
       {
         "code": "KRNT",
@@ -204,7 +204,7 @@
   },
   {
     "id": 6,
-    "name": "Renton - Norman Grier",
+    "name": "Renton - Norman Grier - Renton",
     "waypoints": [
       {
         "code": "KRNT",
@@ -277,7 +277,7 @@
   },
   {
     "id": 11,
-    "name": "Boeing Field - Renton Landing Work",
+    "name": "Boeing Field - Renton - Boeing Field",
     "waypoints": [
       {
         "code": "KBFI",
@@ -306,7 +306,7 @@
   },
   {
     "id": 12,
-    "name": "Boeing Field - Harvey Field",
+    "name": "Boeing Field - Harvey Field - Boeing Field",
     "waypoints": [
       {
         "code": "KBFI",
@@ -335,7 +335,7 @@
   },
   {
     "id": 13,
-    "name": "Boeing Field - Norman Grier",
+    "name": "Boeing Field - Norman Grier - Boeing Field",
     "waypoints": [
       {
         "code": "KBFI",
@@ -364,7 +364,7 @@
   },
   {
     "id": 14,
-    "name": "Boeing Field - Bremerton",
+    "name": "Boeing Field - Bremerton - Boeing Field",
     "waypoints": [
       {
         "code": "KBFI",
@@ -393,7 +393,7 @@
   },
   {
     "id": 15,
-    "name": "Boeing Field - Tacoma Narrows",
+    "name": "Boeing Field - Tacoma Narrows - Boeing Field",
     "waypoints": [
       {
         "code": "KBFI",
@@ -422,7 +422,7 @@
   },
   {
     "id": 16,
-    "name": "Boeing Field - Auburn",
+    "name": "Boeing Field - Auburn - Boeing Field",
     "waypoints": [
       {
         "code": "KBFI",
@@ -436,7 +436,7 @@
         "name": "Auburn Municipal Airport",
         "lat": 47.327702,
         "lon": -122.226997,
-        "visit_count": 12
+        "visit_count": 14
       },
       {
         "code": "KBFI",
@@ -451,7 +451,7 @@
   },
   {
     "id": 17,
-    "name": "Boeing Field - Renton FS",
+    "name": "Boeing Field - Renton",
     "waypoints": [
       {
         "code": "KBFI",
@@ -473,7 +473,7 @@
   },
   {
     "id": 18,
-    "name": "Renton - Boeing Field FS",
+    "name": "Renton - Boeing Field",
     "waypoints": [
       {
         "code": "KRNT",
@@ -495,7 +495,7 @@
   },
   {
     "id": 19,
-    "name": "Boeing Field - Port Angeles",
+    "name": "Boeing Field - Port Angeles - Boeing Field",
     "waypoints": [
       {
         "code": "KBFI",
@@ -524,7 +524,7 @@
   },
   {
     "id": 20,
-    "name": "Boeing Field - Paine - Renton",
+    "name": "Boeing Field - Paine - Renton - Boeing Field",
     "waypoints": [
       {
         "code": "KBFI",
@@ -560,7 +560,7 @@
   },
   {
     "id": 21,
-    "name": "Boeing Field - Scappoose - Olympia",
+    "name": "Boeing Field - Scappoose - Olympia - Boeing Field",
     "waypoints": [
       {
         "code": "KBFI",
@@ -596,7 +596,7 @@
   },
   {
     "id": 22,
-    "name": "Boeing Field - Norman Grier - Auburn",
+    "name": "Boeing Field - Norman Grier - Auburn - Boeing Field",
     "waypoints": [
       {
         "code": "KBFI",
@@ -617,7 +617,7 @@
         "name": "Auburn Municipal Airport",
         "lat": 47.327702,
         "lon": -122.226997,
-        "visit_count": 12
+        "visit_count": 14
       },
       {
         "code": "KBFI",
@@ -639,14 +639,14 @@
         "name": "Auburn Municipal Airport",
         "lat": 47.327702,
         "lon": -122.226997,
-        "visit_count": 12
+        "visit_count": 14
       },
       {
         "code": "KS50",
         "name": "Auburn Municipal Airport",
         "lat": 47.327702,
         "lon": -122.226997,
-        "visit_count": 12
+        "visit_count": 14
       }
     ],
     "flight_count": 2,
@@ -654,14 +654,14 @@
   },
   {
     "id": 24,
-    "name": "Auburn - Renton",
+    "name": "Auburn - Renton - Auburn",
     "waypoints": [
       {
         "code": "KS50",
         "name": "Auburn Municipal Airport",
         "lat": 47.327702,
         "lon": -122.226997,
-        "visit_count": 12
+        "visit_count": 14
       },
       {
         "code": "KRNT",
@@ -675,7 +675,7 @@
         "name": "Auburn Municipal Airport",
         "lat": 47.327702,
         "lon": -122.226997,
-        "visit_count": 12
+        "visit_count": 14
       }
     ],
     "flight_count": 1,
@@ -683,14 +683,14 @@
   },
   {
     "id": 25,
-    "name": "Auburn - Skagit - Arlington - Renton",
+    "name": "Auburn - Skagit - Arlington - Renton - Auburn",
     "waypoints": [
       {
         "code": "KS50",
         "name": "Auburn Municipal Airport",
         "lat": 47.327702,
         "lon": -122.226997,
-        "visit_count": 12
+        "visit_count": 14
       },
       {
         "code": "KBVS",
@@ -711,10 +711,54 @@
         "name": "Auburn Municipal Airport",
         "lat": 47.327702,
         "lon": -122.226997,
-        "visit_count": 12
+        "visit_count": 14
       }
     ],
     "flight_count": 1,
     "distance": 140.5
+  },
+  {
+    "id": 26,
+    "name": "Auburn - Hoquiam",
+    "waypoints": [
+      {
+        "code": "KS50",
+        "name": "Auburn Municipal Airport",
+        "lat": 47.327702,
+        "lon": -122.226997,
+        "visit_count": 14
+      },
+      {
+        "code": "KHQM",
+        "name": "Bowerman Airport",
+        "lat": 46.971199035599994,
+        "lon": -123.93699646,
+        "visit_count": 2
+      }
+    ],
+    "flight_count": 1,
+    "distance": 73.0
+  },
+  {
+    "id": 27,
+    "name": "Hoquiam - Auburn",
+    "waypoints": [
+      {
+        "code": "KHQM",
+        "name": "Bowerman Airport",
+        "lat": 46.971199035599994,
+        "lon": -123.93699646,
+        "visit_count": 2
+      },
+      {
+        "code": "KS50",
+        "name": "Auburn Municipal Airport",
+        "lat": 47.327702,
+        "lon": -122.226997,
+        "visit_count": 14
+      }
+    ],
+    "flight_count": 1,
+    "distance": 73.0
   }
 ]
