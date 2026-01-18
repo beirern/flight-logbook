@@ -25,7 +25,7 @@
     13.5,
     4.4,
     5.6,
-    2.3
+    4.8
   ],
   "cumulative_data": [
     {
@@ -587,6 +587,20 @@
       "pic": 18.1,
       "dual": 99.4,
       "instrument": 6.4
+    },
+    {
+      "date": "2026-01-16",
+      "total": 114.3,
+      "pic": 19.3,
+      "dual": 99.4,
+      "instrument": 6.4
+    },
+    {
+      "date": "2026-01-16",
+      "total": 115.6,
+      "pic": 20.6,
+      "dual": 99.4,
+      "instrument": 6.4
     }
   ],
   "aircraft_breakdown": [
@@ -636,6 +650,11 @@
       "hours": 5.7
     },
     {
+      "name": "N6020Y",
+      "type": "C162",
+      "hours": 4.8
+    },
+    {
       "name": "N6043M",
       "type": "C162",
       "hours": 4.699999999999999
@@ -679,11 +698,6 @@
       "name": "N6067Z",
       "type": "C162",
       "hours": 2.5999999999999996
-    },
-    {
-      "name": "N6020Y",
-      "type": "C162",
-      "hours": 2.3
     },
     {
       "name": "N278CA",
