@@ -13,7 +13,7 @@ from flights.utils.statistics import (
     get_airport_departure_progression,
     get_commercial_license_progress,
     get_cumulative_time_data,
-    get_days_since_last_flight,
+    get_last_flight_date,
     get_instructor_leaderboard,
     get_instructor_time_progression,
     get_instrument_breakdown,
@@ -73,7 +73,7 @@ def dashboard(request):
             'cumulative_data': [],
             'aircraft_breakdown': [],
             'recent_flights': [],
-            'days_since_last_flight': None,
+            'last_flight_date': None,
         })
 
     # Gather all statistics
@@ -85,7 +85,7 @@ def dashboard(request):
     commercial_progress = get_commercial_license_progress(pilot)
     instrument_breakdown = get_instrument_breakdown(pilot)
     recent_flights = get_recent_flights(pilot, limit=10)
-    days_since_last_flight = get_days_since_last_flight(pilot)
+    last_flight_date = get_last_flight_date(pilot)
 
     # Get monthly data for charts
     monthly_data = get_monthly_breakdown(pilot, months=12)
@@ -111,7 +111,7 @@ def dashboard(request):
         'cumulative_data': json.dumps(cumulative_data),
         'instructor_progression': json.dumps(instructor_progression),
         'recent_flights': recent_flights,
-        'days_since_last_flight': days_since_last_flight,
+        'last_flight_date': last_flight_date,
     }
 
     return render(request, 'flights/dashboard.html', context)

@@ -65,9 +65,9 @@
         <div class="col-md-2 col-sm-6 mb-3">
             <div class="card stat-card">
                 <div class="card-body text-center">
-                    <h6 class="card-subtitle mb-2 text-muted">Days Since Last Flight</h6>
-                    <h2 class="card-title">{{ days_since_last_flight|default:"N/A" }}</h2>
-                    <p class="card-text">days</p>
+                    <h6 class="card-subtitle mb-2 text-muted">Last Flight On</h6>
+                    <h2 class="card-title" style="font-size: 1.5rem;">{{ last_flight_date|default:"N/A" }}</h2>
+                    <p class="card-text">date</p>
                 </div>
             </div>
         </div>
@@ -994,16 +994,6 @@
                 }
             });
 
-            // Calculate days since last flight
-            if (flights.length > 0) {
-                const lastFlight = new Date(flights[0].date);
-                const daysSince = Math.floor((today - lastFlight) / (24 * 60 * 60 * 1000));
-
-                const daysSinceElement = document.querySelector('.card-title');
-                if (daysSinceElement && daysSinceElement.parentElement.querySelector('.card-subtitle').textContent.includes('Days Since')) {
-                    daysSinceElement.textContent = daysSince;
-                }
-            }
         } catch (error) {
             console.error('Error recalculating currency:', error);
         }
