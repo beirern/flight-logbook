@@ -37,7 +37,7 @@
         "name": "Auburn Municipal Airport",
         "lat": 47.327702,
         "lon": -122.226997,
-        "visit_count": 14
+        "visit_count": 15
       },
       {
         "code": "KRNT",
@@ -131,7 +131,7 @@
         "name": "Auburn Municipal Airport",
         "lat": 47.327702,
         "lon": -122.226997,
-        "visit_count": 14
+        "visit_count": 15
       },
       {
         "code": "KRNT",
@@ -436,7 +436,7 @@
         "name": "Auburn Municipal Airport",
         "lat": 47.327702,
         "lon": -122.226997,
-        "visit_count": 14
+        "visit_count": 15
       },
       {
         "code": "KBFI",
@@ -617,7 +617,7 @@
         "name": "Auburn Municipal Airport",
         "lat": 47.327702,
         "lon": -122.226997,
-        "visit_count": 14
+        "visit_count": 15
       },
       {
         "code": "KBFI",
@@ -639,17 +639,17 @@
         "name": "Auburn Municipal Airport",
         "lat": 47.327702,
         "lon": -122.226997,
-        "visit_count": 14
+        "visit_count": 15
       },
       {
         "code": "KS50",
         "name": "Auburn Municipal Airport",
         "lat": 47.327702,
         "lon": -122.226997,
-        "visit_count": 14
+        "visit_count": 15
       }
     ],
-    "flight_count": 2,
+    "flight_count": 3,
     "distance": 0.0
   },
   {
@@ -661,7 +661,7 @@
         "name": "Auburn Municipal Airport",
         "lat": 47.327702,
         "lon": -122.226997,
-        "visit_count": 14
+        "visit_count": 15
       },
       {
         "code": "KRNT",
@@ -675,7 +675,7 @@
         "name": "Auburn Municipal Airport",
         "lat": 47.327702,
         "lon": -122.226997,
-        "visit_count": 14
+        "visit_count": 15
       }
     ],
     "flight_count": 1,
@@ -690,7 +690,7 @@
         "name": "Auburn Municipal Airport",
         "lat": 47.327702,
         "lon": -122.226997,
-        "visit_count": 14
+        "visit_count": 15
       },
       {
         "code": "KBVS",
@@ -711,7 +711,7 @@
         "name": "Auburn Municipal Airport",
         "lat": 47.327702,
         "lon": -122.226997,
-        "visit_count": 14
+        "visit_count": 15
       }
     ],
     "flight_count": 1,
@@ -726,7 +726,7 @@
         "name": "Auburn Municipal Airport",
         "lat": 47.327702,
         "lon": -122.226997,
-        "visit_count": 14
+        "visit_count": 15
       },
       {
         "code": "KHQM",
@@ -755,7 +755,7 @@
         "name": "Auburn Municipal Airport",
         "lat": 47.327702,
         "lon": -122.226997,
-        "visit_count": 14
+        "visit_count": 15
       }
     ],
     "flight_count": 1,

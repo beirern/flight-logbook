@@ -1,21 +1,21 @@
 {
   "total_times": {
-    "total_time": 115.6,
-    "pic_time": 20.6,
+    "total_time": 117.0,
+    "pic_time": 22.0,
     "sic_time": 0.0,
     "dual_time": 99.4,
     "xc_time": 15.6,
-    "day_time": 107.6,
-    "night_time": 8.0,
+    "day_time": 108.6,
+    "night_time": 8.4,
     "actual_instrument": 0.0,
     "simulated_instrument": 6.4,
-    "day_landings": 140,
+    "day_landings": 142,
     "night_landings": 1,
-    "total_landings": 224
+    "total_landings": 227
   },
   "currency": {
     "day_current": true,
-    "day_landings": 12,
+    "day_landings": 10,
     "day_expiry": "2026-03-23",
     "night_current": true,
     "night_landings": 4,
@@ -30,25 +30,25 @@
     "first_class_expiry": "2024-07-31",
     "second_class_expiry": "2024-07-31",
     "third_class_expiry": "2028-07-31",
-    "days_remaining": 925,
+    "days_remaining": 910,
     "status": "current"
   },
   "license": {
     "has_license": true,
     "license_type": "Private Pilot",
     "expiration": "2028-01-01",
-    "days_remaining": 713,
+    "days_remaining": 698,
     "status": "current"
   },
   "ir_progress": {
     "actual": 0.0,
     "flight_simulated": 6.4,
-    "simulator_simulated": 12.0,
-    "simulated": 18.4,
-    "creditable_simulated": 18.4,
-    "creditable_total": 18.4,
-    "remaining": 21.6,
-    "percentage": 46.0,
+    "simulator_simulated": 18.8,
+    "simulated": 25.2,
+    "creditable_simulated": 25.2,
+    "creditable_total": 25.2,
+    "remaining": 14.8,
+    "percentage": 63.0,
     "xc_pic_time": 10.5,
     "xc_pic_required": 50,
     "xc_pic_remaining": 39.5,
@@ -56,16 +56,16 @@
   },
   "commercial_progress": {
     "total_time": {
-      "current": 115.6,
+      "current": 117.0,
       "required": 250,
-      "remaining": 134.4,
-      "percentage": 46.239999999999995
+      "remaining": 133.0,
+      "percentage": 46.800000000000004
     },
     "pic_time": {
-      "current": 20.6,
+      "current": 22.0,
       "required": 100,
-      "remaining": 79.4,
-      "percentage": 20.6
+      "remaining": 78.0,
+      "percentage": 22.0
     },
     "xc_pic_time": {
       "current": 10.5,
@@ -77,10 +77,10 @@
   "instrument_breakdown": {
     "actual": 0.0,
     "flight_simulated": 6.4,
-    "simulator_simulated": 12.0,
-    "simulated": 18.4,
-    "total": 18.4
+    "simulator_simulated": 18.8,
+    "simulated": 25.2,
+    "total": 25.2
   },
-  "last_flight_date": "2026-01-16",
-  "last_updated": "2026-01-18T20:47:47.774980"
+  "last_flight_date": "2026-01-26",
+  "last_updated": "2026-02-02T03:55:36.029848"
 }
