@@ -1,6 +1,5 @@
 {
   "monthly_labels": [
-    "Feb 2025",
     "Mar 2025",
     "Apr 2025",
     "May 2025",
@@ -11,10 +10,10 @@
     "Oct 2025",
     "Nov 2025",
     "Dec 2025",
-    "Jan 2026"
+    "Jan 2026",
+    "Feb 2026"
   ],
   "monthly_hours": [
-    2.7,
     5.9,
     3.5,
     0,
@@ -25,7 +24,8 @@
     13.5,
     4.4,
     5.6,
-    4.8
+    6.2,
+    0
   ],
   "cumulative_data": [
     {
@@ -601,6 +601,13 @@
       "pic": 20.6,
       "dual": 99.4,
       "instrument": 6.4
+    },
+    {
+      "date": "2026-01-26",
+      "total": 117.0,
+      "pic": 22.0,
+      "dual": 99.4,
+      "instrument": 6.4
     }
   ],
   "aircraft_breakdown": [
@@ -713,6 +720,11 @@
       "name": "N5210A",
       "type": "C172",
       "hours": 1.5
+    },
+    {
+      "name": "N452EP",
+      "type": "C172",
+      "hours": 1.4
     },
     {
       "name": "N602ND",

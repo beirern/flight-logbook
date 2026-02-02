@@ -1,5 +1,28 @@
 [
   {
+    "date": "2026-01-26",
+    "plane": "N452EP",
+    "flight_time": 1.4,
+    "pic_time": 1.4,
+    "sic_time": 0.0,
+    "dual_time": 0.0,
+    "xc_time": 0.0,
+    "day_time": 1.0,
+    "night_time": 0.4,
+    "actual_instrument_time": 0.0,
+    "simulated_instrument_time": 0.0,
+    "day_landings": 2,
+    "day_fullstop_landings": 1,
+    "night_landings": 0,
+    "night_fullstop_landings": 0,
+    "route": "Maneuvers around Auburn: (KS50 -> KS50)",
+    "instructor": null,
+    "passengers": [
+      "Alex Fu"
+    ],
+    "notes": "Seattle Sightseeing with Alex. Fly-by Spencer's apartment. 1 Circle around Space Needle. Seahawk Transition over KSEA."
+  },
+  {
     "date": "2026-01-16",
     "plane": "N6020Y",
     "flight_time": 1.2,

@@ -82,7 +82,7 @@
             <div class="card stat-card">
                 <div class="card-body text-center">
                     <h6 class="card-subtitle mb-2 text-muted">Total Unique People</h6>
-                    <h2 class="card-title">21</h2>
+                    <h2 class="card-title">22</h2>
                     <p class="card-text">people</p>
                 </div>
             </div>
@@ -91,7 +91,7 @@
             <div class="card stat-card">
                 <div class="card-body text-center">
                     <h6 class="card-subtitle mb-2 text-muted">Unique Passengers</h6>
-                    <h2 class="card-title">5</h2>
+                    <h2 class="card-title">6</h2>
                     <p class="card-text">passengers</p>
                 </div>
             </div>
@@ -109,7 +109,7 @@
             <div class="card stat-card">
                 <div class="card-body text-center">
                     <h6 class="card-subtitle mb-2 text-muted">Flights with Others</h6>
-                    <h2 class="card-title">73</h2>
+                    <h2 class="card-title">74</h2>
                     <p class="card-text">flights</p>
                 </div>
             </div>
@@ -127,7 +127,7 @@
                     
                     <p class="mb-1"><strong>Caleb L.</strong></p>
                     <p class="mb-1">1 flights &middot; 1.7 hrs</p>
-                    <p class="text-muted mb-0">20.0% of all passenger flights</p>
+                    <p class="text-muted mb-0">16.7% of all passenger flights</p>
                     
                 </div>
             </div>
@@ -152,8 +152,8 @@
                     <h5>Flying Patterns</h5>
                 </div>
                 <div class="card-body">
-                    <p class="mb-1"><strong>6.1%</strong> of flights have passengers</p>
-                    <p class="mb-0"><strong>89.0%</strong> of flights are with an instructor</p>
+                    <p class="mb-1"><strong>7.2%</strong> of flights have passengers</p>
+                    <p class="mb-0"><strong>88.0%</strong> of flights are with an instructor</p>
                 </div>
             </div>
         </div>
@@ -196,20 +196,27 @@
                             
                             <tr>
                                 <td>3</td>
+                                <td>Alex F.</td>
+                                <td>1</td>
+                                <td>1.4 hrs</td>
+                            </tr>
+                            
+                            <tr>
+                                <td>4</td>
                                 <td>Ryan L.</td>
                                 <td>1</td>
                                 <td>1.3 hrs</td>
                             </tr>
                             
                             <tr>
-                                <td>4</td>
+                                <td>5</td>
                                 <td>Richard Z.</td>
                                 <td>1</td>
                                 <td>1.1 hrs</td>
                             </tr>
                             
                             <tr>
-                                <td>5</td>
+                                <td>6</td>
                                 <td>Olga D.</td>
                                 <td>1</td>
                                 <td>0.3 hrs</td>
@@ -262,8 +269,8 @@
                                 <td>3</td>
                                 <td>Mark T.</td>
                                 <td>2</td>
-                                <td>7</td>
-                                <td>12.4 hrs</td>
+                                <td>11</td>
+                                <td>19.7 hrs</td>
                             </tr>
                             
                             <tr>
@@ -383,7 +390,7 @@
         data: {
             labels: ["Solo", "With Passengers", "With Instructor"],
             datasets: [{
-                data: [9, 5, 73],
+                data: [9, 6, 73],
                 backgroundColor: [
                     'rgba(108, 117, 125, 0.6)',  // Gray for Solo
                     'rgba(54, 162, 235, 0.6)',   // Blue for Passengers
@@ -419,11 +426,11 @@
     new Chart(trendsCtx, {
         type: 'line',
         data: {
-            labels: ["Feb 2025", "Mar 2025", "Apr 2025", "May 2025", "Jun 2025", "Jul 2025", "Aug 2025", "Sep 2025", "Oct 2025", "Nov 2025", "Dec 2025", "Jan 2026"],
+            labels: ["Mar 2025", "Apr 2025", "May 2025", "Jun 2025", "Jul 2025", "Aug 2025", "Sep 2025", "Oct 2025", "Nov 2025", "Dec 2025", "Jan 2026", "Feb 2026"],
             datasets: [
                 {
                     label: 'Total Flights',
-                    data: [2, 5, 3, 0, 0, 2, 7, 11, 8, 3, 4, 3],
+                    data: [5, 3, 0, 0, 2, 7, 11, 8, 3, 4, 4, 0],
                     borderColor: 'rgba(108, 117, 125, 1)',
                     backgroundColor: 'rgba(108, 117, 125, 0.1)',
                     borderWidth: 2,
@@ -431,7 +438,7 @@
                 },
                 {
                     label: 'With Passengers',
-                    data: [0, 1, 0, 0, 0, 0, 2, 2, 0, 0, 0, 0],
+                    data: [1, 0, 0, 0, 0, 2, 2, 0, 0, 0, 1, 0],
                     borderColor: 'rgba(54, 162, 235, 1)',
                     backgroundColor: 'rgba(54, 162, 235, 0.1)',
                     borderWidth: 2,
@@ -439,7 +446,7 @@
                 },
                 {
                     label: 'With Instructor',
-                    data: [2, 5, 3, 0, 0, 2, 7, 7, 7, 3, 4, 0],
+                    data: [5, 3, 0, 0, 2, 7, 7, 7, 3, 4, 0, 0],
                     borderColor: 'rgba(75, 192, 192, 1)',
                     backgroundColor: 'rgba(75, 192, 192, 0.1)',
                     borderWidth: 2,

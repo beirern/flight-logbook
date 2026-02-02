@@ -1,9 +1,9 @@
 {
-  "sel_hours": 115.6,
+  "sel_hours": 117.0,
   "class_breakdown": {
     "Single Engine Land": {
-      "hours": 115.6,
-      "flight_count": 82,
+      "hours": 117.0,
+      "flight_count": 83,
       "percentage": 100.0
     }
   },
@@ -11,8 +11,8 @@
     {
       "type": "C172",
       "plane_class": "Single Engine Land",
-      "hours": 65.5,
-      "flight_count": 47
+      "hours": 66.9,
+      "flight_count": 48
     },
     {
       "type": "C162",
@@ -34,7 +34,7 @@
       "hours": 0.7,
       "location": "KRNT"
     },
-    "total_aircraft": 30
+    "total_aircraft": 31
   },
   "aircraft_breakdown": [
     {
@@ -168,6 +168,12 @@
       "type": "C172",
       "hours": 1.5,
       "location": "KSQL"
+    },
+    {
+      "tail_number": "N452EP",
+      "type": "C172",
+      "hours": 1.4,
+      "location": "KS50"
     },
     {
       "tail_number": "N602ND",
