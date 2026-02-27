@@ -60,9 +60,9 @@
         <div class="col-md-2 col-sm-6 mb-3">
             <div class="card stat-card">
                 <div class="card-body text-center">
-                    <h6 class="card-subtitle mb-2 text-muted">Last Flight On</h6>
-                    <h2 class="card-title" style="font-size: 1.5rem;">{{ last_flight_date|default:"N/A" }}</h2>
-                    <p class="card-text">date</p>
+                    <h6 class="card-subtitle mb-2 text-muted">Last Flight</h6>
+                    <h2 class="card-title">{{ days_since_last_flight|default:"N/A" }}</h2>
+                    <p class="card-text">days ago</p>
                 </div>
             </div>
         </div>
