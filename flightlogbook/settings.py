@@ -134,9 +134,6 @@ STATIC_URL = "/static/"
 
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
-if os.environ.get("BACKEND_PROXY", None):
-    FORCE_SCRIPT_NAME = "/flights"
-
 STORAGES = {
     "default": {
         "BACKEND": "django.core.files.storage.FileSystemStorage",
