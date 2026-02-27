@@ -15,11 +15,7 @@
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@400;600&family=Archivo:wght@600;700;900&display=swap" rel="stylesheet">
 
     <!-- Custom CSS -->
-    {% if is_static %}
-    <link rel="stylesheet" href="assets/css/dashboard.css">
-    {% else %}
     <link rel="stylesheet" href="{% static 'flights/css/dashboard.css' %}">
-    {% endif %}
 
     {% block extra_css %}{% endblock %}
 </head>
@@ -28,11 +24,7 @@
     <nav class="modern-nav">
         <div class="nav-container">
             <div class="nav-brand-section">
-                {% if is_static %}
-                <a class="logo" href="index.html">FLIGHT LOG</a>
-                {% else %}
                 <a class="logo" href="{% url 'dashboard' %}">FLIGHT LOG</a>
-                {% endif %}
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span></span>
                     <span></span>
@@ -42,50 +34,28 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="nav-links">
                     <li>
-                        {% if is_static %}
-                        <a class="{% block nav_dashboard %}{% endblock %}" href="index.html">Dashboard</a>
-                        {% else %}
                         <a class="{% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}"
                            href="{% url 'dashboard' %}">Dashboard</a>
-                        {% endif %}
                     </li>
                     <li>
-                        {% if is_static %}
-                        <a class="{% block nav_routes %}{% endblock %}" href="routes.html">Routes</a>
-                        {% else %}
                         <a class="{% if request.resolver_match.url_name == 'routes_map' %}active{% endif %}"
                            href="{% url 'routes_map' %}">Routes</a>
-                        {% endif %}
                     </li>
                     <li>
-                        {% if is_static %}
-                        <a class="{% block nav_people %}{% endblock %}" href="people.html">People</a>
-                        {% else %}
                         <a class="{% if request.resolver_match.url_name == 'people' %}active{% endif %}"
                            href="{% url 'people' %}">People</a>
-                        {% endif %}
                     </li>
                     <li>
-                        {% if is_static %}
-                        <a class="{% block nav_aircraft %}{% endblock %}" href="aircraft.html">Aircraft</a>
-                        {% else %}
                         <a class="{% if request.resolver_match.url_name == 'aircraft' %}active{% endif %}"
                            href="{% url 'aircraft' %}">Aircraft</a>
-                        {% endif %}
                     </li>
                     <li>
-                        {% if is_static %}
-                        <a class="{% block nav_logbook %}{% endblock %}" href="logbook.html">Logbook</a>
-                        {% else %}
                         <a class="{% if request.resolver_match.url_name == 'logbook' %}active{% endif %}"
                            href="{% url 'logbook' %}">Logbook</a>
-                        {% endif %}
                     </li>
-                    {% if not is_static %}
                     <li>
                         <a href="/admin/">Admin</a>
                     </li>
-                    {% endif %}
                 </ul>
             </div>
         </div>
