@@ -8,8 +8,6 @@ on:
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
-    outputs:
-      image: ${{ steps.image.outputs.uri }}
 
     steps:
       - name: Checkout
@@ -23,11 +21,9 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Login to Amazon ECR
-        id: ecr-login
         uses: aws-actions/amazon-ecr-login@v2
 
       - name: Build and push image
-        id: image
         env:
           REGISTRY: ${{ secrets.ECR_REGISTRY }}
           REPOSITORY: ${{ secrets.ECR_REPOSITORY }}
@@ -37,7 +33,6 @@ jobs:
           docker build -t "$IMAGE_URI" -t "$REGISTRY/$REPOSITORY:latest" .
           docker push "$IMAGE_URI"
           docker push "$REGISTRY/$REPOSITORY:latest"
-          echo "uri=$IMAGE_URI" >> "$GITHUB_OUTPUT"
 
   deploy:
     runs-on: ubuntu-latest
@@ -82,10 +77,8 @@ jobs:
 
             cd ~/flight-logbook
 
-            # Pull the new image and restart
-            export IMAGE="${{ needs.build-and-push.outputs.image }}"
-            echo $IMAGE
-            echo "${{ needs.build-and-push.outputs.image }}"
+            # Construct image URI from known values — avoids cross-job secret masking
+            export IMAGE="${{ secrets.ECR_REGISTRY }}/${{ secrets.ECR_REPOSITORY }}:${{ github.sha }}"
             docker compose pull web
             docker compose up -d
             docker image prune -f
