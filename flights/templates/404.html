@@ -1,0 +1,121 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 — Flight Logbook</title>
+
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@400;600&family=Archivo:wght@600;700;900&display=swap" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'flights/css/dashboard.css' %}">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="modern-nav">
+        <div class="nav-container">
+            <div class="nav-brand-section">
+                <a class="logo" href="/">FLIGHT LOG</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="nav-links">
+                    <li><a href="/">Dashboard</a></li>
+                    <li><a href="/routes/">Routes</a></li>
+                    <li><a href="/people/">People</a></li>
+                    <li><a href="/aircraft/">Aircraft</a></li>
+                    <li><a href="/logbook/">Logbook</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-container">
+        <div class="error-page">
+            <div class="error-code">404</div>
+            <h1 class="error-title">Off Course</h1>
+            <p class="error-message">This route doesn't exist in the logbook. The page you're looking for may have moved or never existed.</p>
+            <a href="/" class="error-btn">Return to Dashboard</a>
+        </div>
+    </main>
+
+    <style>
+        .error-page {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: calc(100vh - 70px);
+            text-align: center;
+            padding: var(--space-xl) var(--space-sm);
+            animation: fadeInUp 0.8s ease-out both;
+        }
+
+        .error-code {
+            font-family: var(--font-display);
+            font-size: clamp(6rem, 18vw, 12rem);
+            font-weight: 900;
+            line-height: 1;
+            letter-spacing: -0.04em;
+            background: linear-gradient(135deg, var(--forest-green), var(--sage-green), var(--sky-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: var(--space-sm);
+            user-select: none;
+        }
+
+        .error-title {
+            font-family: var(--font-display);
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            font-weight: 700;
+            color: var(--earth-dark);
+            margin-bottom: var(--space-sm);
+        }
+
+        .error-message {
+            font-family: var(--font-body);
+            font-size: 1rem;
+            color: var(--warm-gray);
+            max-width: 420px;
+            line-height: 1.7;
+            margin-bottom: var(--space-lg);
+        }
+
+        .error-btn {
+            display: inline-block;
+            padding: 0.75rem 2rem;
+            background: var(--forest-green);
+            color: var(--cream);
+            font-family: var(--font-body);
+            font-weight: 500;
+            font-size: 0.9rem;
+            text-decoration: none;
+            border-radius: 8px;
+            letter-spacing: 0.02em;
+            transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .error-btn:hover {
+            background: var(--moss);
+            color: var(--cream);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-medium);
+        }
+    </style>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
