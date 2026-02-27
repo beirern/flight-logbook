@@ -2,8 +2,6 @@
 
 {% block title %}Routes Map - Flight Logbook{% endblock %}
 
-{% block nav_routes %}active{% endblock %}
-
 {% block extra_css %}
 <!-- Leaflet CSS -->
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
@@ -30,9 +28,6 @@
     <div class="page-header">
         <div class="d-flex justify-content-between align-items-center">
             <h1>Flight Routes Map</h1>
-            {% if is_static and last_updated %}
-            <small class="text-muted">Last updated: {{ last_updated }}Z</small>
-            {% endif %}
         </div>
     </div>
 
@@ -295,21 +290,8 @@
     }
 
     // Parse routes data from Django template
-    {% if is_static %}
-    // In static mode, fetch from JSON file
-    fetch('data/routes.json')
-        .then(response => response.json())
-        .then(routes => {
-            renderRoutes(routes);
-        })
-        .catch(error => {
-            console.error('Error loading routes:', error);
-        });
-    {% else %}
-    // In Django mode, use template variable
     const routes = {{ routes_json|safe }};
     renderRoutes(routes);
-    {% endif %}
 
     // Airport Departure Progression Chart
     const airportProgressionCtx = document.getElementById('airportProgressionChart');
