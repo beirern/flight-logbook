@@ -84,6 +84,8 @@ jobs:
 
             # Pull the new image and restart
             export IMAGE="${{ needs.build-and-push.outputs.image }}"
+            echo $IMAGE
+            echo "${{ needs.build-and-push.outputs.image }}"
             docker compose pull web
             docker compose up -d
             docker image prune -f
