@@ -142,12 +142,3 @@ STORAGES = {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
     },
 }
-
-# For being behind a proxy
-# 1. Tell Django it's behind a proxy and what the prefix is
-if os.environ.get("BEHIND_PROXY"):
-    FORCE_SCRIPT_NAME = "/flights"
-
-    # 2. Ensure Django respects the HTTPS protocol from Caddy
-    SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
-    USE_X_FORWARDED_HOST = True
