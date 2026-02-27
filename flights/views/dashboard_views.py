@@ -1,5 +1,6 @@
 import json
 import math
+from datetime import date
 
 from django.shortcuts import render
 
@@ -86,6 +87,7 @@ def dashboard(request):
     instrument_breakdown = get_instrument_breakdown(pilot)
     recent_flights = get_recent_flights(pilot, limit=10)
     last_flight_date = get_last_flight_date(pilot)
+    days_since_last_flight = (date.today() - last_flight_date).days if last_flight_date else None
 
     # Get monthly data for charts
     monthly_data = get_monthly_breakdown(pilot, months=12)
@@ -112,6 +114,7 @@ def dashboard(request):
         'instructor_progression': json.dumps(instructor_progression),
         'recent_flights': recent_flights,
         'last_flight_date': last_flight_date,
+        'days_since_last_flight': days_since_last_flight,
     }
 
     return render(request, 'flights/dashboard.html', context)
