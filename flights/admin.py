@@ -20,6 +20,17 @@ class FlightAdmin(admin.ModelAdmin):
         "excluded",
     )
     list_editable = ("excluded",)
+    search_fields = (
+        "date",
+        "plane__tail_number",
+        "plane__type",
+        "route__name",
+        "pilot__first_name",
+        "pilot__last_name",
+        "instructor__first_name",
+        "instructor__last_name",
+        "notes",
+    )
 
 
 class GroundAdmin(admin.ModelAdmin):
@@ -30,6 +41,14 @@ class GroundAdmin(admin.ModelAdmin):
         "ground_time",
         "subject",
     )
+    search_fields = (
+        "date",
+        "subject",
+        "pilot__first_name",
+        "pilot__last_name",
+        "instructor__first_name",
+        "instructor__last_name",
+    )
 
 
 class SimulatorFlightAdmin(admin.ModelAdmin):
@@ -39,6 +58,16 @@ class SimulatorFlightAdmin(admin.ModelAdmin):
         "date",
         "sim_time",
         "plane",
+    )
+    search_fields = (
+        "date",
+        "plane__tail_number",
+        "plane__type",
+        "pilot__first_name",
+        "pilot__last_name",
+        "instructor__first_name",
+        "instructor__last_name",
+        "notes",
     )
 
 
