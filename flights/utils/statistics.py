@@ -8,7 +8,7 @@ from flights.models import Flight, Ground, SimulatorFlight
 
 def get_total_times(pilot):
     """Aggregate all flight time categories for a pilot."""
-    flights = Flight.objects.filter(pilot=pilot)
+    flights = Flight.objects.filter(pilot=pilot, excluded=False)
 
     total_landings = (
         (flights.aggregate(Sum('day_landings'))['day_landings__sum'] or 0) +
@@ -45,7 +45,8 @@ def get_monthly_breakdown(pilot, months=12):
     # Query flights and group by month
     monthly = Flight.objects.filter(
         pilot=pilot,
-        date__gte=start_date
+        date__gte=start_date,
+        excluded=False,
     ).annotate(
         month=TruncMonth('date')
     ).values('month').annotate(
@@ -74,7 +75,7 @@ def get_monthly_breakdown(pilot, months=12):
 
 def get_instrument_breakdown(pilot):
     """Get breakdown of instrument time (actual vs simulated from flights and simulators)."""
-    flights = Flight.objects.filter(pilot=pilot)
+    flights = Flight.objects.filter(pilot=pilot, excluded=False)
     simulator_flights = SimulatorFlight.objects.filter(pilot=pilot)
 
     actual = flights.aggregate(Sum('actual_instrument_time'))['actual_instrument_time__sum'] or 0
@@ -94,7 +95,7 @@ def get_instrument_breakdown(pilot):
 
 def get_aircraft_breakdown(pilot):
     """Get flight hours broken down by aircraft with type and location information."""
-    flights = Flight.objects.filter(pilot=pilot).select_related('plane', 'route').prefetch_related('route__route_steps__waypoint').order_by('plane', '-date')
+    flights = Flight.objects.filter(pilot=pilot, excluded=False).select_related('plane', 'route').prefetch_related('route__route_steps__waypoint').order_by('plane', '-date')
 
     aircraft_data = {}
     for flight in flights:
@@ -121,7 +122,7 @@ def get_aircraft_breakdown(pilot):
 
 def get_recent_flights(pilot, limit=10):
     """Get the most recent N flights for a pilot with computed total landings."""
-    flights = Flight.objects.filter(pilot=pilot).select_related('plane').order_by('-date')[:limit]
+    flights = Flight.objects.filter(pilot=pilot, excluded=False).select_related('plane').order_by('-date')[:limit]
 
     # Add computed total landings to each flight
     flights_with_totals = []
@@ -135,7 +136,7 @@ def get_recent_flights(pilot, limit=10):
 
 def get_last_flight_date(pilot):
     """Get the date of the pilot's last flight."""
-    last_flight = Flight.objects.filter(pilot=pilot).order_by('-date').first()
+    last_flight = Flight.objects.filter(pilot=pilot, excluded=False).order_by('-date').first()
 
     if not last_flight:
         return None
@@ -145,7 +146,7 @@ def get_last_flight_date(pilot):
 
 def get_cumulative_time_data(pilot):
     """Get cumulative time data for line chart (all flights chronologically)."""
-    flights = Flight.objects.filter(pilot=pilot).order_by('date')
+    flights = Flight.objects.filter(pilot=pilot, excluded=False).order_by('date')
 
     cumulative_data = []
     total = 0
@@ -172,7 +173,7 @@ def get_cumulative_time_data(pilot):
 
 def get_xc_pic_time(pilot):
     """Calculate cross-country PIC time (flights with both xc_time > 0 and pic_time > 0)."""
-    flights = Flight.objects.filter(pilot=pilot, xc_time__gt=0, pic_time__gt=0)
+    flights = Flight.objects.filter(pilot=pilot, xc_time__gt=0, pic_time__gt=0, excluded=False)
     xc_pic_total = flights.aggregate(Sum('xc_time'))['xc_time__sum'] or 0
     return round(float(xc_pic_total), 1)
 
@@ -257,7 +258,7 @@ def get_passenger_leaderboard(pilot, limit=10):
     from pilots.models import Pilot
 
     # Get flights where the pilot was PIC and had passengers
-    flights = Flight.objects.filter(pilot=pilot).prefetch_related('passengers')
+    flights = Flight.objects.filter(pilot=pilot, excluded=False).prefetch_related('passengers')
 
     # Collect passenger statistics
     passenger_stats = {}
@@ -293,7 +294,8 @@ def get_instructor_leaderboard(pilot, limit=10):
     # Get flights where the pilot received instruction
     flights = Flight.objects.filter(
         pilot=pilot,
-        instructor__isnull=False
+        instructor__isnull=False,
+        excluded=False,
     ).select_related('instructor').filter(
         Q(instructor__role=Pilot.RoleChoices.INSTRUCTOR) |
         Q(instructor__role=Pilot.RoleChoices.EXAMINER)
@@ -389,7 +391,8 @@ def get_sel_total_hours(pilot):
     """Calculate total Single Engine Land (SEL) hours for a pilot."""
     flights = Flight.objects.filter(
         pilot=pilot,
-        plane__plane_class='Single Engine Land'
+        plane__plane_class='Single Engine Land',
+        excluded=False,
     ).select_related('plane')
 
     sel_total = flights.aggregate(Sum('flight_time'))['flight_time__sum'] or 0
@@ -398,7 +401,7 @@ def get_sel_total_hours(pilot):
 
 def get_aircraft_class_breakdown(pilot):
     """Get breakdown of flight hours by aircraft class (SEL/MEL)."""
-    flights = Flight.objects.filter(pilot=pilot).select_related('plane')
+    flights = Flight.objects.filter(pilot=pilot, excluded=False).select_related('plane')
 
     class_data = flights.values('plane__plane_class').annotate(
         hours=Sum('flight_time'),
@@ -424,7 +427,7 @@ def get_aircraft_class_breakdown(pilot):
 
 def get_aircraft_type_statistics(pilot):
     """Get statistics for each aircraft type flown."""
-    flights = Flight.objects.filter(pilot=pilot).select_related('plane')
+    flights = Flight.objects.filter(pilot=pilot, excluded=False).select_related('plane')
 
     type_data = flights.values('plane__type', 'plane__plane_class').annotate(
         hours=Sum('flight_time'),
@@ -464,7 +467,7 @@ def get_unique_people_counts(pilot):
     """Get counts of unique people the pilot has flown with."""
     from pilots.models import Pilot
 
-    flights = Flight.objects.filter(pilot=pilot).prefetch_related('passengers').select_related('instructor')
+    flights = Flight.objects.filter(pilot=pilot, excluded=False).prefetch_related('passengers').select_related('instructor')
 
     unique_passengers = set()
     unique_instructors = set()
@@ -496,7 +499,7 @@ def get_people_role_distribution(pilot):
     """Get distribution of flights by type (solo, with passengers, with instructor)."""
     from pilots.models import Pilot
 
-    flights = Flight.objects.filter(pilot=pilot).prefetch_related('passengers').select_related('instructor')
+    flights = Flight.objects.filter(pilot=pilot, excluded=False).prefetch_related('passengers').select_related('instructor')
 
     solo_flights = 0
     passenger_flights = 0
@@ -533,7 +536,8 @@ def get_monthly_people_frequency(pilot, months=12):
     # Get flights in date range
     flights = Flight.objects.filter(
         pilot=pilot,
-        date__gte=start_date
+        date__gte=start_date,
+        excluded=False,
     ).prefetch_related('passengers').select_related('instructor').order_by('date')
 
     # Build monthly data structure
@@ -594,10 +598,10 @@ def get_people_insights(pilot):
     instructor_leaderboard = get_instructor_leaderboard(pilot, limit=1)
 
     # Get total flight count
-    total_flights = Flight.objects.filter(pilot=pilot).count()
+    total_flights = Flight.objects.filter(pilot=pilot, excluded=False).count()
 
     # Get counts by type
-    flights = Flight.objects.filter(pilot=pilot).prefetch_related('passengers').select_related('instructor')
+    flights = Flight.objects.filter(pilot=pilot, excluded=False).prefetch_related('passengers').select_related('instructor')
 
     flights_with_passengers = 0
     flights_with_instruction = 0
@@ -641,7 +645,8 @@ def get_instructor_time_progression(pilot):
     # Get all flights with instructors, ordered chronologically
     flights = Flight.objects.filter(
         pilot=pilot,
-        instructor__isnull=False
+        instructor__isnull=False,
+        excluded=False,
     ).select_related('instructor').filter(
         Q(instructor__role=Pilot.RoleChoices.INSTRUCTOR) |
         Q(instructor__role=Pilot.RoleChoices.EXAMINER)
@@ -765,7 +770,8 @@ def get_airport_departure_progression(pilot):
     # Get all flights with routes, ordered chronologically
     flights = Flight.objects.filter(
         pilot=pilot,
-        route__isnull=False
+        route__isnull=False,
+        excluded=False,
     ).select_related('route').prefetch_related('route__route_steps__waypoint').order_by('date')
 
     # Build cumulative departure count for each airport

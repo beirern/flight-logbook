@@ -11,7 +11,7 @@ def check_passenger_currency(pilot):
     Requires 3 takeoffs and landings in the preceding 90 days.
     """
     ninety_days_ago = datetime.now().date() - timedelta(days=90)
-    recent_flights = Flight.objects.filter(pilot=pilot, date__gte=ninety_days_ago)
+    recent_flights = Flight.objects.filter(pilot=pilot, date__gte=ninety_days_ago, excluded=False)
 
     day_landings = recent_flights.aggregate(Sum('day_landings'))['day_landings__sum'] or 0
     night_fullstop_landings = recent_flights.aggregate(Sum('night_fullstop_landings'))['night_fullstop_landings__sum'] or 0
@@ -23,7 +23,8 @@ def check_passenger_currency(pilot):
     # Calculate day currency expiration
     day_landing_flights = Flight.objects.filter(
         pilot=pilot,
-        day_landings__gt=0
+        day_landings__gt=0,
+        excluded=False,
     ).order_by('-date')
 
     day_count = 0
@@ -36,7 +37,8 @@ def check_passenger_currency(pilot):
     # Calculate night currency expiration
     night_landing_flights = Flight.objects.filter(
         pilot=pilot,
-        night_fullstop_landings__gt=0
+        night_fullstop_landings__gt=0,
+        excluded=False,
     ).order_by('-date')
 
     night_count = 0

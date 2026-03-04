@@ -37,6 +37,7 @@ class Flight(models.Model):
     night_fullstop_landings = models.IntegerField()
     notes = models.TextField()
     duration = models.DurationField(null=True, blank=True)
+    excluded = models.BooleanField(default=False)
 
     def __str__(self):
         return f"{self.date}: {self.plane} {self.flight_time} {self.route}"
