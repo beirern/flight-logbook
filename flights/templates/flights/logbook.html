@@ -39,11 +39,12 @@
                             <th>Night FS</th>
                             <th>Instructor</th>
                             <th>Notes</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for flight in flights %}
-                        <tr>
+                        <tr{% if flight.excluded %} class="excluded-flight"{% endif %}>
                             <td>{{ flight.date|date:"Y-m-d" }}</td>
                             <td>{{ flight.plane }}</td>
                             <td>
@@ -70,6 +71,7 @@
                             <td>{{ flight.night_fullstop_landings }}</td>
                             <td>{{ flight.instructor|default:"-" }}</td>
                             <td>{{ flight.notes|truncatewords:15 }}</td>
+                            <td>{% if flight.excluded %}<span class="badge bg-secondary">excluded</span>{% endif %}</td>
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -108,6 +110,10 @@
     td {
         font-size: 0.9rem;
         white-space: nowrap;
+    }
+
+    tr.excluded-flight td {
+        opacity: 0.45;
     }
 </style>
 {% endblock %}

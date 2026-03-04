@@ -17,7 +17,9 @@ class FlightAdmin(admin.ModelAdmin):
         "day_fullstop_landings",
         "night_landings",
         "night_fullstop_landings",
+        "excluded",
     )
+    list_editable = ("excluded",)
 
 
 class GroundAdmin(admin.ModelAdmin):
