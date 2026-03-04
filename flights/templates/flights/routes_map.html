@@ -219,6 +219,42 @@
         pagination.appendChild(nextLi);
     }
 
+    // Build globally-normalized coordinates for all routes so that trans-antimeridian
+    // routes (e.g. US→Taiwan) display via the shorter Pacific path.
+    //
+    // Per-route adjustment fails when outbound (SEA→TPE) and return (TPE→SEA) routes
+    // both exist: one pushes Taiwan to -239°, the other pushes Seattle to +238°,
+    // and the combined bounds still spans nearly the whole world.
+    //
+    // Instead, find the largest longitude gap across ALL waypoints, then shift every
+    // coordinate into the complementary window so they all cluster together.
+    function buildNormalizedCoordsList(routes) {
+        const lons360 = [];
+        routes.forEach(r => (r.waypoints || []).forEach(wp => {
+            lons360.push(((wp.lon % 360) + 360) % 360);
+        }));
+        if (lons360.length === 0) return routes.map(() => []);
+
+        lons360.sort((a, b) => a - b);
+        // Start by assuming the wrap-around gap is largest
+        let maxGap = lons360[0] + 360 - lons360[lons360.length - 1];
+        let windowStart = lons360[0];
+        for (let i = 1; i < lons360.length; i++) {
+            const gap = lons360[i] - lons360[i - 1];
+            if (gap > maxGap) { maxGap = gap; windowStart = lons360[i]; }
+        }
+
+        function normalizeLon(lon) {
+            let n = ((lon % 360) + 360) % 360;
+            if (n < windowStart) n += 360;
+            return n;
+        }
+
+        return routes.map(route =>
+            (route.waypoints || []).map(wp => [wp.lat, normalizeLon(wp.lon)])
+        );
+    }
+
     function renderMap() {
         // Create a bounds object to fit all routes
         const bounds = L.latLngBounds();
@@ -226,15 +262,15 @@
         // Define colors for routes (cycling through them)
         const colors = ['#3388ff', '#ff6b6b', '#4ecdc4', '#45b7d1', '#f9ca24', '#6c5ce7', '#fd79a8'];
 
+        const normalizedCoordsList = buildNormalizedCoordsList(allRoutes);
+
         allRoutes.forEach((route, index) => {
             if (!route.waypoints || route.waypoints.length === 0) {
                 return;
             }
 
             const color = colors[index % colors.length];
-
-            // Create coordinates array for the polyline
-            const coordinates = route.waypoints.map(wp => [wp.lat, wp.lon]);
+            const coordinates = normalizedCoordsList[index];
 
             // Add route line
             const polyline = L.polyline(coordinates, {
@@ -255,9 +291,10 @@
             polyline.bindTooltip(tooltipContent);
             polyline.bindPopup(popupContent);
 
-            // Add markers for waypoints
-            route.waypoints.forEach((waypoint, wpIndex) => {
-                const marker = L.circleMarker([waypoint.lat, waypoint.lon], {
+            // Add markers using normalized coordinates so they match the polyline position
+            coordinates.forEach((coord, wpIndex) => {
+                const waypoint = route.waypoints[wpIndex];
+                const marker = L.circleMarker(coord, {
                     radius: 6,
                     fillColor: color,
                     color: '#fff',
@@ -278,8 +315,7 @@
                 marker.bindTooltip(markerTooltip);
                 marker.bindPopup(markerPopup);
 
-                // Extend bounds
-                bounds.extend([waypoint.lat, waypoint.lon]);
+                bounds.extend(coord);
             });
         });
 
