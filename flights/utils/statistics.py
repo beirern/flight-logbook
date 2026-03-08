@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 from django.db.models import Count, Q, Sum
 from django.db.models.functions import TruncMonth
 
-from flights.models import Flight, Ground, SimulatorFlight
+from flights.models import Approach, Flight, Ground, SimulatorFlight
 
 
 def get_total_times(pilot):
@@ -31,6 +31,11 @@ def get_total_times(pilot):
         'night_landings': flights.aggregate(Sum('night_landings'))['night_landings__sum'] or 0,
         'total_landings': total_landings,
     }
+
+
+def get_total_approaches(pilot):
+    """Count all approaches logged for a pilot (excluding excluded flights)."""
+    return Approach.objects.filter(flight__pilot=pilot, flight__excluded=False).count()
 
 
 def get_monthly_breakdown(pilot, months=12):
