@@ -26,6 +26,7 @@ from flights.utils.statistics import (
     get_people_role_distribution,
     get_recent_flights,
     get_sel_total_hours,
+    get_total_approaches,
     get_total_times,
     get_unique_people_counts,
 )
@@ -79,6 +80,7 @@ def dashboard(request):
 
     # Gather all statistics
     total_times = get_total_times(pilot)
+    total_approaches = get_total_approaches(pilot)
     currency = check_passenger_currency(pilot)
     medical = check_medical_status(pilot)
     license = check_license_status(pilot)
@@ -102,6 +104,7 @@ def dashboard(request):
 
     context = {
         'total_times': total_times,
+        'total_approaches': total_approaches,
         'currency': currency,
         'medical': medical,
         'license': license,
@@ -136,7 +139,7 @@ def logbook(request):
         })
 
     # Get all flights for this pilot, ordered by date (most recent first)
-    flights = Flight.objects.filter(pilot=pilot).select_related('plane', 'instructor').order_by('-date')
+    flights = Flight.objects.filter(pilot=pilot).select_related('plane', 'instructor').prefetch_related('approaches').order_by('-date')
 
     context = {
         'flights': flights,

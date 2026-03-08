@@ -1,9 +1,15 @@
 from django.contrib import admin
 
-from flights.models import Flight, Ground, SimulatorFlight
+from flights.models import Approach, Flight, Ground, SimulatorFlight
+
+
+class ApproachInline(admin.TabularInline):
+    model = Approach
+    extra = 1
 
 
 class FlightAdmin(admin.ModelAdmin):
+    inlines = [ApproachInline]
     list_display = (
         "__str__",
         "pilot",
@@ -17,6 +23,7 @@ class FlightAdmin(admin.ModelAdmin):
         "day_fullstop_landings",
         "night_landings",
         "night_fullstop_landings",
+        "holds",
         "excluded",
     )
     list_editable = ("excluded",)

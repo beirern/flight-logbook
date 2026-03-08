@@ -37,6 +37,8 @@
                             <th>Day FS</th>
                             <th>Night Ldg</th>
                             <th>Night FS</th>
+                            <th>Approaches</th>
+                            <th>Holds</th>
                             <th>Instructor</th>
                             <th>Notes</th>
                             <th></th>
@@ -69,6 +71,14 @@
                             <td>{{ flight.day_fullstop_landings }}</td>
                             <td>{{ flight.night_landings }}</td>
                             <td>{{ flight.night_fullstop_landings }}</td>
+                            <td>
+                                {% for approach in flight.approaches.all %}
+                                    {{ approach.airport }} {{ approach.type }}{% if not forloop.last %}<br>{% endif %}
+                                {% empty %}
+                                    –
+                                {% endfor %}
+                            </td>
+                            <td>{% if flight.holds %}{{ flight.holds }}{% else %}–{% endif %}</td>
                             <td>{{ flight.instructor|default:"-" }}</td>
                             <td>{{ flight.notes|truncatewords:15 }}</td>
                             <td>{% if flight.excluded %}<span class="badge bg-secondary">excluded</span>{% endif %}</td>

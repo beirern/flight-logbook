@@ -2,7 +2,7 @@ from django.db import models
 
 from pilots.models import Pilot
 from planes.models import Plane, Simulator
-from routes.models import Route
+from routes.models import Route, Airport
 
 
 class Flight(models.Model):
@@ -35,12 +35,26 @@ class Flight(models.Model):
     day_fullstop_landings = models.IntegerField()
     night_landings = models.IntegerField()
     night_fullstop_landings = models.IntegerField()
+    holds = models.IntegerField(default=0)
     notes = models.TextField()
     duration = models.DurationField(null=True, blank=True)
     excluded = models.BooleanField(default=False)
 
     def __str__(self):
         return f"{self.date}: {self.plane} {self.flight_time} {self.route}"
+
+
+class Approach(models.Model):
+    flight = models.ForeignKey(
+        Flight, related_name="approaches", on_delete=models.CASCADE
+    )
+    airport = models.ForeignKey(
+        Airport, related_name="airport", on_delete=models.CASCADE
+    )
+    type = models.TextField()
+
+    def __str__(self):
+        return f"{self.airport} {self.type}"
 
 
 class Ground(models.Model):
