@@ -53,6 +53,58 @@ def haversine_distance(lat1, lon1, lat2, lon2):
     return c * nm
 
 
+def get_routes_data(pilot):
+    """Build route map JSON payload shared by dashboard and routes page."""
+    flights = Flight.objects.filter(pilot=pilot).select_related('route').prefetch_related('route__waypoints')
+    unique_routes = {}
+    route_counts = {}
+    airport_visits = {}
+
+    for flight in flights:
+        if flight.route:
+            route_id = flight.route.id
+            route_counts[route_id] = route_counts.get(route_id, 0) + 1
+            waypoints = flight.route.waypoints.all()
+            unique_airports_in_flight = {wp.code for wp in waypoints}
+            for code in unique_airports_in_flight:
+                airport_visits[code] = airport_visits.get(code, 0) + 1
+
+            if route_id not in unique_routes:
+                ordered = flight.route.waypoints.all().order_by('routewaypoint__sequence')
+                waypoints_data = [
+                    {
+                        'code': wp.code,
+                        'name': wp.name,
+                        'lat': float(wp.latitude),
+                        'lon': float(wp.longitude),
+                        'visit_count': 0,
+                    }
+                    for wp in ordered if wp.latitude and wp.longitude
+                ]
+                if waypoints_data:
+                    total_distance = sum(
+                        haversine_distance(
+                            waypoints_data[i]['lat'], waypoints_data[i]['lon'],
+                            waypoints_data[i + 1]['lat'], waypoints_data[i + 1]['lon'],
+                        )
+                        for i in range(len(waypoints_data) - 1)
+                    )
+                    unique_routes[route_id] = {
+                        'id': flight.route.id,
+                        'name': flight.route.name,
+                        'waypoints': waypoints_data,
+                        'flight_count': 0,
+                        'distance': round(total_distance, 1),
+                    }
+
+    for route_id, route in unique_routes.items():
+        route['flight_count'] = route_counts.get(route_id, 0)
+        for wp in route['waypoints']:
+            wp['visit_count'] = airport_visits.get(wp['code'], 0)
+
+    return list(unique_routes.values())
+
+
 def dashboard(request):
     """
     Main dashboard view showing flight statistics, currency, and visualizations.
@@ -87,7 +139,7 @@ def dashboard(request):
     ir_progress = get_instrument_rating_progress(pilot)
     commercial_progress = get_commercial_license_progress(pilot)
     instrument_breakdown = get_instrument_breakdown(pilot)
-    recent_flights = get_recent_flights(pilot, limit=10)
+    recent_flights = get_recent_flights(pilot, limit=5)
     last_flight_date = get_last_flight_date(pilot)
     days_since_last_flight = (date.today() - last_flight_date).days if last_flight_date else None
 
@@ -101,6 +153,9 @@ def dashboard(request):
 
     # Get instructor time progression data
     instructor_progression = get_instructor_time_progression(pilot)
+
+    # Get route map data for embedded dashboard map
+    routes_data = get_routes_data(pilot)
 
     context = {
         'total_times': total_times,
@@ -118,6 +173,7 @@ def dashboard(request):
         'recent_flights': recent_flights,
         'last_flight_date': last_flight_date,
         'days_since_last_flight': days_since_last_flight,
+        'routes_json': json.dumps(routes_data),
     }
 
     return render(request, 'flights/dashboard.html', context)
@@ -160,73 +216,11 @@ def routes_map(request):
             'routes': [],
         })
 
-    # Get all unique routes from flights and count how many times each was flown
-    # Also count how many times each airport was visited
-    flights = Flight.objects.filter(pilot=pilot).select_related('route').prefetch_related('route__waypoints')
-    unique_routes = {}
-    route_counts = {}
-    airport_visits = {}
-
-    for flight in flights:
-        if flight.route:
-            route_id = flight.route.id
-
-            # Count flights for this route
-            route_counts[route_id] = route_counts.get(route_id, 0) + 1
-
-            # Count airport visits for this flight (each airport only counted once per flight)
-            waypoints = flight.route.waypoints.all()
-            unique_airports_in_flight = set()
-            for waypoint in waypoints:
-                unique_airports_in_flight.add(waypoint.code)
-
-            for airport_code in unique_airports_in_flight:
-                airport_visits[airport_code] = airport_visits.get(airport_code, 0) + 1
-
-            if route_id not in unique_routes:
-                route = flight.route
-                waypoints = route.waypoints.all().order_by('routewaypoint__sequence')
-
-                waypoints_data = []
-                for waypoint in waypoints:
-                    if waypoint.latitude and waypoint.longitude:
-                        waypoints_data.append({
-                            'code': waypoint.code,
-                            'name': waypoint.name,
-                            'lat': float(waypoint.latitude),
-                            'lon': float(waypoint.longitude),
-                            'visit_count': 0,  # Will be updated below
-                        })
-
-                if waypoints_data:
-                    # Calculate total distance for the route
-                    total_distance = 0
-                    for i in range(len(waypoints_data) - 1):
-                        wp1 = waypoints_data[i]
-                        wp2 = waypoints_data[i + 1]
-                        total_distance += haversine_distance(wp1['lat'], wp1['lon'], wp2['lat'], wp2['lon'])
-
-                    unique_routes[route_id] = {
-                        'id': route.id,
-                        'name': route.name,
-                        'waypoints': waypoints_data,
-                        'flight_count': 0,  # Will be updated below
-                        'distance': round(total_distance, 1),  # Distance in nautical miles
-                    }
-
-    # Add flight counts to unique routes
-    for route_id in unique_routes:
-        unique_routes[route_id]['flight_count'] = route_counts.get(route_id, 0)
-
-        # Add visit counts to waypoints
-        for waypoint in unique_routes[route_id]['waypoints']:
-            waypoint['visit_count'] = airport_visits.get(waypoint['code'], 0)
-
     # Get airport departure progression data
     airport_progression = get_airport_departure_progression(pilot)
 
     context = {
-        'routes_json': json.dumps(list(unique_routes.values())),
+        'routes_json': json.dumps(get_routes_data(pilot)),
         'airport_progression': json.dumps(airport_progression),
     }
 

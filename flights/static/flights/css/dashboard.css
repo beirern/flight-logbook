@@ -717,3 +717,161 @@ small {
         font-size: 1.25rem;
     }
 }
+
+/* ===================================
+   DASHBOARD REDESIGN: STATS STRIP
+   =================================== */
+
+.stats-strip {
+    display: flex;
+    gap: 0;
+    flex-wrap: wrap;
+    background: var(--white);
+    border-radius: 16px;
+    box-shadow: var(--shadow-soft);
+    border: 1px solid rgba(125, 155, 127, 0.1);
+    overflow: hidden;
+}
+
+.stat-pill {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    min-width: 90px;
+    padding: 0.85rem 0.75rem;
+    border-right: 1px solid rgba(125, 155, 127, 0.12);
+    transition: background 0.2s ease;
+}
+
+.stat-pill:last-child {
+    border-right: none;
+}
+
+.stat-pill:hover {
+    background: rgba(125, 155, 127, 0.04);
+}
+
+.stat-pill-label {
+    font-family: var(--font-body);
+    font-size: 0.68rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--warm-gray);
+    margin-bottom: 0.3rem;
+    white-space: nowrap;
+}
+
+.stat-pill-value {
+    font-family: var(--font-display);
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--forest-green);
+    line-height: 1;
+}
+
+.stat-pill-unit {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    color: var(--sage-green);
+    margin-top: 0.2rem;
+}
+
+/* ===================================
+   DASHBOARD REDESIGN: EMBEDDED MAP
+   =================================== */
+
+#dashboard-map {
+    height: 380px;
+    width: 100%;
+    border-radius: 0 0 20px 20px;
+    background: #f0f0f0;
+}
+
+/* ===================================
+   DASHBOARD REDESIGN: CURRENCY SIDEBAR
+   =================================== */
+
+.currency-panel {
+    background: var(--white);
+    border: 1px solid rgba(125, 155, 127, 0.12);
+    border-radius: 12px;
+    padding: 0.75rem 1rem;
+    box-shadow: var(--shadow-soft);
+}
+
+.currency-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.25rem;
+}
+
+.currency-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.dot-current  { background: var(--forest-green); }
+.dot-lapsed   { background: #B85C5C; }
+.dot-warning  { background: var(--sunrise); }
+
+.currency-label {
+    font-family: var(--font-body);
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--earth-dark);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.currency-detail {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    color: var(--warm-gray);
+    margin-top: 0.15rem;
+}
+
+/* ===================================
+   DASHBOARD REDESIGN: COMPACT CHARTS
+   =================================== */
+
+.dashboard-chart-card canvas {
+    max-height: 220px;
+}
+
+/* ===================================
+   DASHBOARD REDESIGN: RESPONSIVE
+   =================================== */
+
+@media (max-width: 768px) {
+    .stats-strip {
+        border-radius: 12px;
+    }
+    .stat-pill {
+        min-width: 70px;
+        padding: 0.65rem 0.5rem;
+    }
+    .stat-pill-value {
+        font-size: 1.35rem;
+    }
+    #dashboard-map {
+        height: 260px;
+    }
+}
+
+@media (max-width: 480px) {
+    .stat-pill {
+        min-width: 55px;
+        padding: 0.5rem 0.35rem;
+    }
+    .stat-pill-value {
+        font-size: 1.15rem;
+    }
+    .stat-pill-label {
+        font-size: 0.6rem;
+    }
+}
