@@ -2,458 +2,128 @@
 
 {% block title %}Dashboard - Flight Logbook{% endblock %}
 
+{% block extra_css %}
+<!-- Leaflet CSS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""/>
+{% endblock %}
+
 {% block content %}
 <div class="container-fluid">
-    <div class="page-header">
-        <div class="d-flex justify-content-between align-items-center">
-            <h1>Flight Dashboard</h1>
+
+    <!-- Stats Strip -->
+    <div class="stats-strip mb-3">
+        <div class="stat-pill">
+            <span class="stat-pill-label">Total</span>
+            <span class="stat-pill-value">{{ total_times.total_time|floatformat:1 }}</span>
+            <span class="stat-pill-unit">hrs</span>
+        </div>
+        <div class="stat-pill">
+            <span class="stat-pill-label">PIC</span>
+            <span class="stat-pill-value">{{ total_times.pic_time|floatformat:1 }}</span>
+            <span class="stat-pill-unit">hrs</span>
+        </div>
+        <div class="stat-pill">
+            <span class="stat-pill-label">XC</span>
+            <span class="stat-pill-value">{{ total_times.xc_time|floatformat:1 }}</span>
+            <span class="stat-pill-unit">hrs</span>
+        </div>
+        <div class="stat-pill">
+            <span class="stat-pill-label">Instrument</span>
+            <span class="stat-pill-value">{{ instrument_breakdown.total|floatformat:1 }}</span>
+            <span class="stat-pill-unit">hrs</span>
+        </div>
+        <div class="stat-pill">
+            <span class="stat-pill-label">Approaches</span>
+            <span class="stat-pill-value">{{ total_approaches }}</span>
+            <span class="stat-pill-unit">total</span>
+        </div>
+        <div class="stat-pill">
+            <span class="stat-pill-label">Landings</span>
+            <span class="stat-pill-value">{{ total_times.total_landings }}</span>
+            <span class="stat-pill-unit">total</span>
+        </div>
+        <div class="stat-pill">
+            <span class="stat-pill-label">Last Flight</span>
+            <span class="stat-pill-value">{{ days_since_last_flight|default:"—" }}</span>
+            <span class="stat-pill-unit">days ago</span>
         </div>
     </div>
 
-    <!-- Hero Stats Section -->
-    <div class="row mb-4">
-        <div class="col-md-2 col-sm-6 mb-3">
-            <div class="card stat-card">
-                <div class="card-body text-center">
-                    <h6 class="card-subtitle mb-2 text-muted">Total Time</h6>
-                    <h2 class="card-title">{{ total_times.total_time|floatformat:1 }}</h2>
-                    <p class="card-text">hours</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-2 col-sm-6 mb-3">
-            <div class="card stat-card">
-                <div class="card-body text-center">
-                    <h6 class="card-subtitle mb-2 text-muted">PIC Time</h6>
-                    <h2 class="card-title">{{ total_times.pic_time|floatformat:1 }}</h2>
-                    <p class="card-text">hours</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-2 col-sm-6 mb-3">
-            <div class="card stat-card">
-                <div class="card-body text-center">
-                    <h6 class="card-subtitle mb-2 text-muted">Instrument Time</h6>
-                    <h2 class="card-title">{{ instrument_breakdown.total|floatformat:1 }}</h2>
-                    <p class="card-text">hours</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-2 col-sm-6 mb-3">
-            <div class="card stat-card">
-                <div class="card-body text-center">
-                    <h6 class="card-subtitle mb-2 text-muted">Approaches</h6>
-                    <h2 class="card-title">{{ total_approaches }}</h2>
-                    <p class="card-text">total</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-2 col-sm-6 mb-3">
-            <div class="card stat-card">
-                <div class="card-body text-center">
-                    <h6 class="card-subtitle mb-2 text-muted">Total Landings</h6>
-                    <h2 class="card-title">{{ total_times.total_landings }}</h2>
-                    <p class="card-text">landings</p>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-2 col-sm-6 mb-3">
-            <div class="card stat-card">
-                <div class="card-body text-center">
-                    <h6 class="card-subtitle mb-2 text-muted">Last Flight</h6>
-                    <h2 class="card-title">{{ days_since_last_flight|default:"N/A" }}</h2>
-                    <p class="card-text">days ago</p>
-                </div>
-            </div>
-        </div>
-    </div>
+    <!-- Main 2-column layout -->
+    <div class="row g-3">
 
-    <!-- Currency Tracking Section -->
-    <div class="row mb-4">
-        <div class="col-md-6 mb-3">
-            <div class="card">
-                <div class="card-header bg-primary text-white">
-                    <h5>Currency & Certificates</h5>
-                </div>
-                <div class="card-body">
-                    <!-- License Currency -->
-                    {% if license.has_license %}
-                        <div class="mb-3">
-                            <h6>{{ license.license_type }}</h6>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <div>
-                                    <span class="badge
-                                        {% if license.status == 'current' %}bg-success
-                                        {% elif license.status == 'warning' %}bg-warning
-                                        {% elif license.status == 'critical' %}bg-danger
-                                        {% else %}bg-secondary{% endif %}">
-                                        {{ license.status|upper }}
-                                    </span>
-                                    {% if license.expiration %}
-                                        <span class="ms-2">
-                                            <span class="{% if license.days_remaining < 30 %}text-danger{% elif license.days_remaining < 60 %}text-warning{% else %}text-muted{% endif %}">
-                                                {{ license.days_remaining }} days remaining
-                                            </span>
-                                        </span>
-                                    {% endif %}
-                                </div>
-                                {% if license.expiration %}
-                                    <small class="text-muted">Expires: {{ license.expiration }}</small>
-                                {% endif %}
-                            </div>
-                        </div>
-                    {% endif %}
+        <!-- LEFT: Map + Charts + Recent Flights -->
+        <div class="col-lg-8">
 
-                    <!-- Day Currency -->
-                    <div class="mb-3">
-                        <h6>Day Currency (90 days)</h6>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div>
-                                <span class="badge {% if currency.day_current %}bg-success{% else %}bg-danger{% endif %}">
-                                    {% if currency.day_current %}CURRENT{% else %}NOT CURRENT{% endif %}
-                                </span>
-                                <span class="ms-2">{{ currency.day_landings }}/3 landings</span>
-                            </div>
-                            {% if currency.day_expiry %}
-                                <small class="text-muted">Expires: {{ currency.day_expiry }}</small>
-                            {% endif %}
-                        </div>
-                        <div class="progress mt-2" style="height: 25px;">
-                            <div class="progress-bar {% if currency.day_current %}bg-success{% else %}bg-danger{% endif %}"
-                                 role="progressbar"
-                                 style="width: {% widthratio currency.day_landings 3 100 %}%">
-                                {{ currency.day_landings }}/3
-                            </div>
+            <!-- Routes Map -->
+            <div class="card mb-3">
+                <div class="card-header d-flex justify-content-between align-items-center py-2">
+                    <h5 class="mb-0">Routes Flown</h5>
+                    <a href="{% url 'routes_map' %}" class="btn btn-sm btn-outline-secondary" style="font-size:0.8rem; padding:0.2rem 0.6rem;">Full Map →</a>
+                </div>
+                <div class="card-body p-0">
+                    <div id="dashboard-map"></div>
+                </div>
+            </div>
+
+            <!-- Charts: side by side -->
+            <div class="row g-3 mb-3">
+                <div class="col-md-6">
+                    <div class="card h-100 dashboard-chart-card">
+                        <div class="card-header py-2"><h5 class="mb-0">Cumulative Time</h5></div>
+                        <div class="card-body p-2">
+                            <canvas id="cumulativeChart"></canvas>
                         </div>
                     </div>
-
-                    <!-- Night Currency -->
-                    <div>
-                        <h6>Night Currency (90 days)</h6>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <div>
-                                <span class="badge {% if currency.night_current %}bg-success{% else %}bg-danger{% endif %}">
-                                    {% if currency.night_current %}CURRENT{% else %}NOT CURRENT{% endif %}
-                                </span>
-                                <span class="ms-2">{{ currency.night_landings }}/3 landings</span>
-                            </div>
-                            {% if currency.night_expiry %}
-                                <small class="text-muted">Expires: {{ currency.night_expiry }}</small>
-                            {% endif %}
-                        </div>
-                        <div class="progress mt-2" style="height: 25px;">
-                            <div class="progress-bar {% if currency.night_current %}bg-success{% else %}bg-danger{% endif %}"
-                                 role="progressbar"
-                                 style="width: {% widthratio currency.night_landings 3 100 %}%">
-                                {{ currency.night_landings }}/3
-                            </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card h-100 dashboard-chart-card">
+                        <div class="card-header py-2"><h5 class="mb-0">Monthly Activity</h5></div>
+                        <div class="card-body p-2">
+                            <canvas id="monthlyChart"></canvas>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="col-md-6 mb-3">
-            <div class="card">
-                <div class="card-header bg-info text-white">
-                    <h5>Medical Certificate</h5>
-                </div>
-                <div class="card-body">
-                    {% if medical.has_medical %}
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-                            <div>
-                                <h6 class="mb-1">Original: Class {{ medical.original_class }}</h6>
-                                <small class="text-muted">Examination: {{ medical.examination_date }}</small>
-                            </div>
-                            <span class="badge
-                                {% if medical.status == 'current' %}bg-success
-                                {% elif medical.status == 'warning' %}bg-warning
-                                {% elif medical.status == 'critical' %}bg-danger
-                                {% else %}bg-secondary{% endif %}">
-                                {{ medical.status|upper }}
-                            </span>
-                        </div>
-
-                        {% if medical.current_class %}
-                            <div class="mb-3">
-                                <h6>Current Privileges: Class {{ medical.current_class }}</h6>
-                                <p class="mb-1">
-                                    <strong>Next Expiration:</strong> {{ medical.expiry }}
-                                </p>
-                                <p class="mb-0">
-                                    <strong>Days Remaining:</strong>
-                                    <span class="{% if medical.days_remaining < 30 %}text-danger{% elif medical.days_remaining < 60 %}text-warning{% else %}text-success{% endif %}">
-                                        {{ medical.days_remaining }} days
-                                    </span>
-                                </p>
-                            </div>
-
-                            <div class="table-responsive">
-                                <table class="table table-sm table-bordered mb-0">
-                                    <thead class="table-light">
-                                        <tr>
-                                            <th>Class</th>
-                                            <th>Expiry Date</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {% if medical.first_class_expiry %}
-                                        <tr>
-                                            <td>1st Class</td>
-                                            <td>{{ medical.first_class_expiry }}</td>
-                                        </tr>
-                                        {% endif %}
-                                        {% if medical.second_class_expiry %}
-                                        <tr>
-                                            <td>2nd Class</td>
-                                            <td>{{ medical.second_class_expiry }}</td>
-                                        </tr>
-                                        {% endif %}
-                                        {% if medical.third_class_expiry %}
-                                        <tr>
-                                            <td>3rd Class</td>
-                                            <td>{{ medical.third_class_expiry }}</td>
-                                        </tr>
-                                        {% endif %}
-                                    </tbody>
-                                </table>
-                            </div>
-                        {% else %}
-                            <p class="text-danger mb-0"><strong>Medical certificate expired</strong></p>
-                        {% endif %}
-                    {% else %}
-                        <p class="text-muted">No medical certificate on file</p>
-                    {% endif %}
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Instrument Rating Progress -->
-    <div class="row mb-4">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-header bg-success text-white">
-                    <h5>Instrument Rating Progress (§FAR 61.65d)</h5>
-                </div>
-                <div class="card-body">
-                    <div class="row mb-3">
-                        <div class="col-md-6">
-                            <h6>Instrument Time</h6>
-                            <div class="d-flex justify-content-between align-items-center mb-2">
-                                <span>{{ ir_progress.creditable_total }}/40 hours</span>
-                                <span class="badge bg-success">{{ ir_progress.percentage|floatformat:1 }}% Complete</span>
-                            </div>
-                            <div class="progress mb-2" style="height: 25px;">
-                                <div class="progress-bar bg-success"
-                                     role="progressbar"
-                                     style="width: {{ ir_progress.percentage }}%">
-                                    {{ ir_progress.creditable_total }}/40 hrs
-                                </div>
-                            </div>
-                            <small class="text-muted">Remaining: {{ ir_progress.remaining|floatformat:1 }} hrs</small>
-                        </div>
-                        <div class="col-md-6">
-                            <h6>Cross Country PIC Time</h6>
-                            <div class="d-flex justify-content-between align-items-center mb-2">
-                                <span>{{ ir_progress.xc_pic_time|floatformat:1 }}/{{ ir_progress.xc_pic_required }} hours</span>
-                                <span class="badge bg-success">{{ ir_progress.xc_pic_percentage|floatformat:1 }}% Complete</span>
-                            </div>
-                            <div class="progress mb-2" style="height: 25px;">
-                                <div class="progress-bar bg-success"
-                                     role="progressbar"
-                                     style="width: {{ ir_progress.xc_pic_percentage }}%">
-                                    {{ ir_progress.xc_pic_time|floatformat:1 }}/{{ ir_progress.xc_pic_required }} hrs
-                                </div>
-                            </div>
-                            <small class="text-muted">Remaining: {{ ir_progress.xc_pic_remaining|floatformat:1 }} hrs</small>
+            <!-- Instructor Progression + Instrument side by side -->
+            <div class="row g-3 mb-3">
+                <div class="col-md-8">
+                    <div class="card h-100 dashboard-chart-card">
+                        <div class="card-header py-2"><h5 class="mb-0">Instructor Time Progression</h5></div>
+                        <div class="card-body p-2">
+                            <canvas id="instructorProgressionChart"></canvas>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-12 mb-2">
-                            <strong>Actual Instrument:</strong> {{ ir_progress.actual|floatformat:1 }} hrs
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <strong>Simulated (Flight):</strong> {{ ir_progress.flight_simulated|floatformat:1 }} hrs (fully creditable)
-                        </div>
-                        <div class="col-md-6">
-                            <strong>Simulated (Simulator):</strong> {{ ir_progress.simulator_simulated|floatformat:1 }} hrs (max 20 creditable)
-                        </div>
-                    </div>
-                    <div class="row mt-2">
-                        <div class="col-md-6">
-                            <strong>Total Simulated:</strong> {{ ir_progress.simulated|floatformat:1 }} hrs
-                        </div>
-                        <div class="col-md-6">
-                            <strong>Creditable Simulated:</strong> {{ ir_progress.creditable_simulated|floatformat:1 }} hrs
-                        </div>
-                    </div>
-
                 </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Commercial License Progress -->
-    <div class="row mb-4">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-header bg-warning text-dark">
-                    <h5>Commercial Pilot License Progress (§FAR 61.129)</h5>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-4 mb-3">
-                            <h6>Total Flight Time</h6>
-                            <div class="d-flex justify-content-between align-items-center mb-2">
-                                <span>{{ commercial_progress.total_time.current|floatformat:1 }}/{{ commercial_progress.total_time.required }} hours</span>
-                                <span class="badge bg-warning text-dark">{{ commercial_progress.total_time.percentage|floatformat:1 }}%</span>
-                            </div>
-                            <div class="progress" style="height: 25px;">
-                                <div class="progress-bar bg-warning"
-                                     role="progressbar"
-                                     style="width: {{ commercial_progress.total_time.percentage }}%">
-                                    {{ commercial_progress.total_time.current|floatformat:1 }}/{{ commercial_progress.total_time.required }}
-                                </div>
-                            </div>
-                            <small class="text-muted">Remaining: {{ commercial_progress.total_time.remaining|floatformat:1 }} hrs</small>
-                        </div>
-                        <div class="col-md-4 mb-3">
-                            <h6>PIC Time</h6>
-                            <div class="d-flex justify-content-between align-items-center mb-2">
-                                <span>{{ commercial_progress.pic_time.current|floatformat:1 }}/{{ commercial_progress.pic_time.required }} hours</span>
-                                <span class="badge bg-warning text-dark">{{ commercial_progress.pic_time.percentage|floatformat:1 }}%</span>
-                            </div>
-                            <div class="progress" style="height: 25px;">
-                                <div class="progress-bar bg-warning"
-                                     role="progressbar"
-                                     style="width: {{ commercial_progress.pic_time.percentage }}%">
-                                    {{ commercial_progress.pic_time.current|floatformat:1 }}/{{ commercial_progress.pic_time.required }}
-                                </div>
-                            </div>
-                            <small class="text-muted">Remaining: {{ commercial_progress.pic_time.remaining|floatformat:1 }} hrs</small>
-                        </div>
-                        <div class="col-md-4 mb-3">
-                            <h6>Cross Country PIC Time</h6>
-                            <div class="d-flex justify-content-between align-items-center mb-2">
-                                <span>{{ commercial_progress.xc_pic_time.current|floatformat:1 }}/{{ commercial_progress.xc_pic_time.required }} hours</span>
-                                <span class="badge bg-warning text-dark">{{ commercial_progress.xc_pic_time.percentage|floatformat:1 }}%</span>
-                            </div>
-                            <div class="progress" style="height: 25px;">
-                                <div class="progress-bar bg-warning"
-                                     role="progressbar"
-                                     style="width: {{ commercial_progress.xc_pic_time.percentage }}%">
-                                    {{ commercial_progress.xc_pic_time.current|floatformat:1 }}/{{ commercial_progress.xc_pic_time.required }}
-                                </div>
-                            </div>
-                            <small class="text-muted">Remaining: {{ commercial_progress.xc_pic_time.remaining|floatformat:1 }} hrs</small>
+                <div class="col-md-4">
+                    <div class="card h-100 dashboard-chart-card">
+                        <div class="card-header py-2"><h5 class="mb-0">Instrument Breakdown</h5></div>
+                        <div class="card-body p-2">
+                            <canvas id="instrumentChart"></canvas>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
 
-    <!-- Charts Section -->
-    <div class="row mb-4">
-        <div class="col-12">
+            <!-- Recent Flights -->
+            {% if recent_flights %}
             <div class="card">
-                <div class="card-header">
-                    <h5>Cumulative Time Progression</h5>
+                <div class="card-header d-flex justify-content-between align-items-center py-2">
+                    <h5 class="mb-0">Recent Flights</h5>
+                    <a href="{% url 'logbook' %}" class="btn btn-sm btn-outline-secondary" style="font-size:0.8rem; padding:0.2rem 0.6rem;">Full Logbook →</a>
                 </div>
-                <div class="card-body">
-                    <canvas id="cumulativeChart"></canvas>
-                    <div class="mt-3">
-                        <h6>Milestones:</h6>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <small>
-                                    <ul class="list-unstyled" style="font-size: 0.85rem;">
-                                        <li><span style="color: rgba(128, 128, 128, 0.8);">●</span> 2021-04-05: First Discovery Flight</li>
-                                        <li><span style="color: rgba(128, 128, 128, 0.8);">●</span> 2023-08-16: Second Discovery Flight</li>
-                                        <li><span style="color: rgba(54, 162, 235, 0.8);">●</span> 2024-07-31: Stage Check 1 PPL</li>
-                                        <li><span style="color: rgba(255, 206, 86, 0.8);">●</span> 2024-08-12: First Solo C162</li>
-                                        <li><span style="color: rgba(153, 102, 255, 0.8);">●</span> 2025-01-25: KSQL</li>
-                                        <li><span style="color: rgba(75, 192, 192, 0.8);">●</span> 2025-07-27: Return to RFS</li>
-                                    </ul>
-                                </small>
-                            </div>
-                            <div class="col-md-6">
-                                <small>
-                                    <ul class="list-unstyled" style="font-size: 0.85rem;">
-                                        <li><span style="color: rgba(255, 99, 132, 0.8);">●</span> 2025-08-19: Stage 2 Check PPL Fail</li>
-                                        <li><span style="color: rgba(0, 200, 0, 0.8);">●</span> 2025-09-16: Stage 2 Check PPL Pass</li>
-                                        <li><span style="color: rgba(255, 159, 64, 0.8);">●</span> 2025-09-19: Second Solo C172</li>
-                                        <li><span style="color: rgba(100, 100, 100, 0.8);">●</span> 2025-09-22: First XC Solo</li>
-                                        <li><span style="color: rgba(0, 128, 0, 0.8);">●</span> 2025-10-30: EOC PPL Pass</li>
-                                        <li><span style="color: rgba(0, 100, 0, 0.9);">●</span> 2025-12-01: PPL Checkride</li>
-                                    </ul>
-                                </small>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Instructor Time Progression Chart -->
-    <div class="row mb-4">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-header">
-                    <h5>Instructor Time Progression</h5>
-                </div>
-                <div class="card-body">
-                    <canvas id="instructorProgressionChart"></canvas>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row mb-4">
-        <div class="col-md-6 mb-3">
-            <div class="card">
-                <div class="card-header">
-                    <h5>Monthly Flight Activity (Last 12 Months)</h5>
-                </div>
-                <div class="card-body">
-                    <canvas id="monthlyChart"></canvas>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-6 mb-3">
-            <div class="card">
-                <div class="card-header">
-                    <h5>Instrument Time Breakdown</h5>
-                </div>
-                <div class="card-body">
-                    <canvas id="instrumentChart"></canvas>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Recent Flights -->
-    {% if recent_flights %}
-    <div class="row mb-4">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-header">
-                    <h5>Recent Flights</h5>
-                </div>
-                <div class="card-body">
-                    <table class="table table-striped">
+                <div class="card-body p-0">
+                    <table class="table table-sm table-striped mb-0">
                         <thead>
                             <tr>
                                 <th>Date</th>
                                 <th>Aircraft</th>
-                                <th>Duration</th>
-                                <th>Day Landings</th>
-                                <th>Night Landings</th>
+                                <th>Time</th>
+                                <th>Day Ldg</th>
+                                <th>Night Ldg</th>
                                 <th>Notes</th>
                             </tr>
                         </thead>
@@ -465,22 +135,276 @@
                                 <td>{{ flight.flight_time|floatformat:1 }}</td>
                                 <td>{{ flight.total_day_landings }}</td>
                                 <td>{{ flight.total_night_landings }}</td>
-                                <td>{{ flight.notes|truncatewords:10 }}</td>
+                                <td>{{ flight.notes|truncatewords:8 }}</td>
                             </tr>
                             {% endfor %}
                         </tbody>
                     </table>
                 </div>
             </div>
-        </div>
-    </div>
-    {% endif %}
+            {% endif %}
+
+        </div><!-- /col-lg-8 -->
+
+        <!-- RIGHT: Currency & Progress Sidebar -->
+        <div class="col-lg-4">
+
+            <!-- License -->
+            {% if license.has_license %}
+            <div class="currency-panel mb-2">
+                <div class="currency-row">
+                    <span class="currency-dot
+                        {% if license.status == 'current' %}dot-current
+                        {% elif license.status == 'warning' or license.status == 'critical' %}dot-warning
+                        {% else %}dot-lapsed{% endif %}"></span>
+                    <span class="currency-label">{{ license.license_type }}</span>
+                    <span class="badge ms-auto
+                        {% if license.status == 'current' %}bg-success
+                        {% elif license.status == 'warning' %}bg-warning
+                        {% elif license.status == 'critical' %}bg-danger
+                        {% else %}bg-secondary{% endif %}">
+                        {{ license.status|upper }}
+                    </span>
+                </div>
+                {% if license.expiration %}
+                <div class="currency-detail">
+                    Exp {{ license.expiration }} ·
+                    <strong class="{% if license.days_remaining < 30 %}text-danger{% elif license.days_remaining < 60 %}text-warning{% else %}text-success{% endif %}">
+                        {{ license.days_remaining }}d
+                    </strong>
+                </div>
+                {% endif %}
+            </div>
+            {% endif %}
+
+            <!-- Day Currency -->
+            <div class="currency-panel mb-2">
+                <div class="currency-row">
+                    <span class="currency-dot {% if currency.day_current %}dot-current{% else %}dot-lapsed{% endif %}"></span>
+                    <span class="currency-label">Day Currency</span>
+                    <span class="badge ms-auto {% if currency.day_current %}bg-success{% else %}bg-danger{% endif %}">
+                        {% if currency.day_current %}CURRENT{% else %}NOT CURRENT{% endif %}
+                    </span>
+                </div>
+                <div class="currency-detail">
+                    {{ currency.day_landings }}/3 landings
+                    {% if currency.day_expiry %} · Exp {{ currency.day_expiry }}{% endif %}
+                </div>
+                <div class="progress mt-2" style="height:4px;">
+                    <div class="progress-bar {% if currency.day_current %}bg-success{% else %}bg-danger{% endif %}"
+                         role="progressbar"
+                         style="width: {% widthratio currency.day_landings 3 100 %}%"></div>
+                </div>
+            </div>
+
+            <!-- Night Currency -->
+            <div class="currency-panel mb-2">
+                <div class="currency-row">
+                    <span class="currency-dot {% if currency.night_current %}dot-current{% else %}dot-lapsed{% endif %}"></span>
+                    <span class="currency-label">Night Currency</span>
+                    <span class="badge ms-auto {% if currency.night_current %}bg-success{% else %}bg-danger{% endif %}">
+                        {% if currency.night_current %}CURRENT{% else %}NOT CURRENT{% endif %}
+                    </span>
+                </div>
+                <div class="currency-detail">
+                    {{ currency.night_landings }}/3 landings
+                    {% if currency.night_expiry %} · Exp {{ currency.night_expiry }}{% endif %}
+                </div>
+                <div class="progress mt-2" style="height:4px;">
+                    <div class="progress-bar {% if currency.night_current %}bg-success{% else %}bg-danger{% endif %}"
+                         role="progressbar"
+                         style="width: {% widthratio currency.night_landings 3 100 %}%"></div>
+                </div>
+            </div>
+
+            <!-- Medical -->
+            {% if medical.has_medical %}
+            <div class="currency-panel mb-2">
+                <div class="currency-row">
+                    <span class="currency-dot
+                        {% if medical.status == 'current' %}dot-current
+                        {% elif medical.status == 'warning' or medical.status == 'critical' %}dot-warning
+                        {% else %}dot-lapsed{% endif %}"></span>
+                    <span class="currency-label">Medical · Class {{ medical.current_class }}</span>
+                    <span class="badge ms-auto
+                        {% if medical.status == 'current' %}bg-success
+                        {% elif medical.status == 'warning' %}bg-warning
+                        {% elif medical.status == 'critical' %}bg-danger
+                        {% else %}bg-secondary{% endif %}">
+                        {{ medical.status|upper }}
+                    </span>
+                </div>
+                <div class="currency-detail">
+                    Orig Class {{ medical.original_class }} · Exam {{ medical.examination_date }}
+                </div>
+                {% if medical.current_class %}
+                <div class="currency-detail mt-1">
+                    Exp {{ medical.expiry }} ·
+                    <strong class="{% if medical.days_remaining < 30 %}text-danger{% elif medical.days_remaining < 60 %}text-warning{% else %}text-success{% endif %}">
+                        {{ medical.days_remaining }}d remaining
+                    </strong>
+                </div>
+                {% endif %}
+            </div>
+            {% endif %}
+
+            <!-- IR Progress -->
+            <div class="currency-panel mb-2">
+                <div class="currency-label mb-2">IR Progress (§61.65d)</div>
+                <div class="d-flex justify-content-between align-items-center mb-1">
+                    <span class="currency-detail">Instrument time</span>
+                    <span class="currency-detail"><strong>{{ ir_progress.creditable_total|floatformat:1 }}/40h</strong> · {{ ir_progress.percentage|floatformat:0 }}%</span>
+                </div>
+                <div class="progress mb-2" style="height:6px;">
+                    <div class="progress-bar bg-success"
+                         role="progressbar"
+                         style="width: {{ ir_progress.percentage }}%"></div>
+                </div>
+                <div class="d-flex justify-content-between align-items-center mb-1">
+                    <span class="currency-detail">XC PIC</span>
+                    <span class="currency-detail"><strong>{{ ir_progress.xc_pic_time|floatformat:1 }}/{{ ir_progress.xc_pic_required }}h</strong> · {{ ir_progress.xc_pic_percentage|floatformat:0 }}%</span>
+                </div>
+                <div class="progress" style="height:4px;">
+                    <div class="progress-bar bg-success"
+                         role="progressbar"
+                         style="width: {{ ir_progress.xc_pic_percentage }}%"></div>
+                </div>
+                <div class="currency-detail mt-2">
+                    Actual: {{ ir_progress.actual|floatformat:1 }}h ·
+                    Sim (flt): {{ ir_progress.flight_simulated|floatformat:1 }}h ·
+                    Sim (sim): {{ ir_progress.simulator_simulated|floatformat:1 }}h
+                </div>
+            </div>
+
+            <!-- Commercial Progress -->
+            <div class="currency-panel">
+                <div class="currency-label mb-2">CPL Progress (§61.129)</div>
+
+                <div class="d-flex justify-content-between align-items-center mb-1">
+                    <span class="currency-detail">Total time</span>
+                    <span class="currency-detail"><strong>{{ commercial_progress.total_time.current|floatformat:1 }}/{{ commercial_progress.total_time.required }}h</strong> · {{ commercial_progress.total_time.percentage|floatformat:0 }}%</span>
+                </div>
+                <div class="progress mb-2" style="height:5px;">
+                    <div class="progress-bar" style="width: {{ commercial_progress.total_time.percentage }}%; background: var(--sunrise);"></div>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center mb-1">
+                    <span class="currency-detail">PIC time</span>
+                    <span class="currency-detail"><strong>{{ commercial_progress.pic_time.current|floatformat:1 }}/{{ commercial_progress.pic_time.required }}h</strong> · {{ commercial_progress.pic_time.percentage|floatformat:0 }}%</span>
+                </div>
+                <div class="progress mb-2" style="height:5px;">
+                    <div class="progress-bar" style="width: {{ commercial_progress.pic_time.percentage }}%; background: var(--sunrise);"></div>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center mb-1">
+                    <span class="currency-detail">XC PIC</span>
+                    <span class="currency-detail"><strong>{{ commercial_progress.xc_pic_time.current|floatformat:1 }}/{{ commercial_progress.xc_pic_time.required }}h</strong> · {{ commercial_progress.xc_pic_time.percentage|floatformat:0 }}%</span>
+                </div>
+                <div class="progress" style="height:5px;">
+                    <div class="progress-bar" style="width: {{ commercial_progress.xc_pic_time.percentage }}%; background: var(--sunrise);"></div>
+                </div>
+            </div>
+
+        </div><!-- /col-lg-4 -->
+
+    </div><!-- /row -->
+
 </div>
 {% endblock %}
 
 {% block extra_js %}
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+        crossorigin=""></script>
+
 <script>
-    // Aviation Color Palette
+    // =====================
+    // DASHBOARD ROUTES MAP
+    // =====================
+    const dashboardMap = L.map('dashboard-map', { zoomControl: true });
+
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
+        subdomains: 'abcd',
+        maxZoom: 19
+    }).addTo(dashboardMap);
+
+    const routeColor = '#7D9B7F';
+
+    // Build globally-normalized coordinates for all routes so that trans-antimeridian
+    // routes display via the shorter Pacific path.
+    function buildNormalizedCoordsList(routes) {
+        const lons360 = [];
+        routes.forEach(r => (r.waypoints || []).forEach(wp => {
+            lons360.push(((wp.lon % 360) + 360) % 360);
+        }));
+        if (lons360.length === 0) return routes.map(() => []);
+
+        lons360.sort((a, b) => a - b);
+        let maxGap = lons360[0] + 360 - lons360[lons360.length - 1];
+        let windowStart = lons360[0];
+        for (let i = 1; i < lons360.length; i++) {
+            const gap = lons360[i] - lons360[i - 1];
+            if (gap > maxGap) { maxGap = gap; windowStart = lons360[i]; }
+        }
+
+        function normalizeLon(lon) {
+            let n = ((lon % 360) + 360) % 360;
+            if (n < windowStart) n += 360;
+            return n;
+        }
+
+        return routes.map(route =>
+            (route.waypoints || []).map(wp => [wp.lat, normalizeLon(wp.lon)])
+        );
+    }
+
+    const dashRoutesData = {{ routes_json|safe }};
+
+    if (dashRoutesData && dashRoutesData.length > 0) {
+        const bounds = L.latLngBounds();
+        const normalizedList = buildNormalizedCoordsList(dashRoutesData);
+
+        dashRoutesData.forEach((route, idx) => {
+            if (!route.waypoints || route.waypoints.length === 0) return;
+            const coords = normalizedList[idx];
+
+            const poly = L.polyline(coords, {
+                color: routeColor,
+                weight: 2.5,
+                opacity: 0.8
+            }).addTo(dashboardMap);
+
+            const flightText = route.flight_count === 1 ? 'flight' : 'flights';
+            poly.bindTooltip(`${route.name} (${route.flight_count} ${flightText})`);
+            poly.bindPopup(`<strong>${route.name}</strong><br><small>${route.flight_count} ${flightText} · ${route.distance} NM</small>`);
+
+            coords.forEach((coord, wpIdx) => {
+                const wp = route.waypoints[wpIdx];
+                L.circleMarker(coord, {
+                    radius: 4,
+                    fillColor: routeColor,
+                    color: '#fff',
+                    weight: 1.5,
+                    opacity: 1,
+                    fillOpacity: 0.9
+                }).addTo(dashboardMap)
+                  .bindTooltip(wp.code);
+                bounds.extend(coord);
+            });
+        });
+
+        if (bounds.isValid()) {
+            dashboardMap.fitBounds(bounds, { padding: [20, 20] });
+        }
+    } else {
+        dashboardMap.setView([47.6, -122.3], 8);
+    }
+
+    // =====================
+    // CHART.JS DEFAULTS
+    // =====================
     const aviationColors = {
         bronze: 'rgba(205, 127, 50, 1)',
         brass: 'rgba(181, 166, 66, 1)',
@@ -492,16 +416,16 @@
         cream: 'rgba(245, 241, 232, 1)'
     };
 
-    // Configure Chart.js defaults
     Chart.defaults.color = aviationColors.brown;
     Chart.defaults.borderColor = 'rgba(205, 127, 50, 0.2)';
     Chart.defaults.font.family = "'IBM Plex Mono', monospace";
 
-    // Instructor Time Progression Chart
+    // =====================
+    // INSTRUCTOR PROGRESSION
+    // =====================
     const instructorProgressionCtx = document.getElementById('instructorProgressionChart');
     const instructorProgressionData = {{ instructor_progression|safe }};
 
-    // Define a color palette for instructors using aviation colors
     const instructorColors = [
         aviationColors.bronze,
         aviationColors.blue,
@@ -509,13 +433,12 @@
         aviationColors.green,
         aviationColors.leather,
         aviationColors.red,
-        'rgba(181, 101, 29, 1)',     // Dark Bronze
-        'rgba(139, 90, 43, 1)',      // Dark Leather
-        'rgba(58, 71, 63, 1)',       // Dark Green
-        'rgba(34, 56, 81, 1)'        // Dark Blue
+        'rgba(181, 101, 29, 1)',
+        'rgba(139, 90, 43, 1)',
+        'rgba(58, 71, 63, 1)',
+        'rgba(34, 56, 81, 1)'
     ];
 
-    // Build datasets for each instructor
     const instructorDatasets = [];
     let colorIndex = 0;
 
@@ -539,42 +462,24 @@
 
     new Chart(instructorProgressionCtx, {
         type: 'line',
-        data: {
-            datasets: instructorDatasets
-        },
+        data: { datasets: instructorDatasets },
         options: {
             responsive: true,
             maintainAspectRatio: true,
-            interaction: {
-                mode: 'index',
-                intersect: false
-            },
+            interaction: { mode: 'index', intersect: false },
             scales: {
                 y: {
                     beginAtZero: true,
-                    title: {
-                        display: true,
-                        text: 'Cumulative Hours with Instructor'
-                    }
+                    title: { display: true, text: 'Cumulative Hours with Instructor' }
                 },
                 x: {
                     type: 'time',
-                    time: {
-                        unit: 'month',
-                        displayFormats: {
-                            month: 'MMM yyyy'
-                        }
-                    },
-                    title: {
-                        display: true,
-                        text: 'Date'
-                    }
+                    time: { unit: 'month', displayFormats: { month: 'MMM yyyy' } },
+                    title: { display: true, text: 'Date' }
                 }
             },
             plugins: {
-                legend: {
-                    position: 'bottom'
-                },
+                legend: { position: 'bottom' },
                 tooltip: {
                     callbacks: {
                         label: function(context) {
@@ -586,7 +491,9 @@
         }
     });
 
-    // Monthly Activity Chart
+    // =====================
+    // MONTHLY ACTIVITY
+    // =====================
     const monthlyCtx = document.getElementById('monthlyChart');
     new Chart(monthlyCtx, {
         type: 'bar',
@@ -604,50 +511,40 @@
             responsive: true,
             maintainAspectRatio: true,
             scales: {
-                y: {
-                    beginAtZero: true,
-                    title: {
-                        display: true,
-                        text: 'Hours'
-                    }
-                }
+                y: { beginAtZero: true, title: { display: true, text: 'Hours' } }
             }
         }
     });
 
-    // Instrument Time Breakdown Chart
+    // =====================
+    // INSTRUMENT BREAKDOWN
+    // =====================
     const instrumentCtx = document.getElementById('instrumentChart');
     new Chart(instrumentCtx, {
         type: 'pie',
         data: {
-            labels: ['Actual Instrument', 'Simulated (Flight)', 'Simulated (Simulator)'],
+            labels: ['Actual', 'Sim (Flight)', 'Sim (Sim)'],
             datasets: [{
                 data: [{{ instrument_breakdown.actual }}, {{ instrument_breakdown.flight_simulated }}, {{ instrument_breakdown.simulator_simulated }}],
                 backgroundColor: [
-                    'rgba(139, 46, 46, 0.7)',    // Aviation Red
-                    'rgba(44, 74, 107, 0.7)',    // Aviation Blue
-                    'rgba(74, 93, 79, 0.7)'      // Aviation Green
+                    'rgba(139, 46, 46, 0.7)',
+                    'rgba(44, 74, 107, 0.7)',
+                    'rgba(74, 93, 79, 0.7)'
                 ],
-                borderColor: [
-                    aviationColors.red,
-                    aviationColors.blue,
-                    aviationColors.green
-                ],
+                borderColor: [aviationColors.red, aviationColors.blue, aviationColors.green],
                 borderWidth: 2
             }]
         },
         options: {
             responsive: true,
             maintainAspectRatio: true,
-            plugins: {
-                legend: {
-                    position: 'bottom'
-                }
-            }
+            plugins: { legend: { position: 'bottom' } }
         }
     });
 
-    // Cumulative Time Progression Chart
+    // =====================
+    // CUMULATIVE TIME
+    // =====================
     const cumulativeCtx = document.getElementById('cumulativeChart');
     const cumulativeData = {{ cumulative_data|safe }};
 
@@ -699,29 +596,16 @@
             scales: {
                 y: {
                     beginAtZero: true,
-                    title: {
-                        display: true,
-                        text: 'Cumulative Hours'
-                    }
+                    title: { display: true, text: 'Cumulative Hours' }
                 },
                 x: {
                     type: 'time',
-                    time: {
-                        unit: 'month',
-                        displayFormats: {
-                            month: 'MMM yyyy'
-                        }
-                    },
-                    title: {
-                        display: true,
-                        text: 'Date'
-                    }
+                    time: { unit: 'month', displayFormats: { month: 'MMM yyyy' } },
+                    title: { display: true, text: 'Date' }
                 }
             },
             plugins: {
-                legend: {
-                    position: 'bottom'
-                },
+                legend: { position: 'bottom' },
                 tooltip: {
                     callbacks: {
                         afterBody: function(context) {
@@ -754,194 +638,70 @@
                 annotation: {
                     annotations: {
                         discovery1: {
-                            type: 'line',
-                            xMin: '2021-04-05',
-                            xMax: '2021-04-05',
-                            borderColor: 'rgba(128, 128, 128, 0.6)',
-                            borderWidth: 2,
-                            borderDash: [3, 3],
-                            label: {
-                                display: true,
-                                content: 'First Discovery Flight',
-                                position: 'start',
-                                yAdjust: -10,
-                                backgroundColor: 'rgba(128, 128, 128, 0.8)',
-                                color: 'white',
-                                font: {
-                                    size: 10
-                                },
-                                padding: 3
-                            }
+                            type: 'line', xMin: '2021-04-05', xMax: '2021-04-05',
+                            borderColor: 'rgba(128, 128, 128, 0.6)', borderWidth: 2, borderDash: [3, 3],
+                            label: { display: true, content: 'First Discovery Flight', position: 'start', yAdjust: -10,
+                                backgroundColor: 'rgba(128, 128, 128, 0.8)', color: 'white', font: { size: 10 }, padding: 3 }
                         },
                         discovery2: {
-                            type: 'line',
-                            xMin: '2023-08-16',
-                            xMax: '2023-08-16',
-                            borderColor: 'rgba(128, 128, 128, 0.6)',
-                            borderWidth: 2,
-                            borderDash: [3, 3],
-                            label: {
-                                display: true,
-                                content: 'Second Discovery Flight',
-                                position: 'start',
-                                yAdjust: -10,
-                                backgroundColor: 'rgba(128, 128, 128, 0.8)',
-                                color: 'white',
-                                font: {
-                                    size: 10
-                                },
-                                padding: 3
-                            }
+                            type: 'line', xMin: '2023-08-16', xMax: '2023-08-16',
+                            borderColor: 'rgba(128, 128, 128, 0.6)', borderWidth: 2, borderDash: [3, 3],
+                            label: { display: true, content: 'Second Discovery Flight', position: 'start', yAdjust: -10,
+                                backgroundColor: 'rgba(128, 128, 128, 0.8)', color: 'white', font: { size: 10 }, padding: 3 }
                         },
                         stage1: {
-                            type: 'line',
-                            xMin: '2024-07-31',
-                            xMax: '2024-07-31',
-                            borderColor: 'rgba(54, 162, 235, 0.8)',
-                            borderWidth: 2,
-                            borderDash: [5, 5],
-                            label: {
-                                display: false
-                            }
+                            type: 'line', xMin: '2024-07-31', xMax: '2024-07-31',
+                            borderColor: 'rgba(54, 162, 235, 0.8)', borderWidth: 2, borderDash: [5, 5],
+                            label: { display: false }
                         },
                         firstSolo: {
-                            type: 'line',
-                            xMin: '2024-08-12',
-                            xMax: '2024-08-12',
-                            borderColor: 'rgba(255, 206, 86, 0.8)',
-                            borderWidth: 2,
-                            borderDash: [5, 5],
-                            label: {
-                                display: true,
-                                content: 'First Solo C162',
-                                position: 'start',
-                                yAdjust: -10,
-                                backgroundColor: 'rgba(255, 206, 86, 0.8)',
-                                color: 'black',
-                                font: {
-                                    weight: 'bold',
-                                    size: 10
-                                },
-                                padding: 3
-                            }
+                            type: 'line', xMin: '2024-08-12', xMax: '2024-08-12',
+                            borderColor: 'rgba(255, 206, 86, 0.8)', borderWidth: 2, borderDash: [5, 5],
+                            label: { display: true, content: 'First Solo C162', position: 'start', yAdjust: -10,
+                                backgroundColor: 'rgba(255, 206, 86, 0.8)', color: 'black', font: { weight: 'bold', size: 10 }, padding: 3 }
                         },
                         ksql: {
-                            type: 'line',
-                            xMin: '2025-01-25',
-                            xMax: '2025-01-25',
-                            borderColor: 'rgba(153, 102, 255, 0.8)',
-                            borderWidth: 2,
-                            borderDash: [5, 5],
-                            label: {
-                                display: true,
-                                content: 'KSQL',
-                                position: 'start',
-                                yAdjust: -10,
-                                backgroundColor: 'rgba(153, 102, 255, 0.8)',
-                                color: 'white',
-                                font: {
-                                    weight: 'bold',
-                                    size: 10
-                                },
-                                padding: 3
-                            }
+                            type: 'line', xMin: '2025-01-25', xMax: '2025-01-25',
+                            borderColor: 'rgba(153, 102, 255, 0.8)', borderWidth: 2, borderDash: [5, 5],
+                            label: { display: true, content: 'KSQL', position: 'start', yAdjust: -10,
+                                backgroundColor: 'rgba(153, 102, 255, 0.8)', color: 'white', font: { weight: 'bold', size: 10 }, padding: 3 }
                         },
                         returnRFS: {
-                            type: 'line',
-                            xMin: '2025-07-27',
-                            xMax: '2025-07-27',
-                            borderColor: 'rgba(75, 192, 192, 0.8)',
-                            borderWidth: 2,
-                            borderDash: [5, 5],
-                            label: {
-                                display: true,
-                                content: 'RFS',
-                                position: 'start',
-                                yAdjust: -10,
-                                backgroundColor: 'rgba(75, 192, 192, 0.8)',
-                                color: 'white',
-                                font: {
-                                    weight: 'bold',
-                                    size: 10
-                                },
-                                padding: 3
-                            }
+                            type: 'line', xMin: '2025-07-27', xMax: '2025-07-27',
+                            borderColor: 'rgba(75, 192, 192, 0.8)', borderWidth: 2, borderDash: [5, 5],
+                            label: { display: true, content: 'RFS', position: 'start', yAdjust: -10,
+                                backgroundColor: 'rgba(75, 192, 192, 0.8)', color: 'white', font: { weight: 'bold', size: 10 }, padding: 3 }
                         },
                         stage2Fail: {
-                            type: 'line',
-                            xMin: '2025-08-19',
-                            xMax: '2025-08-19',
-                            borderColor: 'rgba(255, 99, 132, 0.8)',
-                            borderWidth: 2,
-                            borderDash: [5, 5],
-                            label: {
-                                display: false
-                            }
+                            type: 'line', xMin: '2025-08-19', xMax: '2025-08-19',
+                            borderColor: 'rgba(255, 99, 132, 0.8)', borderWidth: 2, borderDash: [5, 5],
+                            label: { display: false }
                         },
                         stage2Pass: {
-                            type: 'line',
-                            xMin: '2025-09-16',
-                            xMax: '2025-09-16',
-                            borderColor: 'rgba(0, 200, 0, 0.8)',
-                            borderWidth: 2,
-                            borderDash: [5, 5],
-                            label: {
-                                display: false
-                            }
+                            type: 'line', xMin: '2025-09-16', xMax: '2025-09-16',
+                            borderColor: 'rgba(0, 200, 0, 0.8)', borderWidth: 2, borderDash: [5, 5],
+                            label: { display: false }
                         },
                         secondSolo: {
-                            type: 'line',
-                            xMin: '2025-09-19',
-                            xMax: '2025-09-19',
-                            borderColor: 'rgba(255, 159, 64, 0.8)',
-                            borderWidth: 2,
-                            borderDash: [5, 5],
-                            label: {
-                                display: false
-                            }
+                            type: 'line', xMin: '2025-09-19', xMax: '2025-09-19',
+                            borderColor: 'rgba(255, 159, 64, 0.8)', borderWidth: 2, borderDash: [5, 5],
+                            label: { display: false }
                         },
                         firstXC: {
-                            type: 'line',
-                            xMin: '2025-09-22',
-                            xMax: '2025-09-22',
-                            borderColor: 'rgba(201, 203, 207, 0.8)',
-                            borderWidth: 2,
-                            borderDash: [5, 5],
-                            label: {
-                                display: false
-                            }
+                            type: 'line', xMin: '2025-09-22', xMax: '2025-09-22',
+                            borderColor: 'rgba(201, 203, 207, 0.8)', borderWidth: 2, borderDash: [5, 5],
+                            label: { display: false }
                         },
                         eoc: {
-                            type: 'line',
-                            xMin: '2025-10-30',
-                            xMax: '2025-10-30',
-                            borderColor: 'rgba(0, 128, 0, 0.8)',
-                            borderWidth: 2,
-                            borderDash: [5, 5],
-                            label: {
-                                display: false
-                            }
+                            type: 'line', xMin: '2025-10-30', xMax: '2025-10-30',
+                            borderColor: 'rgba(0, 128, 0, 0.8)', borderWidth: 2, borderDash: [5, 5],
+                            label: { display: false }
                         },
                         pplCheckride: {
-                            type: 'line',
-                            xMin: '2025-12-01',
-                            xMax: '2025-12-01',
-                            borderColor: 'rgba(0, 100, 0, 0.9)',
-                            borderWidth: 3,
-                            borderDash: [5, 5],
-                            label: {
-                                display: true,
-                                content: 'PPL Checkride',
-                                position: 'start',
-                                yAdjust: -10,
-                                backgroundColor: 'rgba(0, 100, 0, 0.9)',
-                                color: 'white',
-                                font: {
-                                    weight: 'bold',
-                                    size: 11
-                                },
-                                padding: 4
-                            }
+                            type: 'line', xMin: '2025-12-01', xMax: '2025-12-01',
+                            borderColor: 'rgba(0, 100, 0, 0.9)', borderWidth: 3, borderDash: [5, 5],
+                            label: { display: true, content: 'PPL Checkride', position: 'start', yAdjust: -10,
+                                backgroundColor: 'rgba(0, 100, 0, 0.9)', color: 'white', font: { weight: 'bold', size: 11 }, padding: 4 }
                         }
                     }
                 }
