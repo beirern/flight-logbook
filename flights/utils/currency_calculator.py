@@ -1,5 +1,6 @@
 from datetime import datetime, timedelta
 
+from django.db import models
 from django.db.models import Sum
 
 from flights.models import Flight
@@ -13,7 +14,9 @@ def check_passenger_currency(pilot):
     ninety_days_ago = datetime.now().date() - timedelta(days=90)
     recent_flights = Flight.objects.filter(pilot=pilot, date__gte=ninety_days_ago, excluded=False)
 
-    day_landings = recent_flights.aggregate(Sum('day_landings'))['day_landings__sum'] or 0
+    day_landings_sum = recent_flights.aggregate(Sum('day_landings'))['day_landings__sum'] or 0
+    day_fullstop_sum = recent_flights.aggregate(Sum('day_fullstop_landings'))['day_fullstop_landings__sum'] or 0
+    day_landings = day_landings_sum + day_fullstop_sum
     night_fullstop_landings = recent_flights.aggregate(Sum('night_fullstop_landings'))['night_fullstop_landings__sum'] or 0
 
     # Find the date when currency expires (90 days from the 3rd landing)
@@ -23,13 +26,14 @@ def check_passenger_currency(pilot):
     # Calculate day currency expiration
     day_landing_flights = Flight.objects.filter(
         pilot=pilot,
-        day_landings__gt=0,
         excluded=False,
+    ).filter(
+        models.Q(day_landings__gt=0) | models.Q(day_fullstop_landings__gt=0)
     ).order_by('-date')
 
     day_count = 0
     for flight in day_landing_flights:
-        day_count += flight.day_landings
+        day_count += flight.day_landings + flight.day_fullstop_landings
         if day_count >= 3:
             day_expiry = flight.date + timedelta(days=90)
             break
