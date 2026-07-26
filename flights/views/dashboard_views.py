@@ -24,10 +24,10 @@ from flights.utils.statistics import (
     get_passenger_leaderboard,
     get_people_insights,
     get_people_role_distribution,
-    get_recent_flights,
     get_sel_total_hours,
     get_total_approaches,
     get_total_times,
+    get_xc_pic_time,
     get_unique_people_counts,
 )
 from pilots.models import Pilot
@@ -118,6 +118,7 @@ def dashboard(request):
         return render(request, 'flights/dashboard.html', {
             'error': 'No pilot found. Please create a pilot in the admin.',
             'total_times': {},
+            'xc_pic_time': 0,
             'currency': {},
             'medical': {},
             'ir_progress': {},
@@ -126,12 +127,12 @@ def dashboard(request):
             'instrument_breakdown': {},
             'cumulative_data': [],
             'aircraft_breakdown': [],
-            'recent_flights': [],
             'last_flight_date': None,
         })
 
     # Gather all statistics
     total_times = get_total_times(pilot)
+    xc_pic_time = get_xc_pic_time(pilot)
     total_approaches = get_total_approaches(pilot)
     currency = check_passenger_currency(pilot)
     medical = check_medical_status(pilot)
@@ -139,7 +140,6 @@ def dashboard(request):
     ir_progress = get_instrument_rating_progress(pilot)
     commercial_progress = get_commercial_license_progress(pilot)
     instrument_breakdown = get_instrument_breakdown(pilot)
-    recent_flights = get_recent_flights(pilot, limit=5)
     last_flight_date = get_last_flight_date(pilot)
     days_since_last_flight = (date.today() - last_flight_date).days if last_flight_date else None
 
@@ -159,6 +159,7 @@ def dashboard(request):
 
     context = {
         'total_times': total_times,
+        'xc_pic_time': xc_pic_time,
         'total_approaches': total_approaches,
         'currency': currency,
         'medical': medical,
@@ -170,7 +171,6 @@ def dashboard(request):
         'instrument_breakdown': instrument_breakdown,
         'cumulative_data': json.dumps(cumulative_data),
         'instructor_progression': json.dumps(instructor_progression),
-        'recent_flights': recent_flights,
         'last_flight_date': last_flight_date,
         'days_since_last_flight': days_since_last_flight,
         'routes_json': json.dumps(routes_data),

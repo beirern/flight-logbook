@@ -782,8 +782,19 @@ small {
    DASHBOARD REDESIGN: EMBEDDED MAP
    =================================== */
 
+.map-card {
+    display: flex;
+    flex-direction: column;
+}
+
+.map-card .card-body {
+    flex: 1 1 auto;
+    display: flex;
+    min-height: 380px;
+}
+
 #dashboard-map {
-    height: 380px;
+    flex: 1 1 auto;
     width: 100%;
     border-radius: 0 0 20px 20px;
     background: #f0f0f0;
@@ -839,8 +850,23 @@ small {
    DASHBOARD REDESIGN: COMPACT CHARTS
    =================================== */
 
-.dashboard-chart-card canvas {
-    max-height: 220px;
+.chart-container {
+    position: relative;
+    width: 100%;
+    height: 400px;
+}
+
+.chart-container--lg {
+    height: 480px;
+}
+
+@media (max-width: 768px) {
+    .chart-container {
+        height: 300px;
+    }
+    .chart-container--lg {
+        height: 360px;
+    }
 }
 
 /* ===================================
@@ -858,8 +884,8 @@ small {
     .stat-pill-value {
         font-size: 1.35rem;
     }
-    #dashboard-map {
-        height: 260px;
+    .map-card .card-body {
+        min-height: 260px;
     }
 }
 

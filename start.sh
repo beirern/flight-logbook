@@ -1,3 +1,1 @@
-docker build . -t flight-logbook:local
-
-docker compose up
+docker compose -f docker-compose.yml -f docker-compose.dev.yml up --build

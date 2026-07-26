@@ -1,0 +1,8 @@
+services:
+  web:
+    build: .
+    environment:
+      - DEBUG=True
+    volumes:
+      - .:/app
+    command: python manage.py runserver 0.0.0.0:8080

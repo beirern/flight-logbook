@@ -8,6 +8,11 @@ until pg_isready -h "$POSTGRES_HOST" -U "$POSTGRES_USER"; do
 done
 
 python manage.py migrate --noinput
+
+if [ "$#" -gt 0 ]; then
+  exec "$@"
+fi
+
 python manage.py collectstatic --noinput
 
 exec gunicorn flightlogbook.wsgi:application \

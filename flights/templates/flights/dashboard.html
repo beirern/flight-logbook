@@ -25,8 +25,8 @@
             <span class="stat-pill-unit">hrs</span>
         </div>
         <div class="stat-pill">
-            <span class="stat-pill-label">XC</span>
-            <span class="stat-pill-value">{{ total_times.xc_time|floatformat:1 }}</span>
+            <span class="stat-pill-label">XC PIC</span>
+            <span class="stat-pill-value">{{ xc_pic_time|floatformat:1 }}</span>
             <span class="stat-pill-unit">hrs</span>
         </div>
         <div class="stat-pill">
@@ -46,19 +46,23 @@
         </div>
         <div class="stat-pill">
             <span class="stat-pill-label">Last Flight</span>
-            <span class="stat-pill-value">{{ days_since_last_flight|default:"—" }}</span>
-            <span class="stat-pill-unit">days ago</span>
+            {% if days_since_last_flight == 0 %}
+                <span class="stat-pill-value">Today</span>
+            {% else %}
+                <span class="stat-pill-value">{{ days_since_last_flight|default:"—" }}</span>
+                <span class="stat-pill-unit">days ago</span>
+            {% endif %}
         </div>
     </div>
 
-    <!-- Main 2-column layout -->
-    <div class="row g-3">
+    <!-- Snapshot row: Map + Currency/Progress Sidebar -->
+    <div class="row g-3 mb-3">
 
-        <!-- LEFT: Map + Charts + Recent Flights -->
+        <!-- LEFT: Map -->
         <div class="col-lg-8">
 
             <!-- Routes Map -->
-            <div class="card mb-3">
+            <div class="card h-100 map-card">
                 <div class="card-header d-flex justify-content-between align-items-center py-2">
                     <h5 class="mb-0">Routes Flown</h5>
                     <a href="{% url 'routes_map' %}" class="btn btn-sm btn-outline-secondary" style="font-size:0.8rem; padding:0.2rem 0.6rem;">Full Map →</a>
@@ -67,82 +71,6 @@
                     <div id="dashboard-map"></div>
                 </div>
             </div>
-
-            <!-- Charts: side by side -->
-            <div class="row g-3 mb-3">
-                <div class="col-md-6">
-                    <div class="card h-100 dashboard-chart-card">
-                        <div class="card-header py-2"><h5 class="mb-0">Cumulative Time</h5></div>
-                        <div class="card-body p-2">
-                            <canvas id="cumulativeChart"></canvas>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="card h-100 dashboard-chart-card">
-                        <div class="card-header py-2"><h5 class="mb-0">Monthly Activity</h5></div>
-                        <div class="card-body p-2">
-                            <canvas id="monthlyChart"></canvas>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Instructor Progression + Instrument side by side -->
-            <div class="row g-3 mb-3">
-                <div class="col-md-8">
-                    <div class="card h-100 dashboard-chart-card">
-                        <div class="card-header py-2"><h5 class="mb-0">Instructor Time Progression</h5></div>
-                        <div class="card-body p-2">
-                            <canvas id="instructorProgressionChart"></canvas>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card h-100 dashboard-chart-card">
-                        <div class="card-header py-2"><h5 class="mb-0">Instrument Breakdown</h5></div>
-                        <div class="card-body p-2">
-                            <canvas id="instrumentChart"></canvas>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Recent Flights -->
-            {% if recent_flights %}
-            <div class="card">
-                <div class="card-header d-flex justify-content-between align-items-center py-2">
-                    <h5 class="mb-0">Recent Flights</h5>
-                    <a href="{% url 'logbook' %}" class="btn btn-sm btn-outline-secondary" style="font-size:0.8rem; padding:0.2rem 0.6rem;">Full Logbook →</a>
-                </div>
-                <div class="card-body p-0">
-                    <table class="table table-sm table-striped mb-0">
-                        <thead>
-                            <tr>
-                                <th>Date</th>
-                                <th>Aircraft</th>
-                                <th>Time</th>
-                                <th>Day Ldg</th>
-                                <th>Night Ldg</th>
-                                <th>Notes</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for flight in recent_flights %}
-                            <tr>
-                                <td>{{ flight.date }}</td>
-                                <td>{{ flight.plane }}</td>
-                                <td>{{ flight.flight_time|floatformat:1 }}</td>
-                                <td>{{ flight.total_day_landings }}</td>
-                                <td>{{ flight.total_night_landings }}</td>
-                                <td>{{ flight.notes|truncatewords:8 }}</td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            {% endif %}
 
         </div><!-- /col-lg-8 -->
 
@@ -309,6 +237,34 @@
 
     </div><!-- /row -->
 
+    <!-- Analytics: each chart gets the full page width to breathe -->
+    <div class="card dashboard-chart-card mb-3">
+        <div class="card-header py-2"><h5 class="mb-0">Cumulative Time</h5></div>
+        <div class="card-body p-2">
+            <div class="chart-container">
+                <canvas id="cumulativeChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="card dashboard-chart-card mb-3">
+        <div class="card-header py-2"><h5 class="mb-0">Monthly Activity</h5></div>
+        <div class="card-body p-2">
+            <div class="chart-container">
+                <canvas id="monthlyChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="card dashboard-chart-card mb-3">
+        <div class="card-header py-2"><h5 class="mb-0">Instructor Time Progression</h5></div>
+        <div class="card-body p-2">
+            <div class="chart-container chart-container--lg">
+                <canvas id="instructorProgressionChart"></canvas>
+            </div>
+        </div>
+    </div>
+
 </div>
 {% endblock %}
 
@@ -426,46 +382,33 @@
     const instructorProgressionCtx = document.getElementById('instructorProgressionChart');
     const instructorProgressionData = {{ instructor_progression|safe }};
 
-    const instructorColors = [
-        aviationColors.bronze,
-        aviationColors.blue,
-        aviationColors.brass,
-        aviationColors.green,
-        aviationColors.leather,
-        aviationColors.red,
-        'rgba(181, 101, 29, 1)',
-        'rgba(139, 90, 43, 1)',
-        'rgba(58, 71, 63, 1)',
-        'rgba(34, 56, 81, 1)'
-    ];
+    // Distinct hue per instructor via golden-angle rotation, so colors never
+    // repeat regardless of how many instructors are in the data.
+    const instructorIds = Object.keys(instructorProgressionData.instructors);
+    const instructorColor = (i) => `hsl(${(i * 137.508) % 360}, 62%, 42%)`;
 
-    const instructorDatasets = [];
-    let colorIndex = 0;
-
-    for (const instructorId in instructorProgressionData.instructors) {
+    const instructorDatasets = instructorIds.map((instructorId, i) => {
         const instructor = instructorProgressionData.instructors[instructorId];
-        const color = instructorColors[colorIndex % instructorColors.length];
-
-        instructorDatasets.push({
+        const color = instructorColor(i);
+        return {
             label: instructor.name,
             data: instructor.data,
             borderColor: color,
-            backgroundColor: color.replace('1)', '0.2)'),
+            backgroundColor: color,
             fill: false,
             tension: 0.1,
-            pointRadius: 3,
+            borderWidth: 2,
+            pointRadius: 2,
             pointHoverRadius: 5
-        });
-
-        colorIndex++;
-    }
+        };
+    });
 
     new Chart(instructorProgressionCtx, {
         type: 'line',
         data: { datasets: instructorDatasets },
         options: {
             responsive: true,
-            maintainAspectRatio: true,
+            maintainAspectRatio: false,
             interaction: { mode: 'index', intersect: false },
             scales: {
                 y: {
@@ -479,7 +422,10 @@
                 }
             },
             plugins: {
-                legend: { position: 'bottom' },
+                legend: {
+                    position: 'bottom',
+                    labels: { boxWidth: 12, boxHeight: 12, font: { size: 10 }, padding: 8 }
+                },
                 tooltip: {
                     callbacks: {
                         label: function(context) {
@@ -509,36 +455,10 @@
         },
         options: {
             responsive: true,
-            maintainAspectRatio: true,
+            maintainAspectRatio: false,
             scales: {
                 y: { beginAtZero: true, title: { display: true, text: 'Hours' } }
             }
-        }
-    });
-
-    // =====================
-    // INSTRUMENT BREAKDOWN
-    // =====================
-    const instrumentCtx = document.getElementById('instrumentChart');
-    new Chart(instrumentCtx, {
-        type: 'pie',
-        data: {
-            labels: ['Actual', 'Sim (Flight)', 'Sim (Sim)'],
-            datasets: [{
-                data: [{{ instrument_breakdown.actual }}, {{ instrument_breakdown.flight_simulated }}, {{ instrument_breakdown.simulator_simulated }}],
-                backgroundColor: [
-                    'rgba(139, 46, 46, 0.7)',
-                    'rgba(44, 74, 107, 0.7)',
-                    'rgba(74, 93, 79, 0.7)'
-                ],
-                borderColor: [aviationColors.red, aviationColors.blue, aviationColors.green],
-                borderWidth: 2
-            }]
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: true,
-            plugins: { legend: { position: 'bottom' } }
         }
     });
 
@@ -547,6 +467,21 @@
     // =====================
     const cumulativeCtx = document.getElementById('cumulativeChart');
     const cumulativeData = {{ cumulative_data|safe }};
+
+    const milestones = {
+        '2021-04-05': 'First Discovery Flight',
+        '2023-08-16': 'Second Discovery Flight',
+        '2024-07-31': 'Stage Check 1 PPL',
+        '2024-08-12': 'First Solo C162',
+        '2025-01-25': 'KSQL',
+        '2025-07-27': 'Return to RFS',
+        '2025-08-19': 'Stage 2 Check PPL Fail',
+        '2025-09-16': 'Stage 2 Check PPL Pass',
+        '2025-09-19': 'Second Solo C172',
+        '2025-09-22': 'First XC Solo',
+        '2025-10-30': 'EOC PPL Pass',
+        '2025-12-01': 'PPL Checkride'
+    };
 
     new Chart(cumulativeCtx, {
         type: 'line',
@@ -592,7 +527,7 @@
         },
         options: {
             responsive: true,
-            maintainAspectRatio: true,
+            maintainAspectRatio: false,
             scales: {
                 y: {
                     beginAtZero: true,
@@ -613,21 +548,6 @@
                             const date = context[0].parsed.x;
                             const dateStr = new Date(date).toISOString().split('T')[0];
 
-                            const milestones = {
-                                '2021-04-05': 'First Discovery Flight',
-                                '2023-08-16': 'Second Discovery Flight',
-                                '2024-07-31': 'Stage Check 1 PPL',
-                                '2024-08-12': 'First Solo C162',
-                                '2025-01-25': 'KSQL',
-                                '2025-07-27': 'Return to RFS',
-                                '2025-08-19': 'Stage 2 Check PPL Fail',
-                                '2025-09-16': 'Stage 2 Check PPL Pass',
-                                '2025-09-19': 'Second Solo C172',
-                                '2025-09-22': 'First XC Solo',
-                                '2025-10-30': 'EOC PPL Pass',
-                                '2025-12-01': 'PPL Checkride'
-                            };
-
                             if (milestones[dateStr]) {
                                 return '\n🎯 ' + milestones[dateStr];
                             }
@@ -635,75 +555,21 @@
                         }
                     }
                 },
+                // Milestone dates get a quiet dashed guide line; the name itself
+                // only shows on hover via the tooltip above, so the chart doesn't
+                // turn into overlapping label soup when several fall close together.
                 annotation: {
-                    annotations: {
-                        discovery1: {
-                            type: 'line', xMin: '2021-04-05', xMax: '2021-04-05',
-                            borderColor: 'rgba(128, 128, 128, 0.6)', borderWidth: 2, borderDash: [3, 3],
-                            label: { display: true, content: 'First Discovery Flight', position: 'start', yAdjust: -10,
-                                backgroundColor: 'rgba(128, 128, 128, 0.8)', color: 'white', font: { size: 10 }, padding: 3 }
-                        },
-                        discovery2: {
-                            type: 'line', xMin: '2023-08-16', xMax: '2023-08-16',
-                            borderColor: 'rgba(128, 128, 128, 0.6)', borderWidth: 2, borderDash: [3, 3],
-                            label: { display: true, content: 'Second Discovery Flight', position: 'start', yAdjust: -10,
-                                backgroundColor: 'rgba(128, 128, 128, 0.8)', color: 'white', font: { size: 10 }, padding: 3 }
-                        },
-                        stage1: {
-                            type: 'line', xMin: '2024-07-31', xMax: '2024-07-31',
-                            borderColor: 'rgba(54, 162, 235, 0.8)', borderWidth: 2, borderDash: [5, 5],
-                            label: { display: false }
-                        },
-                        firstSolo: {
-                            type: 'line', xMin: '2024-08-12', xMax: '2024-08-12',
-                            borderColor: 'rgba(255, 206, 86, 0.8)', borderWidth: 2, borderDash: [5, 5],
-                            label: { display: true, content: 'First Solo C162', position: 'start', yAdjust: -10,
-                                backgroundColor: 'rgba(255, 206, 86, 0.8)', color: 'black', font: { weight: 'bold', size: 10 }, padding: 3 }
-                        },
-                        ksql: {
-                            type: 'line', xMin: '2025-01-25', xMax: '2025-01-25',
-                            borderColor: 'rgba(153, 102, 255, 0.8)', borderWidth: 2, borderDash: [5, 5],
-                            label: { display: true, content: 'KSQL', position: 'start', yAdjust: -10,
-                                backgroundColor: 'rgba(153, 102, 255, 0.8)', color: 'white', font: { weight: 'bold', size: 10 }, padding: 3 }
-                        },
-                        returnRFS: {
-                            type: 'line', xMin: '2025-07-27', xMax: '2025-07-27',
-                            borderColor: 'rgba(75, 192, 192, 0.8)', borderWidth: 2, borderDash: [5, 5],
-                            label: { display: true, content: 'RFS', position: 'start', yAdjust: -10,
-                                backgroundColor: 'rgba(75, 192, 192, 0.8)', color: 'white', font: { weight: 'bold', size: 10 }, padding: 3 }
-                        },
-                        stage2Fail: {
-                            type: 'line', xMin: '2025-08-19', xMax: '2025-08-19',
-                            borderColor: 'rgba(255, 99, 132, 0.8)', borderWidth: 2, borderDash: [5, 5],
-                            label: { display: false }
-                        },
-                        stage2Pass: {
-                            type: 'line', xMin: '2025-09-16', xMax: '2025-09-16',
-                            borderColor: 'rgba(0, 200, 0, 0.8)', borderWidth: 2, borderDash: [5, 5],
-                            label: { display: false }
-                        },
-                        secondSolo: {
-                            type: 'line', xMin: '2025-09-19', xMax: '2025-09-19',
-                            borderColor: 'rgba(255, 159, 64, 0.8)', borderWidth: 2, borderDash: [5, 5],
-                            label: { display: false }
-                        },
-                        firstXC: {
-                            type: 'line', xMin: '2025-09-22', xMax: '2025-09-22',
-                            borderColor: 'rgba(201, 203, 207, 0.8)', borderWidth: 2, borderDash: [5, 5],
-                            label: { display: false }
-                        },
-                        eoc: {
-                            type: 'line', xMin: '2025-10-30', xMax: '2025-10-30',
-                            borderColor: 'rgba(0, 128, 0, 0.8)', borderWidth: 2, borderDash: [5, 5],
-                            label: { display: false }
-                        },
-                        pplCheckride: {
-                            type: 'line', xMin: '2025-12-01', xMax: '2025-12-01',
-                            borderColor: 'rgba(0, 100, 0, 0.9)', borderWidth: 3, borderDash: [5, 5],
-                            label: { display: true, content: 'PPL Checkride', position: 'start', yAdjust: -10,
-                                backgroundColor: 'rgba(0, 100, 0, 0.9)', color: 'white', font: { weight: 'bold', size: 11 }, padding: 4 }
-                        }
-                    }
+                    annotations: Object.fromEntries(
+                        Object.keys(milestones).map((dateStr, i) => [
+                            'milestone' + i,
+                            {
+                                type: 'line', xMin: dateStr, xMax: dateStr,
+                                borderColor: 'rgba(61, 74, 63, 0.35)',
+                                borderWidth: 1,
+                                borderDash: [4, 4]
+                            }
+                        ])
+                    )
                 }
             }
         }
