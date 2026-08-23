@@ -1,0 +1,436 @@
+{% extends "flights/base.html" %}
+
+{% block title %}Add Flight - Flight Logbook{% endblock %}
+
+{% block extra_css %}
+<style>
+    .typeahead-wrap { position: relative; }
+    .typeahead-results {
+        position: absolute; z-index: 1000; top: 100%; left: 0; right: 0;
+        max-height: 240px; overflow-y: auto; display: none;
+    }
+    .typeahead-results.show { display: block; }
+    .typeahead-results .dropdown-item.active { background-color: var(--bs-dropdown-link-hover-bg, #e9ecef); }
+    .passenger-chips { display: flex; flex-wrap: wrap; gap: .375rem; margin-bottom: .5rem; }
+    .passenger-chip { display: flex; align-items: center; gap: .375rem; }
+    .passenger-chip button { line-height: 1; padding: 0 .25rem; }
+    .approach-row { border: 1px solid var(--bs-border-color); border-radius: .375rem; padding: .75rem; margin-bottom: .5rem; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <h1 class="mb-4">Add Flight</h1>
+
+    {% if form.non_field_errors or formset.non_form_errors %}
+    <div class="alert alert-danger">
+        {{ form.non_field_errors }}
+        {{ formset.non_form_errors }}
+    </div>
+    {% endif %}
+
+    <form method="post" novalidate>
+        {% csrf_token %}
+
+        <div class="card mb-3">
+            <div class="card-header"><h5 class="mb-0">Flight</h5></div>
+            <div class="card-body">
+                <div class="row g-3">
+                    <div class="col-md-3">
+                        <label class="form-label">Date</label>
+                        {{ form.date }}
+                        <div class="text-danger small">{{ form.date.errors }}</div>
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">Time Start</label>
+                        {{ form.time_start }}
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">Time End</label>
+                        {{ form.time_end }}
+                    </div>
+                    <div class="col-md-3">
+                        <label class="form-label">Flight Time</label>
+                        {{ form.flight_time }}
+                        <div class="text-danger small">{{ form.flight_time.errors }}</div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="form-label">Aircraft</label>
+                        {{ form.plane }}
+                        <div class="text-danger small">{{ form.plane.errors }}</div>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Route</label>
+                        <div class="typeahead-wrap">
+                            <input type="text" class="form-control" id="route_display"
+                                   placeholder="Search routes..."
+                                   value="{{ default_route.label|default:'' }}"
+                                   autocomplete="off">
+                            {{ form.route }}
+                            <div class="dropdown-menu typeahead-results" id="route_results"></div>
+                        </div>
+                        <div class="text-danger small">{{ form.route.errors }}</div>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Instructor</label>
+                        <div class="typeahead-wrap">
+                            <input type="text" class="form-control" id="instructor_display"
+                                   placeholder="Search instructors..."
+                                   value="{{ default_instructor|default:'' }}"
+                                   autocomplete="off">
+                            {{ form.instructor }}
+                            <div class="dropdown-menu typeahead-results" id="instructor_results"></div>
+                        </div>
+                        <div class="text-danger small">{{ form.instructor.errors }}</div>
+                    </div>
+
+                    <div class="col-12">
+                        <label class="form-label">Passengers</label>
+                        <div class="passenger-chips" id="passenger_chips"></div>
+                        <div class="typeahead-wrap">
+                            <input type="text" class="form-control" id="passenger_display"
+                                   placeholder="Search passengers to add..." autocomplete="off">
+                            <div class="dropdown-menu typeahead-results" id="passenger_results"></div>
+                        </div>
+                        <div id="passenger_hidden_inputs">{{ form.passengers }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mb-3">
+            <div class="card-header"><h5 class="mb-0">Times &amp; Landings</h5></div>
+            <div class="card-body">
+                <div class="row g-3">
+                    <div class="col-md-2 col-6">
+                        <label class="form-label">PIC</label>
+                        {{ form.pic_time }}
+                    </div>
+                    <div class="col-md-2 col-6">
+                        <label class="form-label">SIC</label>
+                        {{ form.sic_time }}
+                    </div>
+                    <div class="col-md-2 col-6">
+                        <label class="form-label">Dual Received</label>
+                        {{ form.flight_training_received }}
+                        <div class="text-danger small">{{ form.flight_training_received.errors }}</div>
+                    </div>
+                    <div class="col-md-2 col-6">
+                        <label class="form-label">Cross Country</label>
+                        {{ form.xc_time }}
+                    </div>
+                    <div class="col-md-2 col-6">
+                        <label class="form-label">Day</label>
+                        {{ form.day_time }}
+                    </div>
+                    <div class="col-md-2 col-6">
+                        <label class="form-label">Night</label>
+                        {{ form.night_time }}
+                    </div>
+                    <div class="col-md-2 col-6">
+                        <label class="form-label">Actual Instrument</label>
+                        {{ form.actual_instrument_time }}
+                    </div>
+                    <div class="col-md-2 col-6">
+                        <label class="form-label">Simulated Instrument</label>
+                        {{ form.simulated_instrument_time }}
+                    </div>
+                    <div class="col-md-2 col-6">
+                        <label class="form-label">Day Landings</label>
+                        {{ form.day_landings }}
+                    </div>
+                    <div class="col-md-2 col-6">
+                        <label class="form-label">Day Full Stop</label>
+                        {{ form.day_fullstop_landings }}
+                    </div>
+                    <div class="col-md-2 col-6">
+                        <label class="form-label">Night Landings</label>
+                        {{ form.night_landings }}
+                    </div>
+                    <div class="col-md-2 col-6">
+                        <label class="form-label">Night Full Stop</label>
+                        {{ form.night_fullstop_landings }}
+                    </div>
+                    <div class="col-md-2 col-6">
+                        <label class="form-label">Holds</label>
+                        {{ form.holds }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mb-3">
+            <div class="card-header"><h5 class="mb-0">Approaches</h5></div>
+            <div class="card-body">
+                {{ formset.management_form }}
+                <div id="approach_rows">
+                    {% for approach_form in formset %}
+                    <div class="approach-row">
+                        <div class="row g-2 align-items-end">
+                            <div class="col-md-5">
+                                <label class="form-label">Airport</label>
+                                <div class="typeahead-wrap">
+                                    <input type="text" class="form-control airport-display"
+                                           placeholder="Search airport..." autocomplete="off">
+                                    {{ approach_form.airport }}
+                                    <div class="dropdown-menu typeahead-results airport-results"></div>
+                                </div>
+                                <div class="text-danger small">{{ approach_form.airport.errors }}</div>
+                            </div>
+                            <div class="col-md-5">
+                                <label class="form-label">Type</label>
+                                {{ approach_form.type }}
+                                <div class="text-danger small">{{ approach_form.type.errors }}</div>
+                            </div>
+                            <div class="col-md-2">
+                                {% if approach_form.DELETE %}
+                                <div class="form-check">
+                                    {{ approach_form.DELETE }}
+                                    <label class="form-check-label">Remove</label>
+                                </div>
+                                {% endif %}
+                            </div>
+                            {{ approach_form.id }}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <template id="approach_row_template">
+                    <div class="approach-row">
+                        <div class="row g-2 align-items-end">
+                            <div class="col-md-5">
+                                <label class="form-label">Airport</label>
+                                <div class="typeahead-wrap">
+                                    <input type="text" class="form-control airport-display"
+                                           placeholder="Search airport..." autocomplete="off">
+                                    <input type="hidden" name="approaches-__prefix__-airport" id="id_approaches-__prefix__-airport">
+                                    <div class="dropdown-menu typeahead-results airport-results"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <label class="form-label">Type</label>
+                                <input type="text" class="form-control form-control-sm" placeholder="e.g. ILS, RNAV, VOR"
+                                       name="approaches-__prefix__-type" id="id_approaches-__prefix__-type">
+                            </div>
+                            <div class="col-md-2"></div>
+                        </div>
+                    </div>
+                </template>
+                <button type="button" class="btn btn-outline-secondary btn-sm mt-2" id="add_approach_btn">
+                    + Add another approach
+                </button>
+            </div>
+        </div>
+
+        <div class="card mb-3">
+            <div class="card-header"><h5 class="mb-0">Notes</h5></div>
+            <div class="card-body">
+                {{ form.notes }}
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary mb-4">Save Flight</button>
+    </form>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+(function() {
+    "use strict";
+
+    function debounce(fn, delay) {
+        let timer = null;
+        return function(...args) {
+            clearTimeout(timer);
+            timer = setTimeout(() => fn.apply(this, args), delay);
+        };
+    }
+
+    // Reusable typeahead: search-as-you-type against a small JSON endpoint,
+    // renders results in a Bootstrap dropdown, supports keyboard navigation.
+    function createTypeahead({ inputEl, hiddenEl, resultsEl, fetchUrl, renderLabel, onSelect, seed }) {
+        let items = seed || [];
+        let activeIndex = -1;
+
+        function render() {
+            resultsEl.innerHTML = "";
+            items.forEach((item, idx) => {
+                const btn = document.createElement("button");
+                btn.type = "button";
+                btn.className = "dropdown-item" + (idx === activeIndex ? " active" : "");
+                btn.textContent = renderLabel(item);
+                btn.addEventListener("mousedown", (e) => {
+                    e.preventDefault();
+                    select(item);
+                });
+                resultsEl.appendChild(btn);
+            });
+            resultsEl.classList.toggle("show", items.length > 0);
+        }
+
+        function select(item) {
+            if (hiddenEl) hiddenEl.value = item.id;
+            inputEl.value = renderLabel(item);
+            resultsEl.classList.remove("show");
+            activeIndex = -1;
+            if (onSelect) onSelect(item);
+        }
+
+        const doFetch = debounce((query) => {
+            fetch(fetchUrl + "?q=" + encodeURIComponent(query))
+                .then((r) => r.json())
+                .then((data) => {
+                    items = data.results || [];
+                    activeIndex = -1;
+                    render();
+                });
+        }, 200);
+
+        inputEl.addEventListener("input", () => {
+            if (hiddenEl) hiddenEl.value = "";
+            const query = inputEl.value.trim();
+            if (query.length === 0 && seed) {
+                items = seed;
+                activeIndex = -1;
+                render();
+                return;
+            }
+            doFetch(query);
+        });
+
+        inputEl.addEventListener("focus", () => {
+            if (inputEl.value.trim().length === 0 && seed) {
+                items = seed;
+                render();
+            } else if (items.length > 0) {
+                render();
+            }
+        });
+
+        inputEl.addEventListener("keydown", (e) => {
+            if (!resultsEl.classList.contains("show")) return;
+            if (e.key === "ArrowDown") {
+                e.preventDefault();
+                activeIndex = Math.min(activeIndex + 1, items.length - 1);
+                render();
+            } else if (e.key === "ArrowUp") {
+                e.preventDefault();
+                activeIndex = Math.max(activeIndex - 1, 0);
+                render();
+            } else if (e.key === "Enter") {
+                if (activeIndex >= 0) {
+                    e.preventDefault();
+                    select(items[activeIndex]);
+                }
+            } else if (e.key === "Escape") {
+                resultsEl.classList.remove("show");
+            }
+        });
+
+        inputEl.addEventListener("blur", () => {
+            setTimeout(() => resultsEl.classList.remove("show"), 150);
+        });
+    }
+
+    // --- Route typeahead ---
+    createTypeahead({
+        inputEl: document.getElementById("route_display"),
+        hiddenEl: document.getElementById("id_route"),
+        resultsEl: document.getElementById("route_results"),
+        fetchUrl: "{% url 'search_routes' %}",
+        renderLabel: (item) => item.label,
+    });
+
+    // --- Instructor typeahead ---
+    const recentInstructors = {{ recent_instructors_json|safe }};
+    createTypeahead({
+        inputEl: document.getElementById("instructor_display"),
+        hiddenEl: document.getElementById("id_instructor"),
+        resultsEl: document.getElementById("instructor_results"),
+        fetchUrl: "{% url 'search_instructors' %}",
+        renderLabel: (item) => item.name,
+        seed: recentInstructors,
+    });
+
+    // --- Passenger typeahead (multi-select via chips) ---
+    const recentPassengers = {{ recent_passengers_json|safe }};
+    const passengerChips = document.getElementById("passenger_chips");
+    const passengerHiddenContainer = document.getElementById("passenger_hidden_inputs");
+    const selectedPassengers = new Map();
+
+    function syncPassengerHiddenInputs() {
+        passengerHiddenContainer.innerHTML = "";
+        selectedPassengers.forEach((name, id) => {
+            const input = document.createElement("input");
+            input.type = "hidden";
+            input.name = "passengers";
+            input.value = id;
+            passengerHiddenContainer.appendChild(input);
+        });
+    }
+
+    function renderPassengerChips() {
+        passengerChips.innerHTML = "";
+        selectedPassengers.forEach((name, id) => {
+            const chip = document.createElement("span");
+            chip.className = "badge text-bg-secondary passenger-chip";
+            chip.innerHTML = `${name} <button type="button" class="btn-close btn-close-white" style="font-size:.6rem;" aria-label="Remove"></button>`;
+            chip.querySelector("button").addEventListener("click", () => {
+                selectedPassengers.delete(id);
+                renderPassengerChips();
+                syncPassengerHiddenInputs();
+            });
+            passengerChips.appendChild(chip);
+        });
+    }
+
+    createTypeahead({
+        inputEl: document.getElementById("passenger_display"),
+        hiddenEl: null,
+        resultsEl: document.getElementById("passenger_results"),
+        fetchUrl: "{% url 'search_passengers' %}",
+        renderLabel: (item) => item.name,
+        seed: recentPassengers,
+        onSelect: (item) => {
+            selectedPassengers.set(item.id, item.name);
+            renderPassengerChips();
+            syncPassengerHiddenInputs();
+            document.getElementById("passenger_display").value = "";
+        },
+    });
+
+    // --- Approach airport typeahead (wired for existing rows + any newly added) ---
+    function wireAirportRow(row) {
+        const input = row.querySelector(".airport-display");
+        const hidden = row.querySelector("input[type=hidden][name$='-airport']");
+        const results = row.querySelector(".airport-results");
+        createTypeahead({
+            inputEl: input,
+            hiddenEl: hidden,
+            resultsEl: results,
+            fetchUrl: "{% url 'search_airports' %}",
+            renderLabel: (item) => item.label,
+        });
+    }
+    document.querySelectorAll("#approach_rows .approach-row").forEach(wireAirportRow);
+
+    // --- Dynamic approach row add ---
+    const totalFormsInput = document.getElementById("id_approaches-TOTAL_FORMS");
+    const approachRowsContainer = document.getElementById("approach_rows");
+    const rowTemplate = document.getElementById("approach_row_template");
+
+    document.getElementById("add_approach_btn").addEventListener("click", () => {
+        const index = parseInt(totalFormsInput.value, 10);
+        const html = rowTemplate.innerHTML.replace(/__prefix__/g, index);
+        const wrapper = document.createElement("div");
+        wrapper.innerHTML = html;
+        const newRow = wrapper.firstElementChild;
+        approachRowsContainer.appendChild(newRow);
+        wireAirportRow(newRow);
+        totalFormsInput.value = index + 1;
+    });
+})();
+</script>
+{% endblock %}

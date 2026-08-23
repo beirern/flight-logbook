@@ -53,6 +53,12 @@
                         <a class="{% if request.resolver_match.url_name == 'logbook' %}active{% endif %}"
                            href="{% url 'logbook' %}">Logbook</a>
                     </li>
+                    {% if request.user.is_staff %}
+                    <li>
+                        <a class="{% if request.resolver_match.url_name == 'add_flight' %}active{% endif %}"
+                           href="{% url 'add_flight' %}">+ Add Flight</a>
+                    </li>
+                    {% endif %}
 
                 </ul>
             </div>
