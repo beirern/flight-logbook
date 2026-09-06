@@ -84,6 +84,7 @@ jobs:
             POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
             POSTGRES_HOST=${{ secrets.POSTGRES_HOST }}
             POSTGRES_PORT=${{ secrets.POSTGRES_PORT }}
+            CARTO_API_KEY=${{ secrets.CARTO_API_KEY }}
             ENVEOF
 
             cd ~/flight-logbook
