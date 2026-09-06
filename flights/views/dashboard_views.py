@@ -2,6 +2,7 @@ import json
 import math
 from datetime import date
 
+from django.conf import settings
 from django.shortcuts import render
 
 from flights.models import Flight
@@ -174,6 +175,7 @@ def dashboard(request):
         'last_flight_date': last_flight_date,
         'days_since_last_flight': days_since_last_flight,
         'routes_json': json.dumps(routes_data),
+        'carto_api_key': settings.CARTO_API_KEY,
     }
 
     return render(request, 'flights/dashboard.html', context)
@@ -222,6 +224,7 @@ def routes_map(request):
     context = {
         'routes_json': json.dumps(get_routes_data(pilot)),
         'airport_progression': json.dumps(airport_progression),
+        'carto_api_key': settings.CARTO_API_KEY,
     }
 
     return render(request, 'flights/routes_map.html', context)
