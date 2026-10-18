@@ -10,14 +10,17 @@ def check_passenger_currency(pilot):
     """
     Check passenger carrying currency per FAR 61.57(a).
     Requires 3 takeoffs and landings in the preceding 90 days.
+    Day currency counts day and night landings; night currency counts only
+    full-stop night landings.
     """
     ninety_days_ago = datetime.now().date() - timedelta(days=90)
     recent_flights = Flight.objects.filter(pilot=pilot, date__gte=ninety_days_ago, excluded=False)
 
     day_landings_sum = recent_flights.aggregate(Sum('day_landings'))['day_landings__sum'] or 0
     day_fullstop_sum = recent_flights.aggregate(Sum('day_fullstop_landings'))['day_fullstop_landings__sum'] or 0
-    day_landings = day_landings_sum + day_fullstop_sum
+    night_landings_sum = recent_flights.aggregate(Sum('night_landings'))['night_landings__sum'] or 0
     night_fullstop_landings = recent_flights.aggregate(Sum('night_fullstop_landings'))['night_fullstop_landings__sum'] or 0
+    day_landings = day_landings_sum + day_fullstop_sum + night_landings_sum + night_fullstop_landings
 
     # Find the date when currency expires (90 days from the 3rd landing)
     day_expiry = None
@@ -29,11 +32,15 @@ def check_passenger_currency(pilot):
         excluded=False,
     ).filter(
         models.Q(day_landings__gt=0) | models.Q(day_fullstop_landings__gt=0)
+        | models.Q(night_landings__gt=0) | models.Q(night_fullstop_landings__gt=0)
     ).order_by('-date')
 
     day_count = 0
     for flight in day_landing_flights:
-        day_count += flight.day_landings + flight.day_fullstop_landings
+        day_count += (
+            flight.day_landings + flight.day_fullstop_landings
+            + flight.night_landings + flight.night_fullstop_landings
+        )
         if day_count >= 3:
             day_expiry = flight.date + timedelta(days=90)
             break
