@@ -1,130 +1,107 @@
 # Flight Logbook
 
-A Django-based flight logbook application for tracking flight time, currency, and license progress. Supports local data entry via Django admin and static site deployment to GitHub Pages.
-Purely for myself, if you like it you could clone it and run it yourself but the GitHub pages link is my data.
-Most of this file is Claude btw, I don't write like this...
+A personal Django flight logbook for tracking flight time, currency, and license
+progress. Data entry and dashboards run in Django, backed by PostgreSQL.
 
-## Features
+## Local development
 
-- **Flight Tracking**: Record all flight details including times, landings, routes, and notes
-- **Currency Monitoring**: Automatic tracking of FAR 61.57(a) passenger currency (day/night)
-- **License Progress**: Track progress toward Commercial Pilot (FAR 61.129) and Instrument Rating (FAR 61.65d)
-- **Medical Certificate**: Monitor medical certificate expiration
-- **Charts & Statistics**: Visual dashboards with monthly activity, cumulative time, and aircraft breakdown
-- **Leaderboards**: Track passengers and instructors by flight count
+Create an untracked `.env` file with local values:
 
-## Architecture
-
-This is a hybrid application:
-- **Local Development**: Django admin for data entry (single-user mode)
-- **Static Deployment**: Exported HTML/JSON for GitHub Pages hosting
-- **Client-side Currency**: JavaScript recalculates currency status in real-time on the static site
-
-## Local Setup
-
-1. **Install dependencies**:
-   ```bash
-   pip install django
-   ```
-
-2. **Run migrations**:
-   ```bash
-   python manage.py migrate
-   ```
-
-3. **Create a pilot** (required for single-user mode):
-   ```bash
-   python manage.py createsuperuser
-   # Then add a Pilot record via admin with pk=1
-   ```
-
-4. **Run the development server**:
-   ```bash
-   python manage.py runserver
-   ```
-
-5. **Access the application**:
-   - Dashboard: http://localhost:8000/
-   - Admin: http://localhost:8000/admin/
-
-## Static Site Deployment
-
-### Export Static Site
-
-Run the export command to generate the static site:
-
-```bash
-python manage.py export_static
+```dotenv
+SECRET_KEY=replace-with-a-local-development-key
+DEBUG=True
+ALLOWED_HOSTS=localhost,127.0.0.1
+CSRF_TRUSTED_ORIGINS=http://localhost:8080
+CARTO_API_KEY=your-carto-key
+POSTGRES_DB=flightlogbook
+POSTGRES_USER=flightlogbook
+POSTGRES_PASSWORD=replace-with-a-local-password
+POSTGRES_HOST=db
+POSTGRES_PORT=5432
+POSTGRES_HOST_PORT=5433
 ```
 
-This creates a `static_site/` directory with:
-- `index.html` - Dashboard page
-- `logbook.html` - Logbook table
-- `data/flights.json` - All flight records
-- `data/stats.json` - Dashboard statistics
-- `data/charts.json` - Chart data
-- `data/leaderboards.json` - Passenger/instructor leaderboards
-- `.nojekyll` - Prevents Jekyll processing on GitHub Pages
+Start the application:
 
-### Deploy to GitHub Pages
+```sh
+sh start.sh
+```
 
-1. **Configure GitHub Pages**:
-   - Go to your repository settings
-   - Under "Pages", set source to "Deploy from a branch"
-   - Select branch: `main` (or your default branch)
-   - Select folder: `/static_site`
-   - Save
+The development Compose override builds the local image, mounts the source, and
+runs Django's development server. The entrypoint applies migrations. Open
+<http://localhost:8080/> or <http://localhost:8080/admin/>.
 
-2. **Deploy using the automated script**:
-   ```bash
-   ./deploy.sh
-   ```
+To create an administrator:
 
-   Or manually:
-   ```bash
-   python manage.py export_static
-   git add static_site/
-   git commit -m "Update flight data"
-   git push origin main
-   ```
+```sh
+docker compose -f docker-compose.yml -f docker-compose.dev.yml exec web python manage.py createsuperuser
+```
 
-3. **Access your site**:
-   - Your site will be available at: `https://<username>.github.io/<repository-name>/`
-   - Updates appear within 1-2 minutes after pushing
+Add the pilot record through the admin before using dashboards that expect it.
 
-### Workflow
+`POSTGRES_PORT` is the port Django connects to, normally `5432` within Docker.
+`POSTGRES_HOST_PORT` controls the database port published on the host and defaults
+to `5433`. Set a different host port for each project sharing the same server.
+Separate Compose projects can all use `db:5432` internally.
 
-1. **Add flights locally**: Use Django admin at http://localhost:8000/admin/
-2. **Export static site**: Run `python manage.py export_static`
-3. **Deploy**: Run `./deploy.sh` or manually commit and push
-4. **View online**: Check your GitHub Pages site
+## Production deployment
 
-## Key Files
+`.github/workflows/deploy.yml` calls
+`beirern/django-deploy/.github/workflows/deploy.yml@v1.0.0` on pushes to `main` or
+manual runs on `main`. `.releaserc.json` configures this application's releases:
+breaking changes bump major versions, `feat` bumps minor, and other included
+commits bump patch. With no previous release tags, the first release normally
+starts at `1.0.0`. Versions are independent of the shared workflow's version.
 
-- **Models**: `flights/models.py`, `pilots/models.py`, `planes/models.py`, etc.
-- **Views**: `flights/views/dashboard_views.py`
-- **Templates**: `flights/templates/flights/`
-- **Statistics**: `flights/utils/statistics.py`, `flights/utils/currency_calculator.py`
-- **Export Command**: `flights/management/commands/export_static.py`
-- **Deploy Script**: `deploy.sh`
+The workflow creates a Git tag and GitHub release, builds the released commit,
+pushes version and `sha-<full-sha>` image tags to ECR, and deploys the versioned
+image through SSH and Docker Compose. It does not publish a `latest` image tag.
+No new release means no build or deployment. Production merges
+`docker-compose.yml` with `docker-compose.prod.yml`, which requires the released
+`IMAGE`. Development keeps the local image default without needing `IMAGE`.
 
-## Data Privacy
+Configure these **repository secrets** in this application repository:
 
-The database (`db.sqlite3`) is excluded from version control and stays on your local machine. Only the exported HTML and JSON data (in `static_site/`) is committed to the repository.
+- `AWS_ACCESS_KEY_ID`
+- `AWS_SECRET_ACCESS_KEY`
+- `AWS_REGION`
+- `ECR_REGISTRY`
+- `ECR_REPOSITORY`
 
-**Important**: GitHub Pages sites are public by default. If you want privacy:
-- Use a private repository (requires GitHub Pro for GitHub Pages)
-- Redact sensitive information (passenger names, routes) before exporting
-- Consider alternative hosting with authentication
+Configure these secrets in the **production environment**:
 
-## Technical Details
+- `SERVER_HOST`
+- `SERVER_USER`
+- `SERVER_SSH_KEY`
+- `SERVER_KNOWN_HOSTS`: verified OpenSSH host-key entry matching `SERVER_HOST`.
+- `APP_ENV`: complete multiline production dotenv contents, using the settings
+  above with production credentials, `DEBUG=False`, and the production domain.
+  Do not include `IMAGE`; the workflow supplies it.
 
-- **Django Version**: Compatible with Django 4.x+
-- **Database**: SQLite (local only)
-- **Frontend**: Bootstrap 5 + Chart.js (loaded from CDN)
-- **Currency Calculations**: Client-side JavaScript recalculates from JSON data
-- **Single-User Mode**: Hardcoded to `Pilot.objects.get(pk=1)`
+The caller grants the GitHub token release permissions. No personal access token
+is needed. Preserve existing database credentials when moving them to `APP_ENV`.
 
-## License
+The server must have Docker and a Compose plugin supporting `up --wait`, and the
+SSH account must run Docker without sudo. The caller uses the absolute directory
+`/home/ubuntu/flight-logbook`; confirm that this matches the existing deployment
+account's home directory. Keep the existing directory and Compose project name
+to retain the existing PostgreSQL volume. Back up the database before the first
+deployment with the new workflow.
 
-This project is for personal use.
+The application entrypoint runs migrations and collects static files. Deployment
+waits for PostgreSQL readiness and an HTTP 200 from Django's admin login page.
+The HTTP check uses a configured allowed host; it does not verify public DNS,
+the reverse proxy, or TLS. Configure those on the server separately.
+
+A GitHub release is created before build/deployment and does not prove deployment
+succeeded. After a failed build or deployment, use **Re-run failed jobs** to keep
+the release outputs. A new manual run does not force a release. There is no
+automatic rollback, and migrations may already have run when deployment fails.
+
+See [django-deploy](https://github.com/beirern/django-deploy) for the shared
+workflow contract. Updating the pinned workflow version is an explicit change.
+
+## Static export
+
+The optional `python manage.py export_static` command generates `static_site/`.
+That directory is ignored by Git and is not deployed by the production workflow.
