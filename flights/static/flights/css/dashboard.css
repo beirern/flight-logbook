@@ -55,6 +55,15 @@ body {
     overflow-x: hidden;
 }
 
+.site-footer {
+    position: relative;
+    padding: var(--space-sm) var(--space-md) var(--space-md);
+    color: var(--forest-green);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    text-align: center;
+}
+
 /* Topographic background pattern */
 body::before {
     content: '';
