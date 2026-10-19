@@ -5,6 +5,10 @@ progress. Data entry and dashboards run in Django, backed by PostgreSQL.
 
 ## Local development
 
+Python dependencies are managed with [uv](https://docs.astral.sh/uv/). The project
+uses Python 3.13; `pyproject.toml` declares dependencies and the committed `uv.lock`
+pins their resolved versions. Docker installs from that lockfile using uv 0.7.21.
+
 Create an untracked `.env` file with local values:
 
 ```dotenv
@@ -38,6 +42,21 @@ docker compose -f docker-compose.yml -f docker-compose.dev.yml exec web python m
 ```
 
 Add the pilot record through the admin before using dashboards that expect it.
+
+For Python commands outside Docker, install uv and run `uv sync --locked` to
+create the local `.venv`. Export the settings variables above into your shell
+(uv does not load `.env` automatically), setting `POSTGRES_HOST=127.0.0.1` and
+`POSTGRES_PORT` to the published host port when using the Compose database.
+Then use `uv run python manage.py check`, `uv run python manage.py test`, or
+`uv run python manage.py runserver`.
+
+Before running tests, run `uv run python manage.py collectstatic --noinput`;
+the view tests need the WhiteNoise static manifest.
+
+Use `uv add <package>` or `uv remove <package>` to change dependencies and commit
+both `pyproject.toml` and `uv.lock`. Rebuild the development image with `sh start.sh`
+after dependency changes. The container environment lives at `/opt/venv` so the
+development source mount at `/app` does not hide it.
 
 `POSTGRES_PORT` is the port Django connects to, normally `5432` within Docker.
 `POSTGRES_HOST_PORT` controls the database port published on the host and defaults

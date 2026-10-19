@@ -1,0 +1,15 @@
+[project]
+name = "flight-logbook"
+version = "0.1.0"
+description = "A personal Django flight logbook"
+requires-python = ">=3.13,<3.14"
+dependencies = [
+    "Django==6.0",
+    "psycopg[binary]==3.2.4",
+    "gunicorn==23.0.0",
+    "whitenoise==6.8.2",
+    "dateutils",
+]
+
+[tool.uv]
+package = false

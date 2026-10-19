@@ -10,15 +10,16 @@ A single-user Django flight logbook application for tracking flight time, curren
 
 ```bash
 # Local development
-pip install -r requirements.txt
-python manage.py migrate
-python manage.py runserver        # http://localhost:8000/
+uv sync --locked
+uv run python manage.py migrate
+uv run python manage.py runserver # http://localhost:8000/
 
 # Docker development
 ./start.sh                        # builds and runs web + PostgreSQL via docker-compose
 
-# Tests (currently empty stubs)
-python manage.py test
+# Tests (requires PostgreSQL and the settings environment variables)
+uv run python manage.py collectstatic --noinput
+uv run python manage.py test
 
 # No linter or formatter configured
 ```
